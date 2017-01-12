@@ -1,11 +1,11 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-  </div>
+    <div class="hello">
+        <h1>{{ msg }}</h1>
+    </div>
 </template>
-
 <script>
 export default {
+  //在vue中，组件的data 必须是函数
   data () {
     return {
       // note: changing this line won't causes changes
@@ -17,7 +17,6 @@ export default {
   }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1 {

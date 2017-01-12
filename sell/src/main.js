@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import App from './App'
+import Vue from "vue";
+import App from "./App";
 new Vue({
   el: 'body',
   components: {App}
-})
+});
 /**
  * import是es6里面的语法
  * import后面接导入的模块,from表示从哪里导入

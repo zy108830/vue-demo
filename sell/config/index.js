@@ -2,6 +2,7 @@
 var path = require('path')
 
 module.exports = {
+  //生产环境配置
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
@@ -16,6 +17,7 @@ module.exports = {
     productionGzip: false,
     productionGzipExtensions: ['js', 'css']
   },
+  //开发环境配置
   dev: {
     env: require('./dev.env'),
     port: 8080,
