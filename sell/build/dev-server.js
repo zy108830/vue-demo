@@ -19,6 +19,32 @@ var port = process.env.PORT || config.dev.port
 var proxyTable = config.dev.proxyTable;
 // 实例化一个express app
 var app = express();
+//加载mock数据
+var appData = require('../data.json');
+var seller = appData.seller;
+var goods = appData.goods;
+var ratings = appData.ratings;
+//定义路由
+var apiRoutes = express.Router();
+apiRoutes.get('/seller', function (req, res) {
+  res.json({
+    errno: 0,
+    data: seller
+  });
+});
+apiRoutes.get('/goods', function (req, res) {
+  res.json({
+    errno: 0,
+    data: goods
+  });
+});
+apiRoutes.get('/ratings', function (req, res) {
+  res.json({
+    errno: 0,
+    data: ratings
+  });
+});
+app.use('/api', apiRoutes);
 // 实例化一个webpack编译器
 var compiler = webpack(webpackConfig);
 // 这个中间件是express为webpack开发的中间件，能够将编译的app.js文件置于内存之中，供浏览器访问
@@ -53,11 +79,9 @@ app.use(devMiddleware)
 // enable hot-reload and state-preserving
 // compilation error display
 app.use(hotMiddleware)
-
 // 配置静态资源的访问路径
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
 app.use(staticPath, express.static('./static'));
-
 //启动express，监听8080端口
 module.exports = app.listen(port, function (err) {
   if (err) {
