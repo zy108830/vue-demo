@@ -20,6 +20,11 @@ var proxyTable = config.dev.proxyTable;
 // 实例化一个express app
 var app = express();
 //加载mock数据
+//Node.js require模块分为两类，一类为原生（核心）模块，一类为文件模块。
+//在文件模块中，又分为3类模块。这三类文件模块以后缀来区分，Node.js会根据后缀名来决定加载方法。
+//.js: 通过fs模块同步读取js文件并编译执行。
+//.node: 通过C/C++进行编写的Addon,通过dlopen方法进行加载。
+//.json: 读取文件，调用JSON.parse解析加载。
 var appData = require('../data.json');
 var seller = appData.seller;
 var goods = appData.goods;
