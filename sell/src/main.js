@@ -1,12 +1,19 @@
 import Vue from "vue";
 import App from "./App";
 import VueRouter from "vue-router";
-import goods from "./components/goods/goods.vue";
-import ratings from "./components/ratings/ratings.vue";
-import seller from "./components/seller/seller.vue";
+/**
+ * 我们既可以使用./components/goods/goods.vue
+ * 也可以使用components/goods/goods.vue
+ * 原因就在于webpack.base.conf.js中定义了component这个路径别名
+ */
+import goods from "components/goods/goods";
+import ratings from "components/ratings/ratings";
+import seller from "components/seller/seller";
 Vue.use(VueRouter);
 var app = Vue.extend(App);
-var router = new VueRouter();
+var router = new VueRouter({
+  linkActiveClass: 'active'//默认当前的link classname为v-link-active
+});
 router.map({
   '/goods': {
     component: goods
@@ -23,6 +30,8 @@ router.map({
   }
 });
 router.start(app, '#app');
+//设置默认的首页
+router.go('/seller');
 /**
  * import是es6里面的语法
  * import后面接导入的模块,from表示从哪里导入
