@@ -1,18 +1,22 @@
-import Vue from "vue";
-import App from "./App";
-import VueRouter from "vue-router";
 /**
  * 我们既可以使用./components/goods/goods.vue
  * 也可以使用components/goods/goods.vue
  * 原因就在于webpack.base.conf.js中定义了component这个路径别名
  */
+
+import Vue from "vue";
+import App from "./App";
+import VueResource from "vue-resource";
+import VueRouter from "vue-router";
 import goods from "components/goods/goods";
 import ratings from "components/ratings/ratings";
 import seller from "components/seller/seller";
 import 'common/stylus/index.styl';
 
-
+//往Vue中注册全局插件
 Vue.use(VueRouter);
+Vue.use(VueResource);
+
 var app = Vue.extend(App);
 var router = new VueRouter({
   linkActiveClass: 'active'//默认当前的link classname为v-link-active
