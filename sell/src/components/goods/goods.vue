@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    I am header template
+    <div>I am goods template</div>
   </div>
 </template>
 <script type="text/ecmascript-6">
