@@ -1,7 +1,7 @@
 <!--App.vue这种.vue为后缀的文件,表示单文件组件,文件名即表示组件名-->
 <template>
   <div>
-    <v-header></v-header>
+    <v-header :seller="seller"></v-header>
     <!--真正在手机上实现1px的效果-->
     <div class="tab border-1px">
       <div class="tab-item">
