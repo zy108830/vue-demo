@@ -6,12 +6,12 @@
       </div>
       <div class="content">
         <div class="title">
-          <div class="brand">
+          <span class="brand">
 
-          </div>
-          <div class="name">
+          </span>
+          <span class="name">
             {{seller.name}}
-          </div>
+          </span>
         </div>
         <div class="description">
           {{seller.description}}/{{seller.deliveryTime}}分钟送达
@@ -39,13 +39,34 @@
   }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/mixin.styl"
   .header
     color #fff
     background #000
     .content-wrapper
       padding 24px 12px 18px 24px
+      /*可以消除字体的默认margin,不然文字与图片间会有边距*/
+      font-size 0
       .avatar
         display inline-block
       .content
         display inline-block
+        font-size 14px
+        margin-left 16px
+        .title
+          margin 2px 0 8px 0
+          .brand
+            display inline-block
+            /*不然文字与图片在垂直方向上会无法对齐*/
+            vertical-align top
+            width 30px
+            height 18px
+            bg-image('brand')
+            background-size 30px 18px
+            background-repeat no-repeat
+          .name
+            margin-left 6px
+            font-size 16px
+            line-height 18px
+            font-weight bold
 </style>
