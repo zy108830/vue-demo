@@ -38,7 +38,7 @@ router.map({
 });
 router.start(app, '#app');
 //设置默认的首页
-router.go('/seller');
+router.go('/goods');
 /**
  * import是es6里面的语法
  * import后面接导入的模块,from表示从哪里导入

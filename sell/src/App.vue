@@ -5,7 +5,7 @@
         <!--真正在手机上实现1px的效果-->
         <div class="tab border-1px">
             <div class="tab-item">
-                <a v-link="{path:'/go'}">商品</a>
+                <a v-link="{path:'/goods'}">商品</a>
             </div>
             <div class="tab-item">
                 <a v-link="{path:'/ratings'}">评论</a>
