@@ -29,18 +29,24 @@
                                     <span class="now">¥{{food.price}}</span>
                                     <span class="old" v-show="food.oldPrice">¥{{food.oldPrice}}</span>
                                 </div>
+                                <div class="cartcontrol-wrapper">
+                                    <cartcontrol :food="food"></cartcontrol>
+                                </div>
                             </div>
                         </li>
                     </ul>
                 </li>
             </ul>
         </div>
+        <shopcart v-ref:shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
     </div>
 </template>
 <script type="text/ecmascript-6">
-    const ERR_OK = 0;
     import BScroll from 'better-scroll'
+    import shopcart from 'components/shopcart/shopcart';
+    import cartcontrol from 'components/cartcontrol/cartcontrol'
 
+    const ERR_OK = 0;
     export default {
         props: {
             seller: {
@@ -77,27 +83,42 @@
         },
         computed: {
             currentIndex() {
-                let $index=0;
+                let $index = 0;
                 console.log(this.scrollY)
                 for (let i = 0; i < this.listHeight.length; i++) {
                     let height1 = this.listHeight[i];
                     let height2 = this.listHeight[i + 1];
                     if (!height2 || this.scrollY >= height1 && this.scrollY < height2) {
-                        $index=i;
+                        $index = i;
                         break;
                     }
                 }
-                console.log(this.listHeight,11111,$index)
+                console.log(this.listHeight, 11111, $index)
                 return $index;
+            },
+            selectFoods() {
+                let foods = [];
+                this.goods.forEach((good) => {
+                    good.foods.forEach((food) => {
+                        if (food.count) {
+                            foods.push(food)
+                        }
+                    })
+                })
+                return foods;
             }
         },
         methods: {
             _initScroll() {
+                /**
+                 * 如果不设置click: true，BScroll默认会禁用click事件
+                 */
                 this.menuScroll = new BScroll(this.$els.menuWrapper, {
                     click: true
                 })
                 this.foodsScroll = new BScroll(this.$els.foodsWrapper, {
-                    probeType: 3
+                    probeType: 3,
+                    click: true
                 })
                 this.foodsScroll.on('scroll', (pos) => {
                     this.scrollY = Math.abs(Math.round(pos.y))
@@ -121,7 +142,25 @@
                 let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
                 let el = foodList[index]
                 this.foodsScroll.scrollToElement(el, 300)
+            },
+            _drop(target) {
+                /**
+                 * 使用this.$refs.shopcart访问子组件
+                 * 使用nextTick来优化动画性能
+                 */
+                this.$nextTick(() => {
+                    this.$refs.shopcart.drop(target)
+                });
             }
+        },
+        events: {
+            'cart.add'(target) {
+                this._drop(target);
+            }
+        },
+        components: {
+            shopcart,
+            cartcontrol
         }
     }
 </script>
@@ -224,4 +263,8 @@
                             text-decoration line-through
                         color
                             rgb(147, 153, 159)
+                    .cartcontrol-wrapper
+                        position absolute
+                        right 0
+                        bottom 12px
 </style>
