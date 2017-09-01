@@ -15,12 +15,13 @@
             </div>
         </div>
         <div class="content">
-            <router-view :seller="seller"></router-view>
+            <router-view :seller="seller" keep-alive></router-view>
         </div>
     </div>
 </template>
-<script type=" text/ecmascript-6">
+<script type="text/ecmascript-6">
     import header from './components/header/header.vue'
+    import {urlParse} from 'common/js/util'
 
     const ERR_OK = 0;
     //必须在引入Hello模块之后，在components属性中注册，否则无法在 template 中使用
@@ -28,16 +29,19 @@
     export default {
         data() {
             return {
-                seller: {}
+                seller: {
+                    id: (() => {
+                        let queryParam = urlParse();
+                        return queryParam.id;
+                    })()
+                }
             }
         },
         created() {
-            this.$http.get('/api/seller').then((response) => {
-                console.log(response);
-                response = response['body'];
+            this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
+                response = response.body;
                 if (response.errno === ERR_OK) {
-                    this.seller = response.data;
-                    console.log(this.seller);
+                    this.seller = Object.assign({}, this.seller, response.data);
                 }
             });
         },
