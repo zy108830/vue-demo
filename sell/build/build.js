@@ -1,5 +1,6 @@
 // https://github.com/shelljs/shelljs，shelljs库用于执行shell命令
 require('shelljs/global')
+require('./check-versions')()
 env.NODE_ENV = 'production'
 var path = require('path')
 var config = require('../config')
@@ -17,7 +18,7 @@ spinner.start()
 var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
 rm('-rf', assetsPath)
 mkdir('-p', assetsPath)
-cp('-R', 'static/', assetsPath)
+cp('-R', 'static/*', assetsPath)
 webpack(webpackConfig, function (err, stats) {
     spinner.stop()
     if (err) throw err

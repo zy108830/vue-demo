@@ -7,6 +7,7 @@ var utils = require('./utils')
 var baseWebpackConfig = require('./webpack.base.conf')
 //webpack操作html的插件
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var FriendlyErrors = require('friendly-errors-webpack-plugin')
 // 将入口文件设置值转换成一个数组，加入热加载的功能
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
@@ -25,7 +26,7 @@ module.exports = merge(baseWebpackConfig, {
       'process.env': config.dev.env
     }),
     //webpack优化插件，为经常使用的模块分配一个最小的ID，作用不大
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     // 热加载插件
     new webpack.HotModuleReplacementPlugin(),
     // 编译遇到错误时，跳过错误的代码块，继续编译
@@ -38,6 +39,7 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index.html',
       //注入所有的资源到特定的 template 中, 如果设置为true，所有的 javascript 资源将被放置到 body 元素的底部，'head' 将放置到 head 元素中。
       inject: true
-    })
+    }),
+    new FriendlyErrors()
   ]
 });

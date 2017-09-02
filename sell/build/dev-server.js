@@ -1,16 +1,16 @@
+require('./check-versions')()
+var config = require('../config')
+if (!process.env.NODE_ENV) process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 //node内置path模块
 var path = require('path');
 //express框架
 var express = require('express');
 //webpack for node.js
 var webpack = require('webpack');
-//import ../config/index.js
-var config = require('../config');
+var opn = require('opn')
 //http proxy middleware
 var proxyMiddleware = require('http-proxy-middleware');
-var webpackConfig = process.env.NODE_ENV === 'testing'
-  ? require('./webpack.prod.conf')
-  : require('./webpack.dev.conf');
+var webpackConfig = require('./webpack.dev.conf')
 // 定义Web服务器默认的端口号
 var port = process.env.PORT || config.dev.port
 // Define HTTP proxies to your custom API backend
@@ -54,14 +54,15 @@ app.use('/api', apiRoutes);
 var compiler = webpack(webpackConfig);
 // 这个中间件是express为webpack开发的中间件，能够将编译的app.js文件置于内存之中，供浏览器访问
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
-  publicPath: webpackConfig.output.publicPath,
-  stats: {
-    colors: true,
-    chunks: false
-  }
+    publicPath: webpackConfig.output.publicPath,
+    quiet: true
 });
 // 热加载中间件
-var hotMiddleware = require('webpack-hot-middleware')(compiler);
+var hotMiddleware = require('webpack-hot-middleware')(compiler,{
+    log:()=>{
+
+    }
+});
 // force page reload when html-webpack-plugin template changes
 compiler.plugin('compilation', function (compilation) {
   compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
@@ -87,11 +88,20 @@ app.use(hotMiddleware)
 // 配置静态资源的访问路径
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
 app.use(staticPath, express.static('./static'));
+
+var uri = 'http://localhost:' + port
+devMiddleware.waitUntilValid(function () {
+    console.log('> Listening at ' + uri + '\n')
+})
+
 //启动express，监听8080端口
 module.exports = app.listen(port, function (err) {
-  if (err) {
-    console.log(err);
-    return
-  }
-  console.log('Listening at http://localhost:' + port + '\n')
+    if (err) {
+        console.log(err);
+        return
+    }
+    // when env is testing, don't need open it
+    if (process.env.NODE_ENV !== 'testing') {
+        opn(uri)
+    }
 })
