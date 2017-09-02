@@ -1,5 +1,5 @@
 <template>
-    <div class="ratings" v-el:ratings>
+    <div class="ratings" ref="ratings">
         <div class="ratings-content">
             <div class="overview">
                 <div class="overview-left">
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <split></split>
-            <ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc"
+            <ratingselect @select="selectRating" @toggle="toggleContent" :selectType="selectType" :onlyContent="onlyContent"
                 :ratings="ratings"></ratingselect>
             <div class="rating-wrapper">
                 <ul>
@@ -81,7 +81,7 @@
                 if (response.errno === ERR_OK) {
                     this.ratings = response.data;
                     this.$nextTick(() => {
-                        this.scroll = new BScroll(this.$els.ratings, {
+                        this.scroll = new BScroll(this.$refs.ratings, {
                             click: true
                         });
                     });
@@ -98,26 +98,24 @@
                 } else {
                     return type === this.selectType;
                 }
+            },
+            selectRating(type) {
+                this.selectType = type;
+                this.$nextTick(() => {
+                    this.scroll.refresh();
+                });
+            },
+            toggleContent() {
+                this.onlyContent = !this.onlyContent;
+                this.$nextTick(() => {
+                    this.scroll.refresh();
+                });
             }
         },
         filters:{
             formatDate(time){
                 let date=new Date(time);
                 return formatDate(date,'yyyy-MM-dd hh:mm');
-            }
-        },
-        events: {
-            'ratingtype.select'(type) {
-                this.selectType = type;
-                this.$nextTick(() => {
-                    this.scroll.refresh();
-                });
-            },
-            'content.toggle'(onlyContent) {
-                this.onlyContent = onlyContent;
-                this.$nextTick(() => {
-                    this.scroll.refresh();
-                });
             }
         },
         components:{

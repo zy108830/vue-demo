@@ -29,40 +29,40 @@
         <div class="background">
             <img :src="seller.avatar" width="100%" height="100%">
         </div>
-        <div v-show="detailShow" class="detail" transition="fade">
-            <div class="detail-wrapper clearfix">
-                <div class="detail-main">
-                    <h1 class="name">{{seller.name}}</h1>
-                    <div class="star-wrapper">
-                        <star :size="48" :score="seller.score"></star>
-                    </div>
-                    <div class="title">
-                        <div class="line"></div>
-                        <div class="text">优惠信息</div>
-                        <div class="line"></div>
-                    </div>
-                    <ul v-if="seller.supports" class="supports">
-                        <li class="support-item" v-for="item in seller.supports">
-                            <span class="icon" :class="classMap[seller.supports[$index].type]"></span>
-                            <span class="text">{{seller.supports[$index].description}}</span>
-                        </li>
-                    </ul>
-                    <div class="title">
-                        <div class="line"></div>
-                        <div class="text">商家公告</div>
-                        <div class="line"></div>
-                    </div>
-                    <div class="bulletin">
-                        <p class="content">
-                            {{seller.bulletin}}
-                        </p>
+        <transition name="fade">
+            <div v-show="detailShow" class="detail">
+                <div class="detail-wrapper clearfix">
+                    <div class="detail-main">
+                        <h1 class="name">{{seller.name}}</h1>
+                        <div class="star-wrapper">
+                            <star :size="48" :score="seller.score"></star>
+                        </div>
+                        <div class="title">
+                            <div class="line"></div>
+                            <div class="text">优惠信息</div>
+                            <div class="line"></div>
+                        </div>
+                        <ul v-if="seller.supports" class="supports">
+                            <li class="support-item" v-for="(item,index) in seller.supports">
+                                <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+                                <span class="text">{{seller.supports[index].description}}</span>
+                            </li>
+                        </ul>
+                        <div class="title">
+                            <div class="line"></div>
+                            <div class="text">商家公告</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="bulletin">
+                            <p class="content">{{seller.bulletin}}</p>
+                        </div>
                     </div>
                 </div>
+                <div class="detail-close" @click="hideDetail">
+                    <i class="icon-close"></i>
+                </div>
             </div>
-            <div class="detail-close" @click="hideDetail">
-                <i class="icon-close"></i>
-            </div>
-        </div>
+        </transition>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -227,9 +227,16 @@
             width 100%
             height 100%
             overflow auto
-            transition all 0.5s
             /*目前只有iphone支持，弹窗的时候，将背景层进行模糊虚化*/
             backdrop-filter:blur(10px)
+            -webkit-backdrop-filter: blur(10px)
+            opacity: 1
+            background: rgba(7, 17, 27, 0.8)
+            &.fade-enter-active, &.fade-leave-active
+                transition: all 0.5s
+            &.fade-enter, &.fade-leave-active
+                opacity 0
+                background rgba(  7, 17, 27, 0)
             .detail-wrapper
                 min-height 100%
                 width 100%
@@ -302,11 +309,4 @@
                 margin -64px auto 0 auto
                 clear both
                 font-size 32px
-            &.fade-transition
-                opacity 1
-                background rgba(7, 17, 27, 0.8)
-            &.fade-enter,&.fade-leave
-                opacity 0
-                background rgba(  7, 17, 27, 0)
-
 </style>

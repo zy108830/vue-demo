@@ -1,6 +1,6 @@
 <template>
     <div class="star" :class="starType">
-        <span v-for="itemClass in itemClasses" :class="itemClass" class="star-item" track-by="$index"></span>
+        <span v-for="(itemClass,index) in itemClasses" :class="itemClass" class="star-item" key="index"></span>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -48,7 +48,7 @@
             display inline-block
             background-repeat no-repeat
         &.star-48
-             .star-item
+            .star-item
                 width 20px
                 height 20px
                 margin-right 22px

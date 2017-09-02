@@ -14,26 +14,28 @@ import 'common/stylus/index.styl';
 //往Vue中注册全局插件
 Vue.use(VueRouter);
 Vue.use(VueResource);
-var app = Vue.extend(App);
-var router = new VueRouter({
-    linkActiveClass: 'active'//默认当前的link classname为v-link-active
+const routes = [{
+    path: '/',
+    component: goods
+}, {
+    path: '/goods',
+    component: goods
+}, {
+    path: '/ratings',
+    component: ratings
+}, {
+    path: '/seller',
+    component: seller
+}];
+const router = new VueRouter({
+    linkActiveClass: 'active',
+    routes
 });
-router.map({
-    '/goods': {
-        component: goods
-    }
+new Vue({
+    el: '#app',
+    router,
+    render: h => h(App)
 });
-router.map({
-    '/ratings': {
-        component: ratings
-    }
-});
-router.map({
-    '/seller': {
-        component: seller
-    }
-});
-router.start(app, '#app');
 //强制更改刷新后的首页，但是这种方式会导致访问评论的时候，刷新页面，BScroll出现异常
 // router.go('/goods');
 /**

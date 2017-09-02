@@ -5,18 +5,18 @@
         <!--真正在手机上实现1px的效果-->
         <div class="tab border-1px">
             <div class="tab-item">
-                <a v-link="{path:'/goods'}">商品</a>
+                <router-link to="/goods">商品</router-link>
             </div>
             <div class="tab-item">
-                <a v-link="{path:'/ratings'}">评论</a>
+                <router-link to="/ratings">评论</router-link>
             </div>
             <div class="tab-item">
-                <a v-link="{path:'/seller'}">商家</a>
+                <router-link to="/seller">商家</router-link>
             </div>
         </div>
-        <div class="content">
-            <router-view :seller="seller" keep-alive></router-view>
-        </div>
+        <keep-alive>
+            <router-view :seller="seller"></router-view>
+        </keep-alive>
     </div>
 </template>
 <script type="text/ecmascript-6">
