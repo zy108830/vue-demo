@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="goods">
+            <!--左侧菜单-->
             <div class="menu-wrapper" ref="menuWrapper">
                 <ul>
                     <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
@@ -12,6 +13,7 @@
                     </li>
                 </ul>
             </div>
+            <!--右侧菜-->
             <div class="foods-wrapper" ref="foodsWrapper">
                 <ul>
                     <li v-for="item in goods" class="food-list food-list-hook">
@@ -41,9 +43,11 @@
                     </li>
                 </ul>
             </div>
+            <!--底部购物车-->
             <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
                 :minPrice="seller.minPrice"></shopcart>
         </div>
+        <!--菜详情-->
         <food @add="addFood" :food="selectedFood" ref="food"></food>
     </div>
 </template>
@@ -182,11 +186,13 @@
     @import "../../common/stylus/mixin.styl"
     .goods
         display flex
+        /*高度固定，使用BScroll进行滚动*/
         position absolute
         top 174px
         bottom 46px
-        width 100%
         overflow hidden
+        /*end*/
+        width 100%
         .menu-wrapper
             flex 0 0 80px
             width 80px
