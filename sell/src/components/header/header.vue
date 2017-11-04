@@ -2,25 +2,25 @@
     <div class="header">
         <div class="content-wrapper">
             <div class="avatar">
-                <img width="64" height="64" :src="seller.avatar" alt="">
+                <img style="opacity: 0" width="64" height="64" :src="seller.avatar" alt="">
             </div>
             <div class="content">
-                <div class="title">
-                    <span class="brand"></span> <span class="name">
-                        {{seller.name}}
-                    </span>
-                </div>
-                <div class="description">
-                    {{seller.description}}/{{seller.deliveryTime}}分钟送达
-                </div>
-                <div v-if="seller.supports" class="support">
-                    <span class="icon" :class="classMap[seller.supports[0]['type']]"></span>
-                    <span class="text">{{seller.supports[0].description}}</span>
-                </div>
+                <!--<div class="title">-->
+                    <!--<span class="brand"></span> <span class="name">-->
+                        <!--{{seller.name}}-->
+                    <!--</span>-->
+                <!--</div>-->
+                <!--<div class="description">-->
+                    <!--{{seller.description}}/{{seller.deliveryTime}}分钟送达-->
+                <!--</div>-->
+                <!--<div v-if="seller.supports" class="support">-->
+                    <!--<span class="icon" :class="classMap[seller.supports[0]['type']]"></span>-->
+                    <!--<span class="text">{{seller.supports[0].description}}</span>-->
+                <!--</div>-->
             </div>
-            <div v-if="seller.supports" class="support-count" @click="showDetail">
-                <span class="count">{{seller.supports.length}}个</span> <i class="icon-keyboard_arrow_right"></i>
-            </div>
+            <!--<div v-if="seller.supports" class="support-count" @click="showDetail">-->
+                <!--<span class="count">{{seller.supports.length}}个</span> <i class="icon-keyboard_arrow_right"></i>-->
+            <!--</div>-->
         </div>
         <div class="bulletin-wrapper" @click="showDetail">
             <span class="bulletin-title"></span> <span class="bulletin-text">{{seller.bulletin}}</span>
@@ -217,7 +217,7 @@
             width 100%
             height 100%
             z-index -1
-            filter blur(10px)
+            filter blur(2px)
 
         .detail
             position fixed

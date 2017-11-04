@@ -7,7 +7,6 @@
                     <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
                         @click="selectMenu(index,$event)">
                     <span class="text border-1px">
-                        <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>
                         {{item.name}}
                     </span>
                     </li>
@@ -25,18 +24,12 @@
                                 </div>
                                 <div class="content">
                                     <h2 class="name">{{food.name}}</h2>
-                                    <p class="desc">{{food.description}}</p>
-                                    <div class="extra">
-                                        <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
-                                    </div>
                                     <div class="price">
-                                        <span class="now">￥{{food.price}}</span><span class="old"
-                                        v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                                        <span class="now">￥{{formatPrice(food)}}</span>
                                     </div>
                                     <div class="cartcontrol-wrapper">
                                         <cartcontrol @add="addFood" :food="food"></cartcontrol>
                                     </div>
-
                                 </div>
                             </li>
                         </ul>
@@ -47,8 +40,6 @@
             <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
                 :minPrice="seller.minPrice"></shopcart>
         </div>
-        <!--菜详情-->
-        <food @add="addFood" :food="selectedFood" ref="food"></food>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -56,6 +47,7 @@
     import shopcart from 'components/shopcart/shopcart';
     import cartcontrol from 'components/cartcontrol/cartcontrol'
     import food from 'components/food/food'
+    import Tool from 'assets/js/tool'
 
     const ERR_OK = 0;
     export default {
@@ -96,16 +88,21 @@
         computed: {
             currentIndex() {
                 let $index = 0;
-                console.log(this.scrollY)
+                if (!this.listHeight.length) {
+                    return $index;
+                }
                 for (let i = 0; i < this.listHeight.length; i++) {
                     let height1 = this.listHeight[i];
                     let height2 = this.listHeight[i + 1];
-                    if (!height2 || this.scrollY >= height1 && this.scrollY < height2) {
+                    console.log(height1, height2);
+                    if (this.scrollY >= height1 && this.scrollY < height2) {
                         $index = i;
                         break;
                     }
                 }
-                console.log(this.listHeight, 11111, $index)
+                if (this.scrollY > 4000) {
+                    return $index + 1;
+                }
                 return $index;
             },
             selectFoods() {
@@ -147,10 +144,10 @@
                 }
             },
             selectMenu(index, event) {
+                console.log(index);
                 if (!event._constructed) {
                     return false
                 }
-                console.log(index)
                 let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
                 let el = foodList[index]
                 this.foodsScroll.scrollToElement(el, 300)
@@ -173,6 +170,13 @@
                 this.$nextTick(() => {
                     this.$refs.shopcart.drop(target)
                 });
+            },
+            formatPrice(food) {
+                if (Tool.getArg('platformid') == 2) {
+                    return food.android_price;
+                } else {
+                    return food.price
+                }
             }
         },
         components: {
@@ -188,19 +192,19 @@
         display flex
         /*高度固定，使用BScroll进行滚动*/
         position absolute
-        top 174px
+        top 135px
         bottom 46px
         overflow hidden
         /*end*/
         width 100%
         .menu-wrapper
-            flex 0 0 80px
-            width 80px
+            flex 0 0 120px
+            width 120px
             background-color #f3f5f7
             .menu-item
                 display table
                 height 54px
-                width 56px
+                width 120px
                 line-height 14px
                 padding 0 12px
                 &.current

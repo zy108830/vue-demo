@@ -3,20 +3,20 @@
     <div>
         <v-header :seller="seller"></v-header>
         <!--真正在手机上实现1px的效果-->
-        <div class="tab border-1px">
-            <div class="tab-item">
-                <router-link to="/goods">商品</router-link>
-            </div>
-            <div class="tab-item">
-                <router-link to="/ratings">评论</router-link>
-            </div>
-            <div class="tab-item">
-                <router-link to="/seller">商家</router-link>
-            </div>
-        </div>
-        <keep-alive>
+        <!--<div class="tab border-1px">-->
+            <!--<div class="tab-item">-->
+                <!--<router-link to="/goods">商品</router-link>-->
+            <!--</div>-->
+            <!--<div class="tab-item">-->
+                <!--<router-link to="/ratings">评论</router-link>-->
+            <!--</div>-->
+            <!--<div class="tab-item">-->
+                <!--<router-link to="/seller">商家</router-link>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<keep-alive>-->
             <router-view :seller="seller"></router-view>
-        </keep-alive>
+        <!--</keep-alive>-->
     </div>
 </template>
 <script type="text/ecmascript-6">

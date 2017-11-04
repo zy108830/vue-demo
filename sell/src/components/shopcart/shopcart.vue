@@ -10,7 +10,6 @@
                         <div class="num" v-show="totalCount>0">{{totalCount}}</div>
                     </div>
                     <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalPrice}}</div>
-                    <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
                 </div>
                 <div class="content-right" @click.stop.prevent="pay">
                     <div class="pay" :class="payClass">
@@ -23,11 +22,9 @@
                     <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
                         <div class="ball" v-show="ball.show">
                             <div class="inner inner-hook"></div>
-
                         </div>
                     </transition>
                 </div>
-
             </div>
             <transition name="fold">
                 <div class="shopcart-list" v-show="listShow">
@@ -50,7 +47,6 @@
                     </div>
                 </div>
             </transition>
-
         </div>
         <transition name="fade">
             <div class="list-mask" @click="hideList" v-show="listShow"></div>
@@ -122,14 +118,7 @@
                 return count
             },
             payDesc() {
-                if (this.totalPrice === 0) {
-                    return `¥${this.minPrice}元起送`;
-                } else if (this.totalPrice < this.minPrice) {
-                    let diff = this.minPrice - this.totalPrice;
-                    return `还差¥${diff}元起送`;
-                } else {
-                    return '去结算';
-                }
+                return '去付款';
             },
             payClass() {
                 if (this.totalPrice === 0) {
@@ -161,6 +150,9 @@
         },
         methods: {
             drop(el) {
+                /**
+                 * 挑选一个隐藏的小球，绑定到某个商品中，如果用户点击购买这个商品，则触发动画
+                 */
                 for (let i = 0; i < this.balls.length; i++) {
                     let ball = this.balls[i];
                     if (!ball.show) {
@@ -178,6 +170,7 @@
                     let ball = this.balls[count];
                     if (ball.show) {
                         let rect = ball.el.getBoundingClientRect();
+                        console.log(rect);
                         let x = rect.left - 32;
                         let y = -(window.innerHeight - rect.top - 22);
                         el.style.display = '';

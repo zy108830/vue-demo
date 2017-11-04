@@ -34,7 +34,7 @@
                 "description": "已加入“外卖保”计划,食品安全保障"
             }
         ],
-        "avatar": "http://static.galileo.xiaojukeji.com/static/tms/seller_avatar_256px.jpg",
+        "avatar": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509610145607&di=83e22ae4020dd1857e5410c5d693d83a&imgtype=0&src=http%3A%2F%2Fp6.qhimg.com%2Ft01233052de98787585.jpg",
         "pics": [
             "http://fuss10.elemecdn.com/8/71/c5cf5715740998d5040dda6e66abfjpeg.jpeg?imageView2/1/w/180/h/180",
             "http://fuss10.elemecdn.com/b/6c/75bd250e5ba69868f3b1178afbda3jpeg.jpeg?imageView2/1/w/180/h/180",
@@ -50,114 +50,54 @@
     },
     "goods": [
         {
-            "name": "热销榜",
+            "name": "学生考生必备",
             "type": -1,
             "foods": [
                 {
-                    "name": "皮蛋瘦肉粥",
-                    "price": 10,
+                    "name": "缓解考试焦虑 - 预演练习法",
+                    "share_active": 1,
+                    "price": 8,
+                    "android_price": 6.99,
                     "oldPrice": "",
                     "description": "咸粥",
                     "sellCount": 229,
                     "rating": 100,
                     "info": "一碗皮蛋瘦肉粥，总是我到粥店时的不二之选。香浓软滑，饱腹暖心，皮蛋的Q弹与瘦肉的滑嫩伴着粥香溢于满口，让人喝这样的一碗粥也觉得心满意足",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "很喜欢的粥",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 1,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
+                    "ratings": [],
                     "icon": "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/114/h/114",
                     "image": "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "扁豆焖面",
-                    "price": 14,
+                    "name": "考前脑力激活",
+                    "price": 8,
+                    "share_active": 1,
+                    "android_price": 6.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 188,
                     "rating": 96,
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 1,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
+                    "ratings": [],
                     "info": "",
                     "icon": "http://fuss10.elemecdn.com/c/6b/29e3d29b0db63d36f7c500bca31d8jpeg.jpeg?imageView2/1/w/114/h/114",
                     "image": "http://fuss10.elemecdn.com/c/6b/29e3d29b0db63d36f7c500bca31d8jpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "葱花饼",
-                    "price": 10,
+                    "name": "午间休息放松 — 考生专用",
+                    "price": 12,
+                    "android_price": 8.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 124,
                     "rating": 85,
                     "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 1,
-                            "text": "没啥味道",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 1,
-                            "text": "很一般啊",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
+                    "ratings": [],
                     "icon": "http://fuss10.elemecdn.com/f/28/a51e7b18751bcdf871648a23fd3b4jpeg.jpeg?imageView2/1/w/114/h/114",
                     "image": "http://fuss10.elemecdn.com/f/28/a51e7b18751bcdf871648a23fd3b4jpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "牛肉馅饼",
-                    "price": 14,
+                    "name": "人际关系改善 - 学生专用",
+                    "price": 12,
+                    "android_price": 8.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 114,
@@ -190,8 +130,9 @@
                     "image": "http://fuss10.elemecdn.com/d/b9/bcab0e8ad97758e65ae5a62b2664ejpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "招牌猪肉白菜锅贴/10个",
-                    "price": 17,
+                    "name": "日常护眼放松",
+                    "price": 12,
+                    "android_price": 8.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 101,
@@ -224,8 +165,9 @@
                     "image": "http://fuss10.elemecdn.com/7/72/9a580c1462ca1e4d3c07e112bc035jpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "南瓜粥",
-                    "price": 9,
+                    "name": "日常脑力激活",
+                    "price": 12,
+                    "android_price": 8.99,
                     "oldPrice": "",
                     "description": "甜粥",
                     "sellCount": 91,
@@ -257,8 +199,10 @@
                     "image": "http://fuss10.elemecdn.com/8/a6/453f65f16b1391942af11511b7a90jpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "红豆薏米美肤粥",
-                    "price": 12,
+                    "name": "改善考试焦虑呼吸",
+                    "share_active": 1,
+                    "price": 8,
+                    "android_price": 6.99,
                     "oldPrice": "",
                     "description": "甜粥",
                     "sellCount": 86,
@@ -291,8 +235,10 @@
                     "image": "http://fuss10.elemecdn.com/d/22/260bd78ee6ac6051136c5447fe307jpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "八宝酱菜",
-                    "price": 4,
+                    "name": "高效学习",
+                    "share_active": 1,
+                    "price": 12,
+                    "android_price": 8.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 84,
@@ -325,8 +271,9 @@
                     "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "红枣山药糙米粥",
-                    "price": 10,
+                    "name": "考前减压",
+                    "price": 25,
+                    "android_price": 18,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 81,
@@ -357,50 +304,144 @@
                     ],
                     "icon": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/114/h/114",
                     "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
-                },
+                }
+            ]
+        },
+        {
+            "name": "失眠助眠专用",
+            "type": 2,
+            "foods": [
                 {
-                    "name": "糊塌子",
-                    "price": 10,
-                    "oldPrice": "",
-                    "description": "",
-                    "sellCount": 80,
-                    "rating": 93,
+                    "name": "午间高效休息",
+                    "price": 8,
+                    "android_price": 6.99,
+                    "oldPrice": 36,
+                    "description": "红枣山药糙米粥,素材包,爽口莴笋丝,四川泡菜或八宝酱菜,配菜可备注",
+                    "sellCount": 17,
+                    "rating": 100,
                     "info": "",
                     "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
                         {
                             "username": "2******3",
                             "rateTime": 1469271264000,
                             "rateType": 0,
                             "text": "",
                             "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "午间休息放松 - 完整版",
+                    "price": 12,
+                    "android_price": 8.99,
+                    "oldPrice": 36,
+                    "description": "红枣山药糙米粥,素材包,爽口莴笋丝,四川泡菜或八宝酱菜,配菜可备注",
+                    "sellCount": 17,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
                         {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
                             "rateType": 0,
                             "text": "",
                             "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
                         }
                     ],
-                    "icon": "http://fuss10.elemecdn.com/0/05/097a2a59fd2a2292d08067e16380cjpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/0/05/097a2a59fd2a2292d08067e16380cjpeg.jpeg?imageView2/1/w/750/h/750"
-                }
-            ]
-        },
-        {
-            "name": "单人精彩套餐",
-            "type": 2,
-            "foods": [
+                    "icon": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
                 {
-                    "name": "红枣山药粥套餐",
-                    "price": 29,
+                    "name": "焦虑型失眠专用",
+                    "price": 12,
+                    "android_price": 8.99,
+                    "oldPrice": 36,
+                    "description": "红枣山药糙米粥,素材包,爽口莴笋丝,四川泡菜或八宝酱菜,配菜可备注",
+                    "sellCount": 17,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "助眠冥想 - 意念转圈法",
+                    "price": 8,
+                    "android_price": 6.99,
+                    "oldPrice": 36,
+                    "description": "红枣山药糙米粥,素材包,爽口莴笋丝,四川泡菜或八宝酱菜,配菜可备注",
+                    "sellCount": 17,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "圣地冥想 - 多梦噩梦缓解",
+                    "price": 12,
+                    "android_price": 8.99,
+                    "oldPrice": 36,
+                    "description": "红枣山药糙米粥,素材包,爽口莴笋丝,四川泡菜或八宝酱菜,配菜可备注",
+                    "sellCount": 17,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "睡前冥想-提高自信",
+                    "price": 12,
+                    "android_price": 8.99,
+                    "oldPrice": 36,
+                    "description": "红枣山药糙米粥,素材包,爽口莴笋丝,四川泡菜或八宝酱菜,配菜可备注",
+                    "sellCount": 17,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "晨间振奋冥想",
+                    "share_active": 1,
+                    "price": 1,
+                    "android_price": 0.99,
                     "oldPrice": 36,
                     "description": "红枣山药糙米粥,素材包,爽口莴笋丝,四川泡菜或八宝酱菜,配菜可备注",
                     "sellCount": 17,
@@ -421,12 +462,69 @@
             ]
         },
         {
-            "name": "冰爽饮品限时特惠",
+            "name": "减压放松专用",
             "type": 1,
             "foods": [
                 {
-                    "name": "VC无限橙果汁",
+                    "name": "肌肉松弛法 - 压力舒缓",
                     "price": 8,
+                    "android_price": 6.99,
+                    "oldPrice": 10,
+                    "description": "",
+                    "sellCount": 15,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "还可以",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/e/c6/f348e811772016ae24e968238bcbfjpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/e/c6/f348e811772016ae24e968238bcbfjpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "交替放松法 - 去除焦虑",
+                    "price": 12,
+                    "android_price": 8.99,
+                    "oldPrice": 10,
+                    "description": "",
+                    "sellCount": 15,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "还可以",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/e/c6/f348e811772016ae24e968238bcbfjpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/e/c6/f348e811772016ae24e968238bcbfjpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "深度冥想放松",
+                    "price": 12,
+                    "android_price": 8.99,
                     "oldPrice": 10,
                     "description": "",
                     "sellCount": 15,
@@ -454,12 +552,13 @@
             ]
         },
         {
-            "name": "精选热菜",
+            "name": "冥想疗愈专用",
             "type": -1,
             "foods": [
                 {
-                    "name": "娃娃菜炖豆腐",
-                    "price": 17,
+                    "name": "痛苦冥想（二）——接纳痛苦",
+                    "price": 12,
+                    "android_price": 8.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 43,
@@ -485,8 +584,10 @@
                     "image": "http://fuss10.elemecdn.com/d/2d/b1eb45b305635d9dd04ddf157165fjpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "手撕包菜",
-                    "price": 16,
+                    "name": "痛苦冥想（三）——消除痛苦",
+                    "share_active": 1,
+                    "price": 12,
+                    "android_price": 8.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 29,
@@ -512,8 +613,237 @@
                     "image": "http://fuss10.elemecdn.com/9/c6/f3bc84468820121112e79583c24efjpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "香酥黄金鱼/3条",
-                    "price": 11,
+                    "name": "轻冥想 - 雨后湖泊",
+                    "share_active": 1,
+                    "price": 6,
+                    "android_price": 3.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 15,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "轻冥想 - 海上日出",
+                    "price": 6,
+                    "android_price": 3.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 15,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "轻冥想 - 白云湖水",
+                    "price": 6,
+                    "android_price": 3.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 15,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "轻冥想 - 麦田想象",
+                    "price": 6,
+                    "android_price": 3.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 15,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "轻冥想 - 森林小溪",
+                    "share_active": 1,
+                    "price": 6,
+                    "android_price": 3.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 15,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "轻冥想 - 海洋沙滩",
+                    "price": 6,
+                    "android_price": 3.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 15,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "轻冥想 - 海鸥想象",
+                    "share_active": 1,
+                    "price": 6,
+                    "android_price": 3.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 15,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "轻冥想 - 提高专注力",
+                    "share_active": 1,
+                    "price": 8,
+                    "android_price": 6.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 15,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/4/e7/8277a6a2ea0a2e97710290499fc41jpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "冥想疗愈 - 缓解咽喉不适",
+                    "price": 6,
+                    "android_price": 3.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 15,
@@ -541,12 +871,13 @@
             ]
         },
         {
-            "name": "爽口凉菜",
+            "name": "正念入门课程",
             "type": -1,
             "foods": [
                 {
-                    "name": "八宝酱菜",
-                    "price": 4,
+                    "name": "正念入门课程 - 第二天",
+                    "price": 8,
+                    "android_price": 6.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 84,
@@ -579,11 +910,12 @@
                     "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "拍黄瓜",
-                    "price": 9,
+                    "name": "正念入门课程 - 第三天",
+                    "price": 8,
+                    "android_price": 6.99,
                     "oldPrice": "",
                     "description": "",
-                    "sellCount": 28,
+                    "sellCount": 84,
                     "rating": 100,
                     "info": "",
                     "ratings": [
@@ -609,18 +941,194 @@
                             "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
                         }
                     ],
-                    "icon": "http://fuss10.elemecdn.com/6/54/f654985b4e185f06eb07f8fa2b2e8jpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/6/54/f654985b4e185f06eb07f8fa2b2e8jpeg.jpeg?imageView2/1/w/750/h/750"
+                    "icon": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "正念入门课程 - 第四天",
+                    "price": 8,
+                    "android_price": 6.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 84,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "3******b",
+                            "rateTime": 1469261964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "正念入门课程 - 第五天",
+                    "price": 8,
+                    "android_price": 6.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 84,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "3******b",
+                            "rateTime": 1469261964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "正念入门课程 - 第六天",
+                    "price": 8,
+                    "android_price": 6.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 84,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "3******b",
+                            "rateTime": 1469261964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "正念入门课程 - 第七天",
+                    "price": 8,
+                    "android_price": 6.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 84,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "3******b",
+                            "rateTime": 1469261964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "正念入门课程 - 最后一天",
+                    "price": 8,
+                    "android_price": 6.99,
+                    "oldPrice": "",
+                    "description": "",
+                    "sellCount": 84,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "3******c",
+                            "rateTime": 1469281964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        },
+                        {
+                            "username": "3******b",
+                            "rateTime": 1469261964000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
                 }
             ]
         },
         {
-            "name": "精选套餐",
+            "name": "呼吸调节训练",
             "type": -1,
             "foods": [
                 {
-                    "name": "红豆薏米粥套餐",
-                    "price": 37,
+                    "name": "冥想禅修呼吸",
+                    "price": 1,
+                    "android_price": 0.99,
                     "oldPrice": "",
                     "description": "红豆薏米粥,三鲜干蒸烧卖,拍黄瓜",
                     "sellCount": 3,
@@ -639,11 +1147,12 @@
                     "image": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "皮蛋瘦肉粥套餐",
-                    "price": 31,
+                    "name": "瘦身减腹呼吸",
+                    "price": 6,
+                    "android_price": 3.99,
                     "oldPrice": "",
-                    "description": "",
-                    "sellCount": 12,
+                    "description": "红豆薏米粥,三鲜干蒸烧卖,拍黄瓜",
+                    "sellCount": 3,
                     "rating": 100,
                     "info": "",
                     "ratings": [
@@ -655,18 +1164,125 @@
                             "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
                         }
                     ],
-                    "icon": "http://fuss10.elemecdn.com/8/96/f444a8087f0e940ef264617f9d98ajpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/8/96/f444a8087f0e940ef264617f9d98ajpeg.jpeg?imageView2/1/w/750/h/750"
+                    "icon": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "龟息长寿呼吸",
+                    "price": 12,
+                    "android_price": 8.99,
+                    "oldPrice": "",
+                    "description": "红豆薏米粥,三鲜干蒸烧卖,拍黄瓜",
+                    "sellCount": 3,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "强心健肺呼吸",
+                    "share_active": 1,
+                    "price": 8,
+                    "android_price": 6.99,
+                    "oldPrice": "",
+                    "description": "红豆薏米粥,三鲜干蒸烧卖,拍黄瓜",
+                    "sellCount": 3,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "养胃美颜呼吸",
+                    "price": 12,
+                    "android_price": 8.99,
+                    "oldPrice": "",
+                    "description": "红豆薏米粥,三鲜干蒸烧卖,拍黄瓜",
+                    "sellCount": 3,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "固本培元呼吸",
+                    "price": 12,
+                    "android_price": 8.99,
+                    "oldPrice": "",
+                    "description": "红豆薏米粥,三鲜干蒸烧卖,拍黄瓜",
+                    "sellCount": 3,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/750/h/750"
+                },
+                {
+                    "name": "脑力激活呼吸",
+                    "price": 12,
+                    "android_price": 8.99,
+                    "oldPrice": "",
+                    "description": "红豆薏米粥,三鲜干蒸烧卖,拍黄瓜",
+                    "sellCount": 3,
+                    "rating": 100,
+                    "info": "",
+                    "ratings": [
+                        {
+                            "username": "2******3",
+                            "rateTime": 1469271264000,
+                            "rateType": 0,
+                            "text": "",
+                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+                        }
+                    ],
+                    "icon": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/114/h/114",
+                    "image": "http://fuss10.elemecdn.com/f/49/27f26ed00c025b2200a9ccbb7e67ejpeg.jpeg?imageView2/1/w/750/h/750"
                 }
             ]
         },
         {
-            "name": "果拼果汁",
+            "name": "其他",
             "type": -1,
             "foods": [
                 {
-                    "name": "蜜瓜圣女萝莉杯",
-                    "price": 6,
+                    "name": "激发灵感",
+                    "price": 12,
+                    "android_price": 8.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 1,
@@ -677,8 +1293,9 @@
                     "image": "http://fuss10.elemecdn.com/b/5f/b3b04c259d5ec9fa52e1856ee50dajpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "加多宝",
+                    "name": "自卑缓解 - 接纳自己",
                     "price": 6,
+                    "android_price": 3.99,
                     "oldPrice": "",
                     "description": "",
                     "sellCount": 7,
@@ -711,8 +1328,9 @@
                     "image": "http://fuss10.elemecdn.com/b/9f/5e6c99c593cf65229225c5661bcdejpeg.jpeg?imageView2/1/w/750/h/750"
                 },
                 {
-                    "name": "VC无限橙果汁",
-                    "price": 8,
+                    "name": "改善易怒个性 - 愤怒系列",
+                    "price": 12,
+                    "android_price": 8.99,
                     "oldPrice": 10,
                     "description": "",
                     "sellCount": 15,
@@ -738,642 +1356,6 @@
                     "image": "http://fuss10.elemecdn.com/e/c6/f348e811772016ae24e968238bcbfjpeg.jpeg?imageView2/1/w/750/h/750"
                 }
             ]
-        },
-        {
-            "name": "小吃主食",
-            "type": -1,
-            "foods": [
-                {
-                    "name": "扁豆焖面",
-                    "price": 14,
-                    "oldPrice": "",
-                    "description": "",
-                    "sellCount": 188,
-                    "rating": 96,
-                    "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 1,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/c/6b/29e3d29b0db63d36f7c500bca31d8jpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/c/6b/29e3d29b0db63d36f7c500bca31d8jpeg.jpeg?imageView2/1/w/750/h/750"
-                },
-                {
-                    "name": "葱花饼",
-                    "price": 10,
-                    "oldPrice": "",
-                    "description": "",
-                    "sellCount": 124,
-                    "rating": 85,
-                    "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 1,
-                            "text": "没啥味道",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 1,
-                            "text": "很一般啊",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/f/28/a51e7b18751bcdf871648a23fd3b4jpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/f/28/a51e7b18751bcdf871648a23fd3b4jpeg.jpeg?imageView2/1/w/750/h/750"
-                },
-                {
-                    "name": "牛肉馅饼",
-                    "price": 14,
-                    "oldPrice": "",
-                    "description": "",
-                    "sellCount": 114,
-                    "rating": 91,
-                    "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 1,
-                            "text": "难吃不推荐",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/d/b9/bcab0e8ad97758e65ae5a62b2664ejpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/d/b9/bcab0e8ad97758e65ae5a62b2664ejpeg.jpeg?imageView2/1/w/750/h/750"
-                },
-                {
-                    "name": "招牌猪肉白菜锅贴/10个",
-                    "price": 17,
-                    "oldPrice": "",
-                    "description": "",
-                    "sellCount": 101,
-                    "rating": 78,
-                    "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 1,
-                            "text": "不脆,不好吃",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/7/72/9a580c1462ca1e4d3c07e112bc035jpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/7/72/9a580c1462ca1e4d3c07e112bc035jpeg.jpeg?imageView2/1/w/750/h/750"
-                },
-                {
-                    "name": "糊塌子",
-                    "price": 10,
-                    "oldPrice": "",
-                    "description": "",
-                    "sellCount": 80,
-                    "rating": 93,
-                    "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/0/05/097a2a59fd2a2292d08067e16380cjpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/0/05/097a2a59fd2a2292d08067e16380cjpeg.jpeg?imageView2/1/w/750/h/750"
-                }
-            ]
-        },
-        {
-            "name": "特色粥品",
-            "type": -1,
-            "foods": [
-                {
-                    "name": "皮蛋瘦肉粥",
-                    "price": 10,
-                    "oldPrice": "",
-                    "description": "咸粥",
-                    "sellCount": 229,
-                    "rating": 100,
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "很喜欢的粥",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 1,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/750/h/750"
-                },
-                {
-                    "name": "南瓜粥",
-                    "price": 9,
-                    "oldPrice": "",
-                    "description": "甜粥",
-                    "sellCount": 91,
-                    "rating": 100,
-                    "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/8/a6/453f65f16b1391942af11511b7a90jpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/8/a6/453f65f16b1391942af11511b7a90jpeg.jpeg?imageView2/1/w/750/h/750"
-                },
-                {
-                    "name": "红豆薏米美肤粥",
-                    "price": 12,
-                    "oldPrice": "",
-                    "description": "甜粥",
-                    "sellCount": 86,
-                    "rating": 100,
-                    "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/d/22/260bd78ee6ac6051136c5447fe307jpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/d/22/260bd78ee6ac6051136c5447fe307jpeg.jpeg?imageView2/1/w/750/h/750"
-                },
-                {
-                    "name": "红枣山药糙米粥",
-                    "price": 10,
-                    "oldPrice": "",
-                    "description": "",
-                    "sellCount": 81,
-                    "rating": 91,
-                    "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
-                },
-                {
-                    "name": "鲜蔬菌菇粥",
-                    "price": 11,
-                    "oldPrice": "",
-                    "description": "咸粥",
-                    "sellCount": 56,
-                    "rating": 100,
-                    "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": ""
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/e/a3/5317c68dd618929b6ac05804e429ajpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/e/a3/5317c68dd618929b6ac05804e429ajpeg.jpeg?imageView2/1/w/750/h/750"
-                },
-                {
-                    "name": "田园蔬菜粥",
-                    "price": 10,
-                    "oldPrice": "",
-                    "description": "咸粥",
-                    "sellCount": 33,
-                    "rating": 100,
-                    "info": "",
-                    "ratings": [
-                        {
-                            "username": "3******c",
-                            "rateTime": 1469281964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "2******3",
-                            "rateTime": 1469271264000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        },
-                        {
-                            "username": "3******b",
-                            "rateTime": 1469261964000,
-                            "rateType": 0,
-                            "text": "",
-                            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-                        }
-                    ],
-                    "icon": "http://fuss10.elemecdn.com/a/94/7371083792c19df00e546b29e344cjpeg.jpeg?imageView2/1/w/114/h/114",
-                    "image": "http://fuss10.elemecdn.com/a/94/7371083792c19df00e546b29e344cjpeg.jpeg?imageView2/1/w/750/h/750"
-                }
-            ]
-        }
-    ],
-    "ratings": [
-        {
-            "username": "3******c",
-            "rateTime": 1469281964000,
-            "deliveryTime": 30,
-            "score": 5,
-            "rateType": 0,
-            "text": "不错,粥很好喝,我经常吃这一家,非常赞,以后也会常来吃,强烈推荐.",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": [
-                "南瓜粥",
-                "皮蛋瘦肉粥",
-                "扁豆焖面",
-                "娃娃菜炖豆腐",
-                "牛肉馅饼"
-            ]
-        },
-        {
-            "username": "2******3",
-            "rateTime": 1469271264000,
-            "deliveryTime": "",
-            "score": 4,
-            "rateType": 0,
-            "deliveryTime": "",
-            "text": "服务态度不错",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": [
-                "扁豆焖面"
-            ]
-        },
-        {
-            "username": "3******b",
-            "rateTime": 1469261964000,
-            "score": 3,
-            "rateType": 1,
-            "text": "",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "1******c",
-            "rateTime": 1469261864000,
-            "deliveryTime": 20,
-            "score": 5,
-            "rateType": 0,
-            "text": "良心店铺",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "2******d",
-            "rateTime": 1469251264000,
-            "deliveryTime": 10,
-            "score": 4,
-            "rateType": 0,
-            "text": "",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "9******0",
-            "rateTime": 1469241964000,
-            "deliveryTime": 70,
-            "score": 1,
-            "rateType": 1,
-            "text": "送货速度蜗牛一样",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "d******c",
-            "rateTime": 1469231964000,
-            "deliveryTime": 30,
-            "score": 5,
-            "rateType": 0,
-            "text": "很喜欢的粥店",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "2******3",
-            "rateTime": 1469221264000,
-            "deliveryTime": "",
-            "score": 4,
-            "rateType": 0,
-            "text": "量给的还可以",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "3******8",
-            "rateTime": 1469211964000,
-            "deliveryTime": "",
-            "score": 3,
-            "rateType": 1,
-            "text": "",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "a******a",
-            "rateTime": 1469201964000,
-            "deliveryTime": "",
-            "score": 4,
-            "rateType": 0,
-            "text": "孩子喜欢吃这家",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": [
-                "南瓜粥"
-            ]
-        },
-        {
-            "username": "3******3",
-            "rateTime": 1469191264000,
-            "deliveryTime": "",
-            "score": 4,
-            "rateType": 0,
-            "text": "粥挺好吃的",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "t******b",
-            "rateTime": 1469181964000,
-            "deliveryTime": "",
-            "score": 3,
-            "rateType": 1,
-            "text": "",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "f******c",
-            "rateTime": 1469171964000,
-            "deliveryTime": 15,
-            "score": 5,
-            "rateType": 0,
-            "text": "送货速度很快",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "k******3",
-            "rateTime": 1469161264000,
-            "deliveryTime": "",
-            "score": 4,
-            "rateType": 0,
-            "text": "",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "u******b",
-            "rateTime": 1469151964000,
-            "deliveryTime": "",
-            "score": 4,
-            "rateType": 0,
-            "text": "下雨天给快递小哥点个赞",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "s******c",
-            "rateTime": 1469141964000,
-            "deliveryTime": "",
-            "score": 4,
-            "rateType": 0,
-            "text": "好",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "z******3",
-            "rateTime": 1469131264000,
-            "deliveryTime": "",
-            "score": 5,
-            "rateType": 0,
-            "text": "吃了还想再吃",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "n******b",
-            "rateTime": 1469121964000,
-            "deliveryTime": "",
-            "score": 3,
-            "rateType": 1,
-            "text": "发票开的不对",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "m******c",
-            "rateTime": 1469111964000,
-            "deliveryTime": 30,
-            "score": 5,
-            "rateType": 0,
-            "text": "好吃",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "l******3",
-            "rateTime": 1469101264000,
-            "deliveryTime": 40,
-            "score": 5,
-            "rateType": 0,
-            "text": "还不错吧",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "3******o",
-            "rateTime": 1469091964000,
-            "deliveryTime": "",
-            "score": 2,
-            "rateType": 1,
-            "text": "",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "3******p",
-            "rateTime": 1469081964000,
-            "deliveryTime": "",
-            "score": 4,
-            "rateType": 0,
-            "text": "很喜欢的粥",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "o******k",
-            "rateTime": 1469071264000,
-            "deliveryTime": "",
-            "score": 5,
-            "rateType": 0,
-            "text": "",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
-        },
-        {
-            "username": "k******b",
-            "rateTime": 1469061964000,
-            "deliveryTime": "",
-            "score": 4,
-            "rateType": 0,
-            "text": "",
-            "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-            "recommend": []
         }
     ]
 }

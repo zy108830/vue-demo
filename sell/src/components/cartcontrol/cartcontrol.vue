@@ -1,13 +1,10 @@
 <template>
     <div class="cartcontrol">
-        <transition name="move">
-            <div class="cart-decrease" v-show="food.count>0" @click.stop.prevent="decreaseCart">
-                <span class="inner icon-remove_circle_outline"></span>
-            </div>
-        </transition>
-        <div class="cart-count" v-show="food.count>0">{{food.count}}</div>
         <!--@click.stop.prevent阻止事件冒泡-->
-        <div class="cart-add icon-add_circle" @click.stop.prevent="addCart($event)"></div>
+        <div class="cart-add icon-add_circle" v-show="displayBuy(food.count)" @click.stop.prevent="addCart($event)"></div>
+        <div class="cart-decrease" v-show="food.count>0" @click.stop.prevent="decreaseCart">
+            <span class="inner icon-remove_circle_outline"></span>
+        </div>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -20,10 +17,14 @@
             }
         },
         methods: {
+            displayBuy(count) {
+                return !count;
+            },
             addCart(event) {
                 /**
                  * 禁用系统原生的事件
                  */
+                this.$emit('add', event.target);
                 if (!event._constructed) {
                     return false;
                 }
@@ -37,7 +38,6 @@
                 /**
                  * 事件派发
                  */
-                this.$emit('add', event.target);
             },
             decreaseCart(event) {
                 if (!event._constructed) {
