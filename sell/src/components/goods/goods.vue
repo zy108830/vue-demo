@@ -10,10 +10,12 @@
                             {{item.name}}
                         </span>
                     </li>
+                    <li style="height: 100px">
+                        <div class="select-all" :class="{'select-all-enable':select_all_enable}" @click="selectAll">
+                            <span class="select-all-text" :class="">全选</span>
+                        </div>
+                    </li>
                 </ul>
-                <div class="select-all" :class="{'select-all-enable':goodsInShopcart.length==47}" @click="selectAll">
-                    <span class="select-all-text" :class="">全选</span>
-                </div>
             </div>
             <!--右侧菜-->
             <div class="foods-wrapper" ref="foodsWrapper">
@@ -23,13 +25,15 @@
                         <ul v-if="group.goods">
                             <li v-for="good in group.goods" class="food-item border-1px">
                                 <div class="content">
-                                    <h2 class="name">{{good.desc}} <span v-if="good.share_request_count>0" class="label-star">*</span></h2>
+                                    <h2 class="name">{{good.desc}} <span v-if="good.share_request_count>0" class="label-star">*</span>
+                                    </h2>
                                     <div class="price">
                                         <span class="now">￥{{formatPrice(good.price)}}</span>
                                     </div>
                                     <div class="cartcontrol-wrapper">
                                         <cartcontrol v-if="displayBuy(good.id)" ref="cartcontrol" @add="addFood" :good="good"></cartcontrol>
-                                        <div v-if="!displayBuy(good.id)"><img class="have_buy" src="./xc_shopping_buy.png" alt=""></div>
+                                        <div v-if="!displayBuy(good.id)">
+                                            <img class="have_buy" src="./xc_shopping_buy.png" alt=""></div>
                                     </div>
                                 </div>
                             </li>
@@ -66,54 +70,72 @@
     import food from 'components/food/food'
     import Tool from 'assets/js/tool'
     import App from 'assets/js/app'
-    import { Indicator } from 'mint-ui';
+    import {Indicator} from 'mint-ui';
+
+    var Xinchao = {};
+    Xinchao.Web = {};
+    Xinchao.Web.payCallback = function (status) {
+        if (status == 1) {
+            paySuccess();
+        } else {
+            payFailure();
+        }
+    };
+    window.Xinchao = Xinchao;
+
+    function paySuccess() {
+        setTimeout(function () {
+            swal({
+                title: "支付成功!",
+                text: "可随时在 【系统通知】 中查看购买记录!",
+                button: "好的"
+            });
+        }, 1000);
+    }
+
+    function payFailure() {
+        setTimeout(function () {
+            swal({
+                title: '支付失败',
+                button: '好的'
+            });
+        }, 1000);
+    }
 
     const ERR_OK = 0;
+    var api_root = Tool.getApiRoot();
     export default {
         data() {
             return {
-                seller:{},
+                seller: {},
                 goods_group: [],
                 goodsInShopcart: [],
                 listHeight: [],
                 scrollY: 0,
-                user_func:{
-                    payFuncIdList:[]
+                user_func: {
+                    payFuncIdList: []
                 }
             }
         },
         created() {
-            var api_root = Tool.getApiRoot();
-            this.$http.get(api_root+'/web/v1/2017/1111',{
-                params:{
-                    awarder_mac:Tool.getArg('awarder_mac') || 'aaa',
-                    awarder_secure:Tool.getArg('awarder_secure') || 'a3055da975d8396c8631b2bb9edc716b',
-                    platformid:Tool.getArg('platformid'),
-                    htid:Tool.getArg('htid') || '83748179'
+            this.$http.get(api_root + '/web/v1/2017/1111', {
+                params: {
+                    awarder_mac: Tool.getArg('awarder_mac') || 'aaa',
+                    awarder_secure: Tool.getArg('awarder_secure') || 'a3055da975d8396c8631b2bb9edc716b',
+                    platformid: Tool.getArg('platformid'),
+                    htid: Tool.getArg('htid') || '83748179'
                 }
             }).then((response) => {
                 response = response.body;
-                this.seller = Object.assign({},this.seller,response.data)
-                this.goods_group=this.seller.group;
+                this.seller = Object.assign({}, this.seller, response.data)
+                this.goods_group = this.seller.group;
                 this.$nextTick(() => {
                     this._initScroll();
                     this._calculateHeight();
                     Indicator.close();
                 })
             });
-            setTimeout(()=>{
-                this.$http.get(api_root + '/web/v1/user/payFunc',{
-                    params:{
-                        awarder_mac:Tool.getArg('awarder_mac') || 'aaa',
-                        awarder_secure:Tool.getArg('awarder_secure') || 'a3055da975d8396c8631b2bb9edc716b',
-                        platformid:Tool.getArg('platformid'),
-                        htid:Tool.getArg('htid') || '83748179'
-                    }
-                }).then((response) => {
-                    response = response.body;
-                    this.user_func=response.data;
-                });
-            },1500)
+            this.queryUserFunc()
         },
         computed: {
             currentIndex() {
@@ -129,13 +151,31 @@
                         break;
                     }
                 }
+                if (this.scrollY > 3520) {
+                    $index = $index + 1;
+                }
                 return $index;
             },
+            select_all_enable() {
+                return this.user_have_count + this.goodsInShopcart.length == 47;
+            },
+            user_have_count() {
+                var count = 0;
+                this.goods_group.forEach((group) => {
+                    if (group.goods) {
+                        group.goods.forEach((good) => {
+                            if (Tool.arrIncludes(this.user_func.payFuncIdList, good.id)) {
+                                count++
+                            }
+                        })
+                    }
+                })
+                return count;
+            },
             selectFoods() {
-
                 let goods = [];
                 this.goods_group.forEach((group) => {
-                    if(group.goods){
+                    if (group.goods) {
                         group.goods.forEach((good) => {
                             if (good.count) {
                                 goods.push(good)
@@ -148,12 +188,25 @@
             }
         },
         methods: {
-            displayBuy(id){
-                return !Tool.arrIncludes(this.user_func.payFuncIdList,id)
+            queryUserFunc(){
+                this.$http.get(api_root + '/web/v1/user/payFunc', {
+                    params: {
+                        awarder_mac: Tool.getArg('awarder_mac') || 'aaa',
+                        awarder_secure: Tool.getArg('awarder_secure') || 'a3055da975d8396c8631b2bb9edc716b',
+                        platformid: Tool.getArg('platformid'),
+                        htid: Tool.getArg('htid') || '83748179'
+                    }
+                }).then((response) => {
+                    response = response.body;
+                    this.user_func = response.data;
+                });
+            },
+            displayBuy(id) {
+                return !Tool.arrIncludes(this.user_func.payFuncIdList, id)
             },
             selectAll() {
                 var components = this.$refs.cartcontrol,
-                    selectAllAction = this.goodsInShopcart.length === 47 ? false : true;
+                    selectAllAction = this.goodsInShopcart.length + this.user_have_count === 47 ? false : true;
                 for (var i = 0; i < components.length; i++) {
                     components[i].addCartApi(selectAllAction);
                 }
@@ -189,7 +242,7 @@
                 }
                 let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
                 let el = foodList[index]
-                let animate_time=300;
+                let animate_time = 300;
                 this.foodsScroll.scrollToElement(el, animate_time)
             },
             addFood(target) {
@@ -207,8 +260,8 @@
             formatPrice(price) {
                 try {
                     return Number(price).toFixed(2);
-                }catch(e){
-                    console.log('出错',price);
+                } catch (e) {
+                    console.log('出错', price);
                 }
             }
         },
@@ -279,12 +332,11 @@
                     font-size 12px
                     border-1px(rgba(7, 17, 27, 0.1))
             .select-all
-                position relative
-                top 30px
                 background url("./xc_shopping_all_add_default.png") no-repeat
                 background-size 100% 100%
                 width 80px
                 height 45px
+                margin-bottom 20px
                 .select-all-text
                     position relative
                     top 15px

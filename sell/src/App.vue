@@ -32,6 +32,8 @@
                 title: "支付成功!",
                 text: "可随时在 【系统通知】 中查看购买记录!",
                 button: "好的"
+            }).then(()=>{
+                window.location.reload();
             });
         }, 1000);
     }
@@ -58,13 +60,13 @@
                 payFunc: {},
                 shareContent: {
                     appMsg: {
-                        title: '流行于西方的东方神秘养生术，原来是这样子……',
-                        desc: '心潮正念入门课程大优惠',
+                        title: '心潮减压1111优惠活动',
+                        desc: '。。。。。。',
                         link: window.location.href.replace(/\?(.*)/, ''),
                         imgUrl: 'https://webres.psy-1.com/images/common/photo.png'
                     },
                     timeline: {
-                        title: '流行于西方的东方神秘养生术，原来是这样子……',
+                        title: '心潮减压1111优惠活动',
                         link: window.location.href.replace(/\?(.*)/, ''),
                         imgUrl: 'https://webres.psy-1.com/images/common/photo.png'
                     }
