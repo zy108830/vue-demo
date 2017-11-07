@@ -1,18 +1,17 @@
 <template>
     <div class="cartcontrol">
         <!--@click.stop.prevent阻止事件冒泡-->
-        <div class="cart-add icon-add_circle" v-show="displayBuy(food.count)" @click.stop.prevent="addCart($event)"></div>
-        <div class="cart-decrease" v-show="food.count>0" @click.stop.prevent="decreaseCart">
-            <span class="inner icon-remove_circle_outline"></span>
-        </div>
+        <div ref="addFoodToCart" class="cart-add" v-show="displayBuy(good.count)" @click.stop.prevent="addCart($event)"></div>
+        <div class="cart-decrease" v-show="good.count>0" @click.stop.prevent="decreaseCart"></div>
     </div>
 </template>
 <script type="text/ecmascript-6">
     import Vue from 'vue'
-
+    import Tool from 'assets/js/tool'
+    import App from 'assets/js/app'
     export default {
         props: {
-            food: {
+            good: {
                 type: Object
             }
         },
@@ -21,30 +20,41 @@
                 return !count;
             },
             addCart(event) {
+                if(!event._constructed){
+                    return false;
+                }
                 /**
                  * 禁用系统原生的事件
                  */
-                this.$emit('add', event.target);
-                if (!event._constructed) {
-                    return false;
+                if (!Tool.getArg('htid')) {
+                    App.userLogin(location.href, true)
+                    return;
                 }
-                if (!this.food.count) {
-                    //老师说，如果父组件传递过来的是一个对象，当我们为这个对象新增元素的时候，vue默认是跟踪不到数据的变化的
-                    //此时需要使用Vue.set方法，而不能直接使用：this.food.count=1;
-                    Vue.set(this.food, 'count', 1)
-                } else {
-                    this.food.count++;
+                this.$emit('add', event.target);
+                if (this.good && !this.good.count) {
+                    Vue.set(this.good, 'count', 1)
                 }
                 /**
                  * 事件派发
                  */
             },
+            addCartApi(action) {
+                if (!Tool.getArg('htid')) {
+                    App.userLogin(location.href, true)
+                    return
+                }
+                if(action===true){
+                    Vue.set(this.good, 'count', 1)
+                }else{
+                    Vue.set(this.good, 'count', 0)
+                }
+            },
             decreaseCart(event) {
                 if (!event._constructed) {
                     return false;
                 }
-                if (this.food.count) {
-                    this.food.count--;
+                if (this.good.count) {
+                    this.good.count--;
                 }
             }
         },
@@ -61,6 +71,10 @@
             transition all 0.5s linear
             opacity: 1
             transform: translate3d(0, 0, 0)
+            background url("./xc_shopping_delete.png") no-repeat
+            background-size 100% 100%
+            width 30px
+            height 30px
             .inner
                 display: inline-block
                 line-height: 24px
@@ -90,4 +104,8 @@
             font-size 24px
             line-height 24px
             color rgb(0, 160, 220)
+            background url("./xc_shopping_add.png") no-repeat
+            background-size 100% 100%
+            width 30px
+            height 30px
 </style>

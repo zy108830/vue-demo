@@ -34,7 +34,7 @@
                 "description": "已加入“外卖保”计划,食品安全保障"
             }
         ],
-        "avatar": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509610145607&di=83e22ae4020dd1857e5410c5d693d83a&imgtype=0&src=http%3A%2F%2Fp6.qhimg.com%2Ft01233052de98787585.jpg",
+        "avatar": "https://res.psy-1.com/xc_title_1.png",
         "pics": [
             "http://fuss10.elemecdn.com/8/71/c5cf5715740998d5040dda6e66abfjpeg.jpeg?imageView2/1/w/180/h/180",
             "http://fuss10.elemecdn.com/b/6c/75bd250e5ba69868f3b1178afbda3jpeg.jpeg?imageView2/1/w/180/h/180",
@@ -1354,6 +1354,29 @@
                     ],
                     "icon": "http://fuss10.elemecdn.com/e/c6/f348e811772016ae24e968238bcbfjpeg.jpeg?imageView2/1/w/114/h/114",
                     "image": "http://fuss10.elemecdn.com/e/c6/f348e811772016ae24e968238bcbfjpeg.jpeg?imageView2/1/w/750/h/750"
+                }
+            ]
+        },
+        {
+            "name": "活动说明",
+            "type": -1,
+            "foods":[],
+            "price":[
+                {
+                    "count":"单次购买≤5个",
+                    "coupon":"9折"
+                },
+                {
+                    "count":"6个≤单次购买≤10个",
+                    "coupon":"8折"
+                },
+                {
+                    "count":"11个≤单次购买≤20个",
+                    "coupon":"7折"
+                },
+                {
+                    "count":"单次购买≥21个",
+                    "coupon":"6折"
                 }
             ]
         }

@@ -4,41 +4,58 @@
             <!--左侧菜单-->
             <div class="menu-wrapper" ref="menuWrapper">
                 <ul>
-                    <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
+                    <li v-for="(item,index) in goods_group" class="menu-item" :class="{'current':currentIndex===index}"
                         @click="selectMenu(index,$event)">
-                    <span class="text border-1px">
-                        {{item.name}}
-                    </span>
+                        <span class="text border-1px">
+                            {{item.name}}
+                        </span>
                     </li>
                 </ul>
+                <div class="select-all" :class="{'select-all-enable':goodsInShopcart.length==47}" @click="selectAll">
+                    <span class="select-all-text" :class="">全选</span>
+                </div>
             </div>
             <!--右侧菜-->
             <div class="foods-wrapper" ref="foodsWrapper">
                 <ul>
-                    <li v-for="item in goods" class="food-list food-list-hook">
-                        <h1 class="title">{{item.name}}</h1>
-                        <ul>
-                            <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px">
-                                <div class="icon">
-                                    <img width="57" height="57" :src="food.icon">
-                                </div>
+                    <li v-for="group in goods_group" class="food-list food-list-hook">
+                        <h1 class="title">{{group.name}}</h1>
+                        <ul v-if="group.goods">
+                            <li v-for="good in group.goods" class="food-item border-1px">
                                 <div class="content">
-                                    <h2 class="name">{{food.name}}</h2>
+                                    <h2 class="name">{{good.desc}} <span v-if="good.share_request_count>0" class="label-star">*</span></h2>
                                     <div class="price">
-                                        <span class="now">￥{{formatPrice(food)}}</span>
+                                        <span class="now">￥{{formatPrice(good.price)}}</span>
                                     </div>
                                     <div class="cartcontrol-wrapper">
-                                        <cartcontrol @add="addFood" :food="food"></cartcontrol>
+                                        <cartcontrol v-if="displayBuy(good.id)" ref="cartcontrol" @add="addFood" :good="good"></cartcontrol>
+                                        <div v-if="!displayBuy(good.id)"><img class="have_buy" src="./xc_shopping_buy.png" alt=""></div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
+                        <div v-if="group.rules" class="rules">
+                            <div class="rules-content">
+                                <p>1. 活动时间：即日起 - 2017年11月20日；</p>
+                                <p>2. 优惠力度以每次购买个数为准，购买历史不重复叠加，建议需要购买的用户一次性选购所需功能，获取最大优惠；</p>
+                                <p>3. 已购买功能不能重复购买，购买成功后，请到 “我的” - “系统消息”，查看成功购买记录；</p>
+                                <p>4. 功能右上角带 <span class="label-star">*</span>，代表该功能支持邀请好友解锁，邀请好友详细规则详见功能解锁说明；</p>
+                                <p>5. 心潮科技对本活动拥有最终解释权。</p>
+                            </div>
+                            <div class="rules-price">
+                                <table>
+                                    <tr v-for="rule in group.rules">
+                                        <td class="price-count">{{rule.count}}</td>
+                                        <td>{{rule.coupon}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
             <!--底部购物车-->
-            <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
-                :minPrice="seller.minPrice"></shopcart>
+            <shopcart ref="shopcart" :selectFoods="selectFoods"></shopcart>
         </div>
     </div>
 </template>
@@ -48,42 +65,55 @@
     import cartcontrol from 'components/cartcontrol/cartcontrol'
     import food from 'components/food/food'
     import Tool from 'assets/js/tool'
+    import App from 'assets/js/app'
+    import { Indicator } from 'mint-ui';
 
     const ERR_OK = 0;
     export default {
-        props: {
-            seller: {
-                type: Object
-            }
-        },
         data() {
             return {
-                goods: [],
+                seller:{},
+                goods_group: [],
+                goodsInShopcart: [],
                 listHeight: [],
                 scrollY: 0,
-                selectedFood: {}
+                user_func:{
+                    payFuncIdList:[]
+                }
             }
         },
         created() {
-            this.classMap = [
-                'decrease',
-                'discount',
-                'special',
-                'invoice',
-                'guarantee'
-            ]
-            this.$http.get('/api/goods').then((response) => {
-                response = response['body'];
-                if (response.errno === ERR_OK) {
-                    this.goods = response.data;
-                    this.$nextTick(() => {
-                        //vue的dom更新是异步的，因此需要在nextTick中执行DOM更新完毕之后的代码
-                        this._initScroll()
-                        this._calculateHeight()
-                    })
-                    console.log(this.goods);
+            var api_root = Tool.getApiRoot();
+            this.$http.get(api_root+'/web/v1/2017/1111',{
+                params:{
+                    awarder_mac:Tool.getArg('awarder_mac') || 'aaa',
+                    awarder_secure:Tool.getArg('awarder_secure') || 'a3055da975d8396c8631b2bb9edc716b',
+                    platformid:Tool.getArg('platformid'),
+                    htid:Tool.getArg('htid') || '83748179'
                 }
+            }).then((response) => {
+                response = response.body;
+                this.seller = Object.assign({},this.seller,response.data)
+                this.goods_group=this.seller.group;
+                this.$nextTick(() => {
+                    this._initScroll();
+                    this._calculateHeight();
+                    Indicator.close();
+                })
             });
+            setTimeout(()=>{
+                this.$http.get(api_root + '/web/v1/user/payFunc',{
+                    params:{
+                        awarder_mac:Tool.getArg('awarder_mac') || 'aaa',
+                        awarder_secure:Tool.getArg('awarder_secure') || 'a3055da975d8396c8631b2bb9edc716b',
+                        platformid:Tool.getArg('platformid'),
+                        htid:Tool.getArg('htid') || '83748179'
+                    }
+                }).then((response) => {
+                    response = response.body;
+                    this.user_func=response.data;
+                });
+            },1500)
         },
         computed: {
             currentIndex() {
@@ -94,30 +124,40 @@
                 for (let i = 0; i < this.listHeight.length; i++) {
                     let height1 = this.listHeight[i];
                     let height2 = this.listHeight[i + 1];
-                    console.log(height1, height2);
                     if (this.scrollY >= height1 && this.scrollY < height2) {
                         $index = i;
                         break;
                     }
                 }
-                if (this.scrollY > 4000) {
-                    return $index + 1;
-                }
                 return $index;
             },
             selectFoods() {
-                let foods = [];
-                this.goods.forEach((good) => {
-                    good.foods.forEach((food) => {
-                        if (food.count) {
-                            foods.push(food)
-                        }
-                    })
+
+                let goods = [];
+                this.goods_group.forEach((group) => {
+                    if(group.goods){
+                        group.goods.forEach((good) => {
+                            if (good.count) {
+                                goods.push(good)
+                            }
+                        })
+                    }
                 })
-                return foods;
+                this.goodsInShopcart = goods;
+                return goods;
             }
         },
         methods: {
+            displayBuy(id){
+                return !Tool.arrIncludes(this.user_func.payFuncIdList,id)
+            },
+            selectAll() {
+                var components = this.$refs.cartcontrol,
+                    selectAllAction = this.goodsInShopcart.length === 47 ? false : true;
+                for (var i = 0; i < components.length; i++) {
+                    components[i].addCartApi(selectAllAction);
+                }
+            },
             _initScroll() {
                 /**
                  * 如果不设置click: true，BScroll默认会禁用click事件
@@ -144,23 +184,16 @@
                 }
             },
             selectMenu(index, event) {
-                console.log(index);
                 if (!event._constructed) {
                     return false
                 }
                 let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
                 let el = foodList[index]
-                this.foodsScroll.scrollToElement(el, 300)
+                let animate_time=300;
+                this.foodsScroll.scrollToElement(el, animate_time)
             },
             addFood(target) {
                 this._drop(target);
-            },
-            selectFood(food, event) {
-                if (!event._constructed) {
-                    return;
-                }
-                this.selectedFood = food;
-                this.$refs.food.show();
             },
             _drop(target) {
                 /**
@@ -171,11 +204,11 @@
                     this.$refs.shopcart.drop(target)
                 });
             },
-            formatPrice(food) {
-                if (Tool.getArg('platformid') == 2) {
-                    return food.android_price;
-                } else {
-                    return food.price
+            formatPrice(price) {
+                try {
+                    return Number(price).toFixed(2);
+                }catch(e){
+                    console.log('出错',price);
                 }
             }
         },
@@ -192,28 +225,33 @@
         display flex
         /*高度固定，使用BScroll进行滚动*/
         position absolute
-        top 135px
+        top 146px
         bottom 46px
         overflow hidden
         /*end*/
         width 100%
+        .label-star
+            color gold
         .menu-wrapper
-            flex 0 0 120px
-            width 120px
-            background-color #f3f5f7
+            flex 0 0 104px
+            width 104px
+            background-color rgb(67, 60, 193)
             .menu-item
                 display table
-                height 54px
-                width 120px
+                height 43px
+                width 80px
                 line-height 14px
                 padding 0 12px
+                border-bottom 1px solid rgba(255, 255, 255, 0.1)
                 &.current
                     position relative
                     z-index 10
                     margin-top -1px
-                    background #fff
+                    background rgb(83, 71, 221)
                     font-size 700
                     .text
+                        opacity 1
+                        color #fff
                         border-none()
                 .icon
                     display inline-block
@@ -235,23 +273,42 @@
                 .text
                     display table-cell
                     width 56px
+                    color #fff
+                    opacity 0.5
                     vertical-align middle
                     font-size 12px
                     border-1px(rgba(7, 17, 27, 0.1))
+            .select-all
+                position relative
+                top 30px
+                background url("./xc_shopping_all_add_default.png") no-repeat
+                background-size 100% 100%
+                width 80px
+                height 45px
+                .select-all-text
+                    position relative
+                    top 15px
+                    left 8px
+                    opacity 0.5
+                    color white
+            .select-all-enable
+                background url("./xc_shopping_all_add_selected.png") no-repeat
+                background-size 100% 100%
         .foods-wrapper
             flex 1
+            background-color rgb(37, 37, 140)
             .title
                 padding-left 14px
-                height 26px
-                line-height 26px
-                border-left 2px solid #d9dde1
+                height 22px
+                line-height 22px
+                border-left 2px solid #5e77bf
                 font-size 12px
-                color rgb(147, 153, 159)
+                color #fff
+                background-color rgb(83, 71, 221)
             .food-item
                 display flex
-                margin 18px
-                border-1px(rgba(7, 17, 27, 0.1))
-                padding-bottom 18px
+                margin 17px
+                border-1px(rgb(54, 50, 171))
                 &:last-child
                     border-none()
                     margin-bottom 0
@@ -260,35 +317,47 @@
                     margin-right 10px
                 .content
                     flex 1
+                    height 60px
                     .name
                         margin 2px 0 8px 0
                         height 14px
                         line-height 14px
-                        font-size 14px
-                        color rgb(7, 17, 27)
-                    .desc, .extra
-                        line-height 10px
-                        font-size 10px
-                        color rgb(147, 153, 159)
-                    .desc
-                        margin-bottom 8px
-                    .extra
-                        line-height 10px
-                        &.count
-                            margin-right 12px
+                        font-size 15px
+                        color #fff
                     .price
                         font-weight 700
                         line-height 24px
-                        .now
-                            margin-right 8px
-                            font-size 14px
-                            color rgb(240, 20, 20)
-                        .old
-                            text-decoration line-through
-                            font-size 10px
-                            color rgb(147, 153, 159)
+                        margin-right 8px
+                        font-size 15px
+                        color #fad921
                     .cartcontrol-wrapper
                         position absolute
                         right 0
                         bottom 12px
+                        .have_buy
+                            height 25px
+                            width auto
+            .rules
+                padding 17px 17px 17px 17px
+                color white
+                .rules-content
+                    margin-bottom 35px
+                    p
+                        font-size 12px
+                        margin-bottom 13px
+                        letter-spacing 1.5px
+                        line-height 20px
+                .rules-price
+                    table
+                        width 100%
+                        font-size 12px
+                        tr
+                            height 30px
+                            line-height 30px
+                        td
+                            text-align center
+                            border 1px solid #ccc
+                            &.price-count
+                                text-align left
+                                text-indent 10px
 </style>

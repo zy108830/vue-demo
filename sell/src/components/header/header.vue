@@ -2,32 +2,16 @@
     <div class="header">
         <div class="content-wrapper">
             <div class="avatar">
-                <img style="opacity: 0" width="64" height="64" :src="seller.avatar" alt="">
+                <img style="opacity: 0" width="64" height="64" :src="seller.activity.cover" alt="">
             </div>
-            <div class="content">
-                <!--<div class="title">-->
-                    <!--<span class="brand"></span> <span class="name">-->
-                        <!--{{seller.name}}-->
-                    <!--</span>-->
-                <!--</div>-->
-                <!--<div class="description">-->
-                    <!--{{seller.description}}/{{seller.deliveryTime}}分钟送达-->
-                <!--</div>-->
-                <!--<div v-if="seller.supports" class="support">-->
-                    <!--<span class="icon" :class="classMap[seller.supports[0]['type']]"></span>-->
-                    <!--<span class="text">{{seller.supports[0].description}}</span>-->
-                <!--</div>-->
-            </div>
-            <!--<div v-if="seller.supports" class="support-count" @click="showDetail">-->
-                <!--<span class="count">{{seller.supports.length}}个</span> <i class="icon-keyboard_arrow_right"></i>-->
-            <!--</div>-->
+            <div class="content"></div>
         </div>
         <div class="bulletin-wrapper" @click="showDetail">
-            <span class="bulletin-title"></span> <span class="bulletin-text">{{seller.bulletin}}</span>
-            <i class="icon-keyboard_arrow_right"></i>
+            <span class="bulletin-title"></span>
+            <marquee class="bulletin-text" direction="left" scrollamount="3">{{seller.activity.bulletin}}</marquee>
         </div>
         <div class="background">
-            <img :src="seller.avatar" width="100%" height="100%">
+            <img :src="seller.activity.cover" width="100%" height="100%">
         </div>
         <transition name="fade">
             <div v-show="detailShow" class="detail">
@@ -101,6 +85,11 @@
                 'invoice',
                 'guarantee'
             ]
+//            setInterval(() => {
+//                if (this.seller.bulletin) {
+//                    this.seller.bulletin = this.seller.bulletin.slice(1) + this.seller.bulletin.substr(0, 1);
+//                }
+//            }, 300)
         },
         components: {
             star
@@ -111,8 +100,8 @@
     @import "../../common/stylus/mixin.styl"
     .header
         color #fff
-        background rgba(7, 17, 27, 0.5)
         position relative
+        height 146px
         .content-wrapper
             padding 24px 12px 18px 24px
             /*可以消除字体的默认margin,不然文字与图片间会有边距*/
@@ -188,12 +177,10 @@
         .bulletin-wrapper
             height 28px
             line-height 28px
-            padding 0 22px 0 12px
+            padding 0 12px 0 12px
             white-space nowrap
             overflow hidden
-            text-overflow ellipsis
             position relative
-            background rgba(7, 17, 27, 0.2)
             .bulletin-title
                 display inline-block
                 width 22px
@@ -201,15 +188,18 @@
                 bg-image('bulletin')
                 background-size 22px 12px
                 background-repeat no-repeat
+            top 12px
+            border-top-left-radius 25px
+            border-top-right-radius 25px
+            background-color rgb(37, 37, 140)
             .bulletin-text
+                color #5e77bf;
                 vertical-align top
                 margin 0 4px
                 font-size 10px
-            .icon-keyboard_arrow_right
-                position absolute
-                font-size 10px
-                right 12px
-                top: 8px
+                display: inline-block;
+                overflow: hidden;
+                width 87%;
         .background
             position absolute
             top 0
@@ -217,8 +207,6 @@
             width 100%
             height 100%
             z-index -1
-            filter blur(2px)
-
         .detail
             position fixed
             top 0
@@ -228,7 +216,7 @@
             height 100%
             overflow auto
             /*目前只有iphone支持，弹窗的时候，将背景层进行模糊虚化*/
-            backdrop-filter:blur(10px)
+            backdrop-filter: blur(10px)
             -webkit-backdrop-filter: blur(10px)
             opacity: 1
             background: rgba(7, 17, 27, 0.8)
@@ -236,7 +224,7 @@
                 transition: all 0.5s
             &.fade-enter, &.fade-leave-active
                 opacity 0
-                background rgba(  7, 17, 27, 0)
+                background rgba(7, 17, 27, 0)
             .detail-wrapper
                 min-height 100%
                 width 100%
