@@ -51,6 +51,7 @@
     "shelljs": "^0.7.4",
     "url-loader": "^0.5.7",
     "vue-loader": "^10.0.0",
+    "vue-html-loader": "^1.2.4",
     "vue-style-loader": "^1.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.1.1",

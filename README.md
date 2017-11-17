@@ -1,36 +1,25 @@
-# sell
+## 关于
 
-> A Vue.js project
+> 这是一个使用vue框架来高仿饿了么外卖的项目
 
-## Build Setup
+##预览
 
-``` bash
-# install dependencies
-npm install
+![Demo](/Users/xinchao/Desktop/demo.gif)
 
-# serve with hot reload at localhost:8080
-npm run dev
+[演示地址](http://vuejssellapp.t.imooc.io/) [课程地址](http://coding.imooc.com/learn/list/74.html)
 
-# build for production with minification
-npm run build
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+##安装
+```bash
+git clone https://github.com/zy108830/vue-demo
+cd vue-demo/sell && npm install
 ```
 
-## 文件说明
+##运行
+```
+npm run dev
+```
 
-###.babelrc文件
-- 该文件用来设置转码规则和插件，presets字段设定转码规则，官方提供的有es2015，react这些转码规则
-- npm install之后，添加到presets集合中即可
-- stage-2表示这是ES7第二阶段语法提案的转码规则，共有4个阶段
-- 所有Babel工具和模块的使用，都必须先写好.babelrc
-- 详见 http://www.ruanyifeng.com/blog/2016/01/babel.html
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+##编译
+```
+npm run build
+```
