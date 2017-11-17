@@ -391,7 +391,7 @@
                         right 0
                         bottom 6px
 
-    .list-mark
+    .list-mask
         position fixed
         top 0
         left 0
