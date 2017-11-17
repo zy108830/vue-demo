@@ -6,7 +6,7 @@
             </div>
             <div class="content"></div>
         </div>
-        <div class="bulletin-wrapper" @click="showDetail">
+        <div class="bulletin-wrapper">
             <span class="bulletin-title"></span>
             <marquee class="bulletin-text" direction="left" scrollamount="3">{{seller.activity.bulletin}}</marquee>
         </div>
@@ -181,17 +181,16 @@
             white-space nowrap
             overflow hidden
             position relative
+            background url("./xc_roll_explain.png") no-repeat
+            background-size 100% 100%
+            top 12px
             .bulletin-title
                 display inline-block
                 width 22px
                 height 12px
-                bg-image('bulletin')
+                background-image url("./xc_roll_yh.png")
                 background-size 22px 12px
                 background-repeat no-repeat
-            top 12px
-            border-top-left-radius 25px
-            border-top-right-radius 25px
-            background-color rgb(37, 37, 140)
             .bulletin-text
                 color #5e77bf;
                 vertical-align top

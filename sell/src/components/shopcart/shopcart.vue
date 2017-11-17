@@ -2,18 +2,14 @@
     <div>
         <div class="shopcart">
             <div class="content" @click="toggleList">
-                <div class="content-left" :class="{'content-left-disable':totalCount==0}">
+                <div class="content-left">
                     <div class="logo-wrapper">
                         <div class="logo" :class="{'highlight':totalCount>0}">
                             <img class="shopcart-empty" :class="{'highlight':totalCount>0}" alt="">
                         </div>
                         <div class="num" v-show="totalCount>0">{{totalCount}}</div>
                     </div>
-                    <div class="price" :class="{'highlight':totalPrice>0}">
-                        ￥{{totalPriceDiscount}}
-                        <del>￥{{totalPrice}}</del>
-                        <div class="coupon">优惠力度 {{totalDiscount}} 折，省￥{{saveMoney}}</div>
-                    </div>
+                    <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalPriceDiscount}}<del>￥{{totalPrice}}</del><div class="coupon">优惠力度 <span class="discount">{{totalDiscount}}</span> 折，省￥{{saveMoney}}</div></div>
                 </div>
                 <div class="content-right" :class="{'content-right-disable':totalCount==0}" @click.stop.prevent="pay">
                     <div class="pay" :class="payClass">
@@ -130,7 +126,7 @@
             },
             saveMoney() {
                 //乘1000，是为了避免丢失精度
-                return (this.totalPrice * 1000 - this.totalPriceDiscount * 1000) / 1000
+                return ((this.totalPrice * 1000 - this.totalPriceDiscount * 1000) / 1000).toFixed(2);
             },
             totalPriceDiscount() {
                 return (((this.totalPrice) * 1000) * ((this.totalDiscount / 10) * 1000) / 1000000).toFixed(2);
@@ -260,6 +256,13 @@
                 this.fold = true;
             },
             pay() {
+                if(this.totalPriceDiscount==0){
+                    swal({
+                        text: '购物车还是空的呢，先去买买买吧',
+                        button: '我知道啦'
+                    })
+                    return false;
+                }
                 Indicator.open({
                     text:'',
                     spinnerType: 'fading-circle'
@@ -319,8 +322,6 @@
             background-color rgb(83, 71, 221)
             .content-left
                 flex 1
-                &.content-left-disable
-                    opacity 0.5
                 .logo-wrapper
                     display inline-block
                     position relative
@@ -379,6 +380,15 @@
                     .coupon
                         font-size 11px
                         color #fad921
+                        .discount
+                            display: inline-block;
+                            background-color: #fad922;
+                            width: 12px;
+                            height: 12px;
+                            line-height: 12px;
+                            text-align: center;
+                            color: #25248c;
+
                 .desc
                     display: inline-block
                     vertical-align: top
@@ -403,6 +413,7 @@
                     &.enough
                         background rgb(234, 33, 158)
                         color #fff
+
         .ball-container
             .ball
                 position fixed
@@ -414,7 +425,7 @@
                     width: 16px
                     height: 16px
                     border-radius: 50%
-                    background: rgb(0, 160, 220)
+                    background: #493FD8
                     transition: all 0.4s linear
         .shopcart-list
             position absolute
@@ -468,7 +479,7 @@
                         right 0
                         bottom 6px
 
-    .list-mark
+    .list-mask
         position fixed
         top 0
         left 0
@@ -483,4 +494,12 @@
         &.fade-enter, &.fade-leave-active
             opacity 0
             background rgba(7, 17, 27, 0)
+
+    @media (max-width: 330px)
+        .shopcart .content .content-left .price
+            font-size 12px
+        .shopcart .content .content-left .price .coupon
+            font-size 7px
+        .shopcart .shopcart-list .list-content .food .name
+            font-size 11px
 </style>

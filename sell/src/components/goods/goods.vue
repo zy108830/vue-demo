@@ -10,11 +10,6 @@
                             {{item.name}}
                         </span>
                     </li>
-                    <li style="height: 100px">
-                        <div class="select-all" :class="{'select-all-enable':select_all_enable}" @click="selectAll">
-                            <span class="select-all-text" :class="">全选</span>
-                        </div>
-                    </li>
                 </ul>
             </div>
             <!--右侧菜-->
@@ -33,20 +28,14 @@
                                     <div class="cartcontrol-wrapper">
                                         <cartcontrol v-if="displayBuy(good.id)" ref="cartcontrol" @add="addFood" :good="good"></cartcontrol>
                                         <div v-if="!displayBuy(good.id)">
-                                            <img class="have_buy" src="./xc_shopping_buy.png" alt=""></div>
+                                            <img class="have_buy" src="./xc_shopping_have.png" alt=""></div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                         <div v-if="group.rules" class="rules">
-                            <div class="rules-content">
-                                <p>1. 活动时间：即日起 - 2017年11月20日；</p>
-                                <p>2. 优惠力度以每次购买个数为准，购买历史不重复叠加，建议需要购买的用户一次性选购所需功能，获取最大优惠；</p>
-                                <p>3. 已购买功能不能重复购买，购买成功后，请到 “我的” - “系统消息”，查看成功购买记录；</p>
-                                <p>4. 功能右上角带 <span class="label-star">*</span>，代表该功能支持邀请好友解锁，邀请好友详细规则详见功能解锁说明；</p>
-                                <p>5. 心潮科技对本活动拥有最终解释权。</p>
-                            </div>
                             <div class="rules-price">
+                                <p>1.优惠说明</p>
                                 <table>
                                     <tr v-for="rule in group.rules">
                                         <td class="price-count">{{rule.count}}</td>
@@ -54,10 +43,19 @@
                                     </tr>
                                 </table>
                             </div>
+                            <div class="rules-content">
+                                <p>2. 活动时间：即日起 - 2017年11月20日；</p>
+                                <p>3. 优惠力度以每次购买个数为准，购买历史不重复叠加，建议需要购买的用户一次性选购所需功能，获取最大优惠；</p>
+                                <p>4. 已购买功能不能重复购买，购买成功后，请到 “我的” - “系统消息”，查看成功购买记录；</p>
+                                <p>5. 功能右上角带 <span class="label-star">*</span>，代表该功能支持邀请好友解锁，邀请好友详细规则详见功能解锁说明；</p>
+                                <p>6. 心潮科技对本活动拥有最终解释权。</p>
+                            </div>
                         </div>
                     </li>
                 </ul>
             </div>
+            <!--全选-->
+            <div class="select-all" :class="{'select-all-enable':select_all_enable}" @click="selectAll"></div>
             <!--底部购物车-->
             <shopcart ref="shopcart" :selectFoods="selectFoods"></shopcart>
         </div>
@@ -120,10 +118,10 @@
         created() {
             this.$http.get(api_root + '/web/v1/2017/1111', {
                 params: {
-                    awarder_mac: Tool.getArg('awarder_mac') || 'aaa',
-                    awarder_secure: Tool.getArg('awarder_secure') || 'a3055da975d8396c8631b2bb9edc716b',
+                    awarder_mac: Tool.getArg('awarder_mac'),
+                    awarder_secure: Tool.getArg('awarder_secure'),
                     platformid: Tool.getArg('platformid'),
-                    htid: Tool.getArg('htid') || '83748179'
+                    htid: Tool.getArg('htid')
                 }
             }).then((response) => {
                 response = response.body;
@@ -132,7 +130,6 @@
                 this.$nextTick(() => {
                     this._initScroll();
                     this._calculateHeight();
-                    Indicator.close();
                 })
             });
             this.queryUserFunc()
@@ -151,9 +148,6 @@
                         break;
                     }
                 }
-                if (this.scrollY > 3520) {
-                    $index = $index + 1;
-                }
                 return $index;
             },
             select_all_enable() {
@@ -164,7 +158,7 @@
                 this.goods_group.forEach((group) => {
                     if (group.goods) {
                         group.goods.forEach((good) => {
-                            if (Tool.arrIncludes(this.user_func.payFuncIdList, good.id)) {
+                            if (!this.displayBuy(good.id)) {
                                 count++
                             }
                         })
@@ -191,20 +185,34 @@
             queryUserFunc(){
                 this.$http.get(api_root + '/web/v1/user/payFunc', {
                     params: {
-                        awarder_mac: Tool.getArg('awarder_mac') || 'aaa',
-                        awarder_secure: Tool.getArg('awarder_secure') || 'a3055da975d8396c8631b2bb9edc716b',
+                        awarder_mac: Tool.getArg('awarder_mac'),
+                        awarder_secure: Tool.getArg('awarder_secure'),
                         platformid: Tool.getArg('platformid'),
-                        htid: Tool.getArg('htid') || '83748179'
+                        htid: Tool.getArg('htid')
                     }
                 }).then((response) => {
                     response = response.body;
-                    this.user_func = response.data;
+                    if(response.status==1){
+                        this.user_func = response.data;
+                    }
+                    Indicator.close();
                 });
             },
             displayBuy(id) {
-                return !Tool.arrIncludes(this.user_func.payFuncIdList, id)
+                var display=true;
+                for (var i=0;i<this.user_func.payFuncIdList.length;i++){
+                    if(parseInt(this.user_func.payFuncIdList[i])===parseInt(id)){
+                        display=false;
+                        break;
+                    }
+                }
+                return display
             },
             selectAll() {
+                if (!Tool.getArg('htid')) {
+                    App.userLogin(window.location.href.replace('#/','').replace(/&random=\d+/,'')+'&random='+Math.round(Math.random()*1000))
+                    return
+                }
                 var components = this.$refs.cartcontrol,
                     selectAllAction = this.goodsInShopcart.length + this.user_have_count === 47 ? false : true;
                 for (var i = 0; i < components.length; i++) {
@@ -331,21 +339,6 @@
                     vertical-align middle
                     font-size 12px
                     border-1px(rgba(7, 17, 27, 0.1))
-            .select-all
-                background url("./xc_shopping_all_add_default.png") no-repeat
-                background-size 100% 100%
-                width 80px
-                height 45px
-                margin-bottom 20px
-                .select-all-text
-                    position relative
-                    top 15px
-                    left 8px
-                    opacity 0.5
-                    color white
-            .select-all-enable
-                background url("./xc_shopping_all_add_selected.png") no-repeat
-                background-size 100% 100%
         .foods-wrapper
             flex 1
             background-color rgb(37, 37, 140)
@@ -392,17 +385,19 @@
             .rules
                 padding 17px 17px 17px 17px
                 color white
-                .rules-content
-                    margin-bottom 35px
+                .rules-content,.rules-price
                     p
                         font-size 12px
                         margin-bottom 13px
                         letter-spacing 1.5px
                         line-height 20px
+                .rules-content
+                    margin-bottom 35px
                 .rules-price
                     table
                         width 100%
                         font-size 12px
+                        margin-bottom 13px
                         tr
                             height 30px
                             line-height 30px
@@ -412,4 +407,29 @@
                             &.price-count
                                 text-align left
                                 text-indent 10px
+        .select-all
+            position fixed
+            bottom 10%
+            right 0
+            width 80px
+            height 45px
+            background url("./xc_shopping_all_add_default.png") no-repeat
+            background-size 100% 100%
+            margin-bottom 20px
+        .select-all-enable
+            background url("./xc_shopping_all_add_selected.png") no-repeat
+            background-size 100% 100%
+    @media(max-width: 330px)
+        .goods .foods-wrapper .food-item .content .name
+            font-size 13px
+        .cartcontrol .cart-decrease,.cartcontrol .cart-add
+            position relative
+            top 3px
+            width 20px !important
+            height 20px !important
+        .goods .foods-wrapper .food-item .content .cartcontrol-wrapper .have_buy
+            height 20px
+            width auto
+        .shopcart .content .content-left .price
+            font-size 10px
 </style>

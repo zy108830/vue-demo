@@ -27,7 +27,7 @@
                  * 禁用系统原生的事件
                  */
                 if (!Tool.getArg('htid')) {
-                    App.userLogin(location.href, true)
+                    App.userLogin(window.location.href.replace('#/','').replace(/&random=\d+/,'')+'&random='+Math.round(Math.random()*1000))
                     return;
                 }
                 this.$emit('add', event.target);
@@ -39,10 +39,6 @@
                  */
             },
             addCartApi(action) {
-                if (!Tool.getArg('htid')) {
-                    App.userLogin(location.href, true)
-                    return
-                }
                 if(action===true){
                     Vue.set(this.good, 'count', 1)
                 }else{

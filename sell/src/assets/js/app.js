@@ -21,4 +21,20 @@ export default class App{
             })
         }
     }
+
+    static redirect(to, returnClose) {
+        var data = JSON.stringify({
+            from: window.location.href,
+            to: to,
+            returnClose: returnClose
+        });
+        try {
+            xinchao_app.redirect(data);
+        } catch (e) {
+            swal({
+                text:'此版本不支持跳转，请将客户端升级到最新版本',
+                button:'我知道啦'
+            })
+        }
+    }
 }

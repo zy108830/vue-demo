@@ -13,6 +13,8 @@
     import {urlParse} from 'common/js/util'
     import Tool from 'assets/js/tool'
     import Weixin from 'assets/js/weixin'
+    import App from 'assets/js/app'
+    import Baidu from 'assets/js/baidu'
     import {Indicator} from 'mint-ui';
 
     var Xinchao = {};
@@ -31,9 +33,14 @@
             swal({
                 title: "支付成功!",
                 text: "可随时在 【系统通知】 中查看购买记录!",
-                button: "好的"
-            }).then(()=>{
-                window.location.reload();
+                buttons: ['马上体验','好的'],
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    window.location.href=window.location.href.replace('#/','').replace(/&random=\d+/,'')+'&random='+Math.round(Math.random()*1000);
+                } else {
+                    App.redirect(3011, true);
+                }
             });
         }, 1000);
     }
@@ -53,21 +60,21 @@
             return {
                 seller: {
                     activity: {
-                        bulletin: '单次购买≤5个享9折优惠，6个≤单次购买≤10个享8折优惠，11个≤单次购买≤20个享7折优惠，单次购买≥21个享6折优惠',
+                        bulletin: '单次购买≥21个享6折优惠，11个≤单次购买≤20个享7折优惠，6个≤单次购买≤10个享8折优惠，单次购买≤5个享9折优惠',
                         cover: 'https://res.psy-1.com/xc_title_1.png'
                     }
                 },
                 payFunc: {},
                 shareContent: {
                     appMsg: {
-                        title: '心潮减压1111优惠活动',
-                        desc: '。。。。。。',
-                        link: window.location.href.replace(/\?(.*)/, ''),
+                        title: '妈蛋！等这么久总算搞到一次称心优惠',
+                        desc: '小手一抖，优惠到手',
+                        link: 'https://www.psy-1.com/',
                         imgUrl: 'https://webres.psy-1.com/images/common/photo.png'
                     },
                     timeline: {
-                        title: '心潮减压1111优惠活动',
-                        link: window.location.href.replace(/\?(.*)/, ''),
+                        title: '妈蛋！等这么久总算搞到一次称心优惠',
+                        link: 'https://www.psy-1.com/',
                         imgUrl: 'https://webres.psy-1.com/images/common/photo.png'
                     }
                 }
@@ -84,6 +91,7 @@
             weixin.configReady(function () {
                 weixin.setShareContent(shareContent);
             });
+            Baidu.statics()
         },
         methods: {
             getXinchaoShare() {
@@ -107,6 +115,8 @@
         .swal-title
             font-family: "Tahoma,Helvetica,Arial,宋体,sans-serif"
             font-size: 20px
+        .swal-text
+            max-width none
         .swal-button--danger
             background-color: #7cd1f9;
         .swal-button

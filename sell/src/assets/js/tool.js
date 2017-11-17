@@ -45,7 +45,7 @@ export default class Tool{
     static arrIncludes(arr,target){
         var include=false;
         for (var i=0;i<arr.length;i++){
-            if (String(arr[i]).indexOf(target)>-1){
+            if (arr[i].indexOf(target)>-1){
                 include=true;
                 break;
             }
