@@ -61,7 +61,7 @@
                 seller: {
                     activity: {
                         bulletin: '单次购买≥21个享6折优惠，11个≤单次购买≤20个享7折优惠，6个≤单次购买≤10个享8折优惠，单次购买≤5个享9折优惠',
-                        cover: 'https://res.psy-1.com/xc_title_1.png'
+                        cover: 'https://res.psy-1.com/xc_title.png'
                     }
                 },
                 payFunc: {},
