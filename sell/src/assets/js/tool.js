@@ -74,7 +74,7 @@ export default class Tool{
                 host='api.xxhh.com';
                 break;
             case 1:
-                host='api.test.psy-1.com';
+                host='api.debug.psy-1.com';
                 break;
             case 2:
                 host='api.psy-1.com';
