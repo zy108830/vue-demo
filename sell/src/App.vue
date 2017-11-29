@@ -37,13 +37,44 @@
                 }
             }
         },
+        beforeCreate(){
+            console.warn('vue beforeCreate')
+        },
         created() {
+            console.warn('vue created');
             this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
                 response = response.body;
                 if (response.errno === ERR_OK) {
                     this.seller = Object.assign({}, this.seller, response.data);
                 }
             });
+        },
+        beforeMount(){
+            console.warn('vue beforeMount');
+        },
+        mounted(){
+            console.warn('vue mounted');
+        },
+        beforeUpdate(){
+            console.warn('vue beforeUpdate');
+        },
+        updated(){
+            console.warn('vue updated');
+        },
+        activated(){
+            console.warn('vue activated');
+        },
+        deactivated(){
+            console.warn('vue deactivated');
+        },
+        beforeDestroy(){
+            console.warn('vue beforeDestroy');
+        },
+        destroyed(){
+            console.warn('vue destroyed');
+        },
+        errorCaptured(){
+            console.warn('vue errorCaptured');
         },
         components: {
             'v-header': header
