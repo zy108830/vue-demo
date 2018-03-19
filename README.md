@@ -4,7 +4,7 @@
 
 ## 预览
 
-![Demo](https://github.com/zy108830/vue-demo/blob/master/demo.gif)
+![Demo](https://github.com/zy108830/vue-demo/blob/master/sell/demo.gif)
 
 [演示地址](http://vuejssellapp.t.imooc.io/) [课程地址](http://coding.imooc.com/learn/list/74.html)
 
