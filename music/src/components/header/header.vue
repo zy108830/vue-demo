@@ -1,18 +1,37 @@
 <template>
     <div class="header">
-        <p><img class="logo" alt="">Chicken Music</p>
+        <div class="logo"></div>
+        <span class="title">Chicken Music</span>
     </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
 	export default {
-		name: "header"
+		name: "Header",
+        data(){
+            return {
+
+            }
+        }
 	}
 </script>
-<style lang="stylus" rel="stylesheet/stylus">
+<style ﻿scoped lang="stylus" rel="stylesheet/stylus">
     @import '~common/stylus/variable';
     @import "~common/stylus/mixin";
-    header
-        p
-            text-align center
-            color red
+    .header
+        text-align center
+        height 44px
+        .logo
+            display inline-block
+            width 30px
+            height 32px
+            margin 6px 9px
+            bg-image("./logo")
+            background-repeat no-repeat
+            background-size 100% auto
+        .title
+            display inline-block
+            vertical-align top
+            line-height 44px
+            font-size 18px
+            color $color-theme
 </style>
