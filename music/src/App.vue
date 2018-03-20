@@ -1,19 +1,25 @@
 <template>
-  <div id="app">
-    Hello World
-    <router-view/>
-  </div>
+    <div id="app">
+        <Header></Header>
+        <Tab></Tab>
+        <router-view/>
+    </div>
 </template>
+<script type="text/ecmascript-6">
+    import Header from 'components/header/header'
+    import Tab from 'components/tab/tab'
+	export default {
+		name: 'App',
+		data() {
+			return {
 
-<script>
-import Header from 'components/header/header'
-export default {
-  name: 'App'
-}
+			}
+		},
+        components:{
+            Header,
+            Tab
+        }
+	}
 </script>
-
-<style lang="stylus" rel="stylesheet/stylus">
-    @import '~common/stylus/variable'
-    #app
-        color $color-theme
+<style scoped lang="stylus" rel="stylesheet/stylus">
 </style>
