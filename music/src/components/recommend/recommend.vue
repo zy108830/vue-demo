@@ -1,7 +1,9 @@
 ﻿﻿<template>
     <div class="recommend">
-        <div class="scrollpic_list" ref="scrollpic_list">
-            <img class="scrollpic" v-for="slider_single in slider" :src="slider_single['picUrl']" alt="">
+        <div class="scrollpic_list_wrapper">
+            <div class="scrollpic_list" ref="scrollpic_list">
+                <img class="scrollpic" v-for="scrollpic in scrollpic_data" :src="scrollpic['picUrl']" alt="">
+            </div>
         </div>
     </div>
 </template>
@@ -16,7 +18,7 @@
 		},
 		data() {
 			return {
-				slider: []
+                scrollpic_data: []
 			}
 		},
 		mounted() {
@@ -30,28 +32,44 @@
 				})
 			},
             getRecommendDataSuccess(data){
-	            this.slider = data['data']['slider']
+	            this.scrollpic_data = data['data']['slider']
 	            this.$nextTick(() => {
 	                this.setScrollpicDom()
                     this.initBScroll()
+                    this.autoPlay()
 	            })
             },
 			setScrollpicDom(){
-				this.$refs.scrollpic_list.style.width='2070px';
+				this.$refs.scrollpic_list.style.width='1875px';
 			},
 			initBScroll(){
-				this.scroll = new BScroll('.recommend', {
-					scrollX: true,
-					scrollY: false
-				});
+                this.scroll = new BScroll('.scrollpic_list_wrapper', {
+                    scrollX: true,//允许水平滚动
+                    scrollY: false,//禁止垂直滚动
+                    momentum: false,
+                    snap: {
+                        loop: false,
+                        threshold: 0.3,
+                        speed: 400
+                    }
+                });
+            },
+            autoPlay() {
+                let pageIndexY=0
+                let animationTime=400
+                setInterval(() => {
+                    let pageIndexX = (this.scroll.getCurrentPage().pageX + 1)% 5
+                    this.scroll.goToPage(pageIndexX, pageIndexY, animationTime)
+                }, 1000)
             }
 		}
 	}
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
-    .scrollpic_list
-        display block
-        .scrollpic
-            display inline-block
-            width 414px
+    .recommend
+        .scrollpic_list_wrapper
+            overflow scroll
+            .scrollpic_list
+                .scrollpic
+                    width 375px
 </style>
