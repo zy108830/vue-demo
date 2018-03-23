@@ -23,8 +23,7 @@
 		data() {
 			return {
 				scrollpic_data: [],
-				scroll:null,
-				scroll_lock_wait:false
+				scroll:null
 			}
 		},
 		mounted() {
@@ -67,7 +66,7 @@
 				}
 				//再设置轮播图父节点的大小=单个轮播图的宽度*轮播图的数量
                 let scrollpic_list_width=scrollpic_list_wrapper_width*scrollpic_list.length;
-				//如果设置了loop为true，根据BScroll的原理[具体不太清楚]，需要再加两张轮播图的宽度
+				//根据无缝循环轮播的原理，需要再加两张轮播图的宽度
 				scrollpic_list_width+=2*scrollpic_list_wrapper_width;
                 this.$refs.scrollpic_list.style.width+=scrollpic_list_width+'px';
 			},
@@ -76,37 +75,24 @@
 					scrollX: true,//允许水平滚动
 					scrollY: false,//禁止垂直滚动
 					momentum: false,
-					snap: {
-						loop: true,
-						threshold:0.3,
-                        speed:400
-					}
+					snap: true,
+					snapLoop: true,
+					snapThreshold: 0.3,
+					snapSpeed: 400
 				});
-				//每一次滑动结束的事件
 				this.scroll.on('scrollEnd',()=>{
-					// console.log('已跳转到页面下标',this.scroll.getCurrentPage().pageX);
-					if(!this.scroll_lock_wait){
-						this.autoPlay();
-					}
+                    this.autoPlay();
 				});
-				this.scroll.on('touchEnd',()=>{
-					// console.log('触摸结束');
-					clearTimeout(this.timer);
-					if(!this.scroll_lock_wait){
-						this.scroll_lock_wait=true;
-						setTimeout(()=>{
-							this.scroll_lock_wait=false;
-							this.autoPlay();
-						},4000)
-					}
+				this.scroll.on('beforeScrollStart', () => {
+					//避免叠加多个滚动任务
+                    clearTimeout(this.timer)
 				})
 			},
 			autoPlay() {
-				this.pageIndex=(this.scroll.getCurrentPage().pageX+1)%5;
-				console.log('要跳转到的页面下标',this.pageIndex);
+				this.pageIndex=(this.scroll.getCurrentPage().pageX+1)%7;
                 this.timer=setTimeout(() => {
 					this.scroll.goToPage(this.pageIndex, 0, 400)
-				}, 1500)
+				}, 2000)
 			}
 		}
 	}
