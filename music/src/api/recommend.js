@@ -9,10 +9,9 @@ export default function getRecommend() {
 		format: 'jsonp',
 		platform: 'h5',
 		uin: 0,
-		needNewCode: 1,
-		jsonpCallback: 'jp0'
+		needNewCode: 1
 	}
 	return jsonp(url,data,{
-		prefix: 'jp'
+		param: 'jsonpCallback'
 	})
 }
