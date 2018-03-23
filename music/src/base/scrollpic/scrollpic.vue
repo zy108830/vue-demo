@@ -3,7 +3,7 @@
         <div class="scrollpic_list" ref="scrollpic_list">
             <img v-for="scrollpic in scrollpic_data" class="scrollpic" @click="dealScrollpicLink(scrollpic['linkUrl'])" :src="scrollpic['picUrl']" alt="">
         </div>
-        <div class="pointer_list_wrapper">
+        <div v-if="display_pointer" class="pointer_list_wrapper">
             <div class="pointer_list">
                 <div v-for="scrollpic,index in scrollpic_data" class="pointer">
                     <span :class="{selected:index==getScrollpicCurrentPage}"></span>
@@ -23,18 +23,29 @@
 		data() {
 			return {
 				scrollpic_data: [],
-				scroll:null
+				scroll:null,
+				display_pointer:false
 			}
 		},
 		mounted() {
-
+			//避免图片还未加载完成就出现pointer
+			window.addEventListener('resize',()=>{
+                setTimeout(()=>{
+	                this.setScrollpicDom();
+				    this.scroll.refresh();
+                },20);
+			})
 		},
 		computed:{
 			getScrollpicCurrentPage(){
 				if(!this.scroll){
 					return -1
 				}
-				return this.scroll.getCurrentPage().pageX;
+				let currentPage=this.scroll.getCurrentPage().pageX;
+				if(currentPage==5){
+					return 0;
+                }
+                return currentPage;
 			}
 		},
 		methods: {
@@ -50,13 +61,14 @@
 			},
 			getRecommendDataSuccess(data){
 				this.scrollpic_data = data['data']['slider']
-				this.$nextTick(() => {
-					this.setScrollpicDom()
-					this.initBScroll()
-					this.autoPlay()
-				})
+                setTimeout(()=>{
+	                this.setScrollpicDom()
+	                this.initBScroll()
+	                this.autoPlay()
+	                this.display_pointer=true
+                },20)
 			},
-			setScrollpicDom(){
+			setScrollpicDom(isResieze){
 				//先设置轮播图的宽度
 				let scrollpic_list_wrapper=document.getElementsByClassName('scrollpic_list_wrapper')[0];
 				let scrollpic_list_wrapper_width=scrollpic_list_wrapper.clientWidth;
@@ -66,17 +78,20 @@
 				}
 				//再设置轮播图父节点的大小=单个轮播图的宽度*轮播图的数量
                 let scrollpic_list_width=scrollpic_list_wrapper_width*scrollpic_list.length;
-				//根据无缝循环轮播的原理，需要再加两张轮播图的宽度
-				scrollpic_list_width+=2*scrollpic_list_wrapper_width;
-                this.$refs.scrollpic_list.style.width+=scrollpic_list_width+'px';
+				if(!isResieze){
+					//根据无缝循环轮播的原理，需要再加两张轮播图的宽度
+					scrollpic_list_width+=2*scrollpic_list_wrapper_width;
+					console.log(scrollpic_list_wrapper_width,scrollpic_list.length,this.$refs.scrollpic_list.style.width,scrollpic_list_width);
+                }
+                this.$refs.scrollpic_list.style.width=scrollpic_list_width+'px';
 			},
 			initBScroll(){
 				this.scroll = new BScroll('.scrollpic_list_wrapper', {
 					scrollX: true,//允许水平滚动
 					scrollY: false,//禁止垂直滚动
 					momentum: false,
-					snap: true,
-					snapLoop: true,
+					snap: true,//开启轮播
+					snapLoop: true,//循环轮播
 					snapThreshold: 0.3,
 					snapSpeed: 400
 				});
@@ -86,7 +101,7 @@
 				this.scroll.on('beforeScrollStart', () => {
 					//避免叠加多个滚动任务
                     clearTimeout(this.timer)
-				})
+				});
 			},
 			autoPlay() {
 				this.pageIndex=(this.scroll.getCurrentPage().pageX+1)%7;
