@@ -2,7 +2,9 @@
     <div id="app">
         <Header></Header>
         <Tab></Tab>
-        <router-view/>
+        <keep-alive>
+            <router-view/>
+        </keep-alive>
     </div>
 </template>
 <script type="text/ecmascript-6">
