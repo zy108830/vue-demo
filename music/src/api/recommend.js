@@ -1,5 +1,8 @@
 import jsonp from 'common/js/jsonp'
-export default function getRecommend() {
+import axios from 'axios'
+import {http_build_query} from "common/js/tool";
+
+export function getRecommend() {
 	let url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg';
 	let data = {
 		g_tk: '1928093487',
@@ -13,5 +16,12 @@ export default function getRecommend() {
 	}
 	return jsonp(url,data,{
 		param: 'jsonpCallback'
+	})
+}
+
+export function getDiscList() {
+	return axios({
+		url:'http://localhost:8080/getDiscList',
+		method:'get'
 	})
 }

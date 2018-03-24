@@ -13,7 +13,7 @@
     </div>
 </template>
 <script type="text/ecmascript-6">
-	import getRecommend from 'api/recommend'
+	import {getRecommend} from 'api/recommend'
 	import BScroll from 'better-scroll'
 	export default {
 		name: "Scrollpic",
@@ -80,8 +80,9 @@
                 let scrollpic_list_width=scrollpic_list_wrapper_width*scrollpic_list.length;
 				if(!isResieze){
 					//根据无缝循环轮播的原理，需要再加两张轮播图的宽度
+
 					scrollpic_list_width+=2*scrollpic_list_wrapper_width;
-					console.log(scrollpic_list_wrapper_width,scrollpic_list.length,this.$refs.scrollpic_list.style.width,scrollpic_list_width);
+					// console.log(scrollpic_list_wrapper_width,scrollpic_list.length,this.$refs.scrollpic_list.style.width,scrollpic_list_width);
                 }
                 this.$refs.scrollpic_list.style.width=scrollpic_list_width+'px';
 			},
@@ -109,7 +110,11 @@
 					this.scroll.goToPage(this.pageIndex, 0, 400)
 				}, 2000)
 			}
-		}
+		},
+        destroyed(){
+			console.log("触发destroyed事件");
+			clearTimeout(this.timer);
+        }
 	}
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
