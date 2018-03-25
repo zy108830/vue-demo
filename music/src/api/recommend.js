@@ -21,7 +21,7 @@ export function getRecommend() {
 
 export function getDiscList() {
 	return axios({
-		url:'http://localhost:8080/getDiscList',
+		url:'/getDiscList',
 		method:'get'
 	})
 }
