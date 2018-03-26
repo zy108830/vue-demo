@@ -1,7 +1,9 @@
 <template>
-    <div id="app">
-        <Header></Header>
-        <Tab></Tab>
+    <div id="app"  @touchmove.prevent>
+        <div class="header">
+            <Header></Header>
+            <Tab></Tab>
+        </div>
         <div class="scroll-wrapper" ref="scroll_wrapper">
             <div class="content">
                 <keep-alive>
@@ -27,10 +29,12 @@
 		},
 		mounted(){
             this.initScrollWrapperDom();
-//		    this.scroll=new BScroll('.scroll-wrapper',{
-//		        scrollX:false,
-//		        scrollY:true
-//		    })
+            setTimeout(()=>{
+	            this.scroll=new BScroll('.scroll-wrapper',{
+		            scrollX:false,
+		            scrollY:true
+	            })
+            },20)
 		},
 		methods:{
             initScrollWrapperDom(){
@@ -46,6 +50,12 @@
 	}
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
+    @import "~common/stylus/variable"
+    .header
+        position relative
+        z-index 10
+        background-color $color-background
     .scroll-wrapper
-        overflow: scroll
+        position relative
+        z-index 1
 </style>
