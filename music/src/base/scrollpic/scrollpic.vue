@@ -1,14 +1,14 @@
-﻿﻿
-<template>
+﻿﻿<template>
     <div class="scrollpic_list_wrapper">
         <div class="scrollpic_list" ref="scrollpic_list">
-            <img v-for="scrollpic in scrollpic_data" class="scrollpic" @click="dealScrollpicLink(scrollpic['linkUrl'])"  :src="scrollpic['picUrl']" alt="">
+            <a v-for="scrollpic in scrollpic_data" :href="scrollpic['linkUrl']">
+                <img class="scrollpic" :src="scrollpic['picUrl']" alt="">
+            </a>
         </div>
-        <p>{{activeTimers}}</p>
-        <div v-if="display_pointer" class="pointer_list_wrapper">
+        <div class="pointer_list_wrapper">
             <div class="pointer_list">
                 <div v-for="scrollpic,index in scrollpic_data" class="pointer">
-                    <span :class="{selected:index==getCurrentPage}"></span>
+                    <span :class="{selected:index==dotIndex}"></span>
                 </div>
             </div>
         </div>
@@ -36,26 +36,11 @@
 		},
 		created() {
 			this.requestRecommendApi();
-			window.sc=this;
-
-			window.originalSetTimeout=window.setTimeout;
-			window.originalClearTimeout=window.clearTimeout;
-			this.activeTimers=0;
-			window.setTimeout=(func,delay)=> {
-				this.activeTimers++;
-				return window.originalSetTimeout(func,delay);
-			};
-			window.clearTimeout=timerID=>{
-				this.activeTimers--;
-				window.originalClearTimeout(timerID);
-			};
 		},
 		data() {
 			return {
 				scrollpic_data: [],
-				scroll: null,
-				activeTimers:0,
-				display_pointer: false
+				dotIndex:0
 			}
 		},
 		mounted() {
@@ -67,21 +52,9 @@
 			}
 		},
 		computed: {
-			getCurrentPage() {
-				if (!this.scroll) {
-					return -1
-				}
-				let currentPage = this.scroll.getCurrentPage().pageX;
-				if (currentPage == this.scrollpic_data.length) {
-					return 0;
-				}
-				return currentPage;
-			}
+
 		},
 		methods: {
-			dealScrollpicLink(linkUrl) {
-				window.location.href = linkUrl;
-			},
 			requestRecommendApi() {
 				getRecommend().then((data) => {
 					this.scrollpic_data = data['data']['slider']
@@ -116,45 +89,71 @@
 
 				this.$refs.scrollpic_list.style.width = scrollpic_list_width + 'px';
 			},
+            scrollEnd(){
+                this.dotIndex=this.scroll.getCurrentPage().pageX;
+                if(this.loop){
+                    this.dotIndex-=1;
+                }
+                if(this.autoPlay){
+                    this.startScroll();
+                }
+            },
 			initBScroll() {
 				this.scroll = new BScroll('.scrollpic_list_wrapper', {
 					scrollX: true,//允许水平滚动
 					scrollY: false,//禁止垂直滚动
 					momentum: false,//当快速滑动的时候，是否开启滑动惯性
 					snap: true,//是否为slider组件
-					snapLoop: true,//是否无缝循环轮播
+					snapLoop: this.loop,//是否无缝循环轮播
 					snapThreshold: 0.1,//轮播图滑动的阈值，超过这个阈值即可滑动到下一页
 					snapSpeed: 400//轮播图切换的动画时间
 				});
-				this.scroll.on('scrollEnd', () => {
-					if(this.timer){
-						//避免自动滚动+手动滚动，叠加多个滚动任务
-						clearTimeout(this.timer)
-					}
+				this.scroll.on('scrollEnd', this.scrollEnd);
+				this.scroll.on('beforeScrollStart', () => {
+					//仅在用户手动滚动时触发
 					if(this.autoPlay){
-					    this.startScroll();
+						clearTimeout(this.timer)
                     }
 				});
-				this.scroll.on('beforeScrollStart', () => {
-					if(this.timer){
-						//避免自动滚动+手动滚动，叠加多个滚动任务
-						clearTimeout(this.timer)
-					}
-				});
 				window.addEventListener('resize', () => {
-					setTimeout(() => {
+					//避免resize产生大量的定时任务，出现性能问题
+					clearTimeout(this.resizeTimer);
+					this.resizeTimer=setTimeout(()=>{
+						//﻿window.resize比较快速的时候，会导致自动轮播失效
+                        //针对BScroll框架本身的bug修复，实际并未完全修复。。。
+						if(this.scroll.isInTransition){
+							this.scrollEnd();
+                        }else {
+							if(this.autoPlay){
+								this.startScroll();
+							}
+                        }
 						this.setScrollpicDom(true);
-					}, 20);
+						this.scroll.refresh();
+                    },60);
 				})
 			},
 			startScroll() {
-				this.pageIndex = (this.scroll.getCurrentPage().pageX + 1) % 7;
+				let nextPage=this.dotIndex+1;
+                if(this.loop){
+					nextPage+=1;
+                }
                 this.timer = setTimeout(() => {
-                    this.scroll.goToPage(this.pageIndex, 0, 400)
+                    this.scroll.goToPage(nextPage, 0, 400)
                 }, this.interval)
             }
         },
-        destroyed() {
+		activated(){
+			//路由跳转，从其他组件切换回此组件
+			if(this.autoPlay){
+				this.startScroll();
+            }
+        },
+		deactivated(){
+			//路由跳转，切换到其他组件
+            clearTimeout(this.timer);
+        },
+		beforeDestroy() {
 			console.log("触发destroyed事件");
 			clearTimeout(this.timer);
 		}
@@ -166,8 +165,10 @@
             overflow hidden
             position relative
             .scrollpic_list
-                .scrollpic
-                    width auto
+                a
+                    display inline-block
+                    img
+                        width 100%
             .pointer_list_wrapper
                 position absolute
                 left 50%
