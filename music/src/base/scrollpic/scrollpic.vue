@@ -4,6 +4,7 @@
         <div class="scrollpic_list" ref="scrollpic_list">
             <img v-for="scrollpic in scrollpic_data" class="scrollpic" @click="dealScrollpicLink(scrollpic['linkUrl'])"  :src="scrollpic['picUrl']" alt="">
         </div>
+        <p>{{activeTimers}}</p>
         <div v-if="display_pointer" class="pointer_list_wrapper">
             <div class="pointer_list">
                 <div v-for="scrollpic,index in scrollpic_data" class="pointer">
@@ -35,11 +36,25 @@
 		},
 		created() {
 			this.requestRecommendApi();
+			window.sc=this;
+
+			window.originalSetTimeout=window.setTimeout;
+			window.originalClearTimeout=window.clearTimeout;
+			this.activeTimers=0;
+			window.setTimeout=(func,delay)=> {
+				this.activeTimers++;
+				return window.originalSetTimeout(func,delay);
+			};
+			window.clearTimeout=timerID=>{
+				this.activeTimers--;
+				window.originalClearTimeout(timerID);
+			};
 		},
 		data() {
 			return {
 				scrollpic_data: [],
 				scroll: null,
+				activeTimers:0,
 				display_pointer: false
 			}
 		},
@@ -71,16 +86,11 @@
 				getRecommend().then((data) => {
 					this.scrollpic_data = data['data']['slider']
 					this.$nextTick(() => {
-						console.log('触发mounted事件');
 						this.setScrollpicDom()
 						this.initBScroll()
                         if(this.autoPlay){
 	                        this.startScroll()
                         }
-						document.getElementsByClassName('scrollpic')[0].addEventListener('onload',()=>{
-							console.log('ppppp');
-							this.display_pointer = true
-						})
 					})
 
 				}, (err) => {
@@ -103,7 +113,7 @@
 					scrollpic_list_width += 2 * scrollpic_list_wrapper_width;
 					// console.log(scrollpic_list_wrapper_width,scrollpic_list.length,this.$refs.scrollpic_list.style.width,scrollpic_list_width);
 				}
-				console.log(scrollpic_list_width);
+
 				this.$refs.scrollpic_list.style.width = scrollpic_list_width + 'px';
 			},
 			initBScroll() {
