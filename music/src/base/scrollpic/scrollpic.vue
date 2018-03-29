@@ -97,7 +97,7 @@
 					scrollX: true,//允许水平滚动
 					scrollY: false,//禁止垂直滚动
 					momentum: false,//当快速滑动的时候，是否开启滑动惯性
-					snap: true,//是否为slider组件
+					snap: true,//是否为srollpic组件
 					snapLoop: this.loop,//是否无缝循环轮播
 					snapThreshold: 0.1,//轮播图滑动的阈值，超过这个阈值即可滑动到下一页
 					snapSpeed: 400//轮播图切换的动画时间
@@ -132,6 +132,8 @@
 				if (this.loop) {
 					nextPage += 1;
 				}
+				//如果不clear一下，在iPhone6S plus上测试会自动滚动异常
+				clearTimeout(this.timer);
 				this.timer = setTimeout(() => {
 					this.scroll.goToPage(nextPage, 0, 400)
 				}, this.interval)
