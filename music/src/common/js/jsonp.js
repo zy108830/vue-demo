@@ -9,13 +9,13 @@ import {http_build_query} from "./tool";
  * @param options jsonp options
  * @returns {Promise<any>}
  */
-export default function jsonp(url,data,options) {
-	return new Promise((resolve, reject)=>{
-		let join_url=`${url}?${http_build_query(data)}`;
-		originJSONP(join_url,options,(err, data)=>{
-			if(!err){
+export default function jsonp(url, data, options) {
+	return new Promise((resolve, reject) => {
+		let join_url = `${url}?${http_build_query(data)}`;
+		originJSONP(join_url, options, (err, data) => {
+			if (!err) {
 				resolve(data);
-			}else {
+			} else {
 				reject(err);
 			}
 		})

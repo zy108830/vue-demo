@@ -44,13 +44,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 		before(app) {
 			app.get('/getDiscList', function (req, res) {
 				axios({
-					url:'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg',
-					method:'get',
-					headers:{
+					url: 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg',
+					method: 'get',
+					headers: {
 						referer: 'https://y.qq.com/portal/playlist.html'
 					},
 					params: req.query,
-					proxy:false
+					proxy: false
 				})
 				.then((response) => {
 					res.json(response.data);

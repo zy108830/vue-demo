@@ -1,4 +1,5 @@
-﻿﻿<template>
+﻿﻿
+<template>
     <div class="tab">
         <div class="tab-item">
             <router-link tag="span" to="/recommend">推荐</router-link>
@@ -16,7 +17,7 @@
 </template>
 <script type="text/ecmascript-6">
 	export default {
-        name:"Tab"
+		name: "Tab"
 	}
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">

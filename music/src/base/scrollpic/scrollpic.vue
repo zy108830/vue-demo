@@ -1,9 +1,9 @@
-﻿﻿<template>
+﻿﻿
+<template>
     <div class="scrollpic_list_wrapper">
         <div class="scrollpic_list" ref="scrollpic_list">
             <a v-for="scrollpic in scrollpic_data" :href="scrollpic['linkUrl']">
-                <img class="scrollpic" :src="scrollpic['picUrl']" alt="">
-            </a>
+                <img class="scrollpic" :src="scrollpic['picUrl']" alt=""> </a>
         </div>
         <div class="pointer_list_wrapper">
             <div class="pointer_list">
@@ -25,14 +25,14 @@
 				type: Boolean,
 				default: true
 			},
-            autoPlay:{
-				type:Boolean,
-                default:true
-            },
-			interval:{
-				type:Number,
-                default:2000
-            }
+			autoPlay: {
+				type: Boolean,
+				default: true
+			},
+			interval: {
+				type: Number,
+				default: 2000
+			}
 		},
 		created() {
 			this.requestRecommendApi();
@@ -40,20 +40,16 @@
 		data() {
 			return {
 				scrollpic_data: [],
-				dotIndex:0
+				dotIndex: 0
 			}
 		},
 		mounted() {
-
 		},
 		watch: {
 			scrollpic_data: function (newValue, oldValue) {
-
 			}
 		},
-		computed: {
-
-		},
+		computed: {},
 		methods: {
 			requestRecommendApi() {
 				getRecommend().then((data) => {
@@ -61,11 +57,10 @@
 					this.$nextTick(() => {
 						this.setScrollpicDom()
 						this.initBScroll()
-                        if(this.autoPlay){
-	                        this.startScroll()
-                        }
+						if (this.autoPlay) {
+							this.startScroll()
+						}
 					})
-
 				}, (err) => {
 					console.log(err)
 				})
@@ -86,18 +81,17 @@
 					scrollpic_list_width += 2 * scrollpic_list_wrapper_width;
 					// console.log(scrollpic_list_wrapper_width,scrollpic_list.length,this.$refs.scrollpic_list.style.width,scrollpic_list_width);
 				}
-
 				this.$refs.scrollpic_list.style.width = scrollpic_list_width + 'px';
 			},
-            scrollEnd(){
-                this.dotIndex=this.scroll.getCurrentPage().pageX;
-                if(this.loop){
-                    this.dotIndex-=1;
-                }
-                if(this.autoPlay){
-                    this.startScroll();
-                }
-            },
+			scrollEnd() {
+				this.dotIndex = this.scroll.getCurrentPage().pageX;
+				if (this.loop) {
+					this.dotIndex -= 1;
+				}
+				if (this.autoPlay) {
+					this.startScroll();
+				}
+			},
 			initBScroll() {
 				this.scroll = new BScroll('.scrollpic_list_wrapper', {
 					scrollX: true,//允许水平滚动
@@ -111,48 +105,48 @@
 				this.scroll.on('scrollEnd', this.scrollEnd);
 				this.scroll.on('beforeScrollStart', () => {
 					//仅在用户手动滚动时触发
-					if(this.autoPlay){
+					if (this.autoPlay) {
 						clearTimeout(this.timer)
-                    }
+					}
 				});
 				window.addEventListener('resize', () => {
 					//避免resize产生大量的定时任务，出现性能问题
 					clearTimeout(this.resizeTimer);
-					this.resizeTimer=setTimeout(()=>{
+					this.resizeTimer = setTimeout(() => {
 						//﻿window.resize比较快速的时候，会导致自动轮播失效
-                        //针对BScroll框架本身的bug修复，实际并未完全修复。。。
-						if(this.scroll.isInTransition){
+						//针对BScroll框架本身的bug修复，实际并未完全修复。。。
+						if (this.scroll.isInTransition) {
 							this.scrollEnd();
-                        }else {
-							if(this.autoPlay){
+						} else {
+							if (this.autoPlay) {
 								this.startScroll();
 							}
-                        }
+						}
 						this.setScrollpicDom(true);
 						this.scroll.refresh();
-                    },60);
+					}, 60);
 				})
 			},
 			startScroll() {
-				let nextPage=this.dotIndex+1;
-                if(this.loop){
-					nextPage+=1;
-                }
-                this.timer = setTimeout(() => {
-                    this.scroll.goToPage(nextPage, 0, 400)
-                }, this.interval)
-            }
-        },
-		activated(){
+				let nextPage = this.dotIndex + 1;
+				if (this.loop) {
+					nextPage += 1;
+				}
+				this.timer = setTimeout(() => {
+					this.scroll.goToPage(nextPage, 0, 400)
+				}, this.interval)
+			}
+		},
+		activated() {
 			//路由跳转，从其他组件切换回此组件
-			if(this.autoPlay){
+			if (this.autoPlay) {
 				this.startScroll();
-            }
-        },
-		deactivated(){
+			}
+		},
+		deactivated() {
 			//路由跳转，切换到其他组件
-            clearTimeout(this.timer);
-        },
+			clearTimeout(this.timer);
+		},
 		beforeDestroy() {
 			console.log("触发destroyed事件");
 			clearTimeout(this.timer);
