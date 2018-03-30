@@ -1,7 +1,13 @@
 ﻿﻿﻿<template>
     <div class="recommend" ref="recommend">
         <div ref="recommend_content">
-            <Scrollpic></Scrollpic>
+            <template v-if="scrollpic_data.length">
+                <Scrollpic :display_pointer="display_pointer">
+                    <a v-for="scrollpic in scrollpic_data" :href="scrollpic['linkUrl']">
+                        <img @load="scrollpic_load" class="scrollpic" :src="scrollpic['picUrl']" alt="">
+                    </a>
+                </Scrollpic>
+            </template>
             <div class="disc-module">
                 <h1 class="disc-header">热门歌单推荐</h1>
                 <div class="disc-main">
@@ -27,7 +33,7 @@
 </template>
 <script type="text/ecmascript-6">
 	import Scrollpic from 'base/scrollpic/scrollpic'
-	import {getDiscList} from 'api/recommend'
+	import {getDiscList,getRecommend} from 'api/recommend'
 	import BScroll from 'better-scroll'
 
 	export default {
@@ -37,27 +43,41 @@
         },
 		data() {
 			return {
-				disc_list:[]
+				disc_list:[],
+				scrollpic_data:[],
+				display_pointer:false
             }
 		},
 		created() {
-			getDiscList().then((resp) => {
-				const resp_content = resp['data'];
-				this.disc_list = resp_content['data']['list']
-                setTimeout(()=>{
-	                this.initScrollWrapperDom();
-                },5000)
-			}, (err) => {
-				console.log('error...');
-			})
+			this.requestRecommendApi();
+			this.requestDiscApi();
 		},
         mounted(){
-
+            this.initScrollWrapperDom();
         },
         methods:{
+	        requestRecommendApi() {
+		        getRecommend().then((data) => {
+			        this.scrollpic_data = data['data']['slider']
+		        })
+	        },
+	        requestDiscApi(){
+		        getDiscList().then((resp) => {
+			        const resp_content = resp['data'];
+			        this.disc_list = resp_content['data']['list']
+		        })
+            },
+	        scrollpic_load(){
+	        	if(!this.scrollpic_load_complete){
+			        setTimeout(()=>{
+				        this.scroll.refresh();
+				        this.display_pointer=true;
+			        },100)
+                    this.scrollpic_load_complete=true
+                }
+            },
 	        initScrollWrapperDom() {
 	        	let recommend_height=window.innerHeight-88;
-	        	console.log('recommend_height',recommend_height);
 		        document.getElementsByClassName('recommend')[0].style.height=recommend_height+'px';
 		        this.scroll = new BScroll('.recommend', {
 			        scrollX: false,
@@ -66,7 +86,11 @@
 	        }
         },
         watch:{
-
+	        disc_list(){
+	        	setTimeout(()=>{
+                    this.scroll.refresh();
+                },100)
+            }
         },
 		components: {
 			Scrollpic
@@ -94,10 +118,12 @@
                             flex 0 0 80px
                             padding-right 20px
                             img
+                                vertical-align top
                                 width 60px
                                 height 60px
-                                height auto
                         .disc-info
+                            display flex
+                            flex-direction column
                             flex 1 0 auto
                             font-size 14px
                             line-height 30px

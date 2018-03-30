@@ -2,22 +2,19 @@
 <template>
     <div class="scrollpic_list_wrapper">
         <div class="scrollpic_list" ref="scrollpic_list">
-            <a v-for="scrollpic in scrollpic_data" :href="scrollpic['linkUrl']">
-                <img class="scrollpic" :src="scrollpic['picUrl']" alt=""> </a>
+            <slot></slot>
         </div>
-        <div class="pointer_list_wrapper">
+        <div class="pointer_list_wrapper" v-if="display_pointer">
             <div class="pointer_list">
-                <div v-for="scrollpic,index in scrollpic_data" class="pointer">
-                    <span :class="{selected:index==dotIndex}"></span>
+                <div v-for="value,key in pointer_list" class="pointer">
+                    <span :class="{selected:key==dotIndex}"></span>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script type="text/ecmascript-6">
-	import {getRecommend} from 'api/recommend'
 	import BScroll from 'better-scroll'
-
 	export default {
 		name: "Scrollpic",
 		props: {
@@ -32,39 +29,38 @@
 			interval: {
 				type: Number,
 				default: 2000
-			}
+			},
+			display_pointer:{
+				type:Boolean,
+                default:false
+            }
 		},
 		created() {
-			this.requestRecommendApi();
+
 		},
 		data() {
 			return {
-				scrollpic_data: [],
-				dotIndex: 0
+				dotIndex: 0,
+				pointer_list:[]
 			}
 		},
 		mounted() {
+			this.$nextTick(() => {
+				this.setScrollpicDom()
+				this.initBScroll()
+				if (this.autoPlay) {
+					this.startScroll()
+				}
+			})
 		},
 		watch: {
-			scrollpic_data: function (newValue, oldValue) {
-			}
+
 		},
 		computed: {},
 		methods: {
-			requestRecommendApi() {
-				getRecommend().then((data) => {
-					this.scrollpic_data = data['data']['slider']
-					this.$nextTick(() => {
-						this.setScrollpicDom()
-						this.initBScroll()
-						if (this.autoPlay) {
-							this.startScroll()
-						}
-					})
-				}, (err) => {
-					console.log(err)
-				})
-			},
+			setPointerCount(count){
+                this.pointer_list=new Array(count);
+            },
 			setScrollpicDom(isResieze) {
 				//先设置轮播图的宽度
 				let scrollpic_list_wrapper = document.getElementsByClassName('scrollpic_list_wrapper')[0];
@@ -82,6 +78,9 @@
 					// console.log(scrollpic_list_wrapper_width,scrollpic_list.length,this.$refs.scrollpic_list.style.width,scrollpic_list_width);
 				}
 				this.$refs.scrollpic_list.style.width = scrollpic_list_width + 'px';
+				if(!this.pointer_list.length){
+					this.setPointerCount(scrollpic_list.length);
+                }
 			},
 			scrollEnd() {
 				this.dotIndex = this.scroll.getCurrentPage().pageX;
