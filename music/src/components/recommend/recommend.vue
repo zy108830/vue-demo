@@ -14,7 +14,7 @@
                     <div class="disc-list">
                         <div v-for="disc in disc_list" class="disc">
                             <div class="disc-cover">
-                                <img :src="disc.imgurl" alt="">
+                                <img v-lazy="disc.imgurl" alt="">
                             </div>
                             <div class="disc-info">
                                 <p class="disc-author">
