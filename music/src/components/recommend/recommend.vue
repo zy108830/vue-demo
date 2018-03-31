@@ -1,14 +1,14 @@
 ﻿﻿﻿<template>
     <div class="recommend" ref="recommend">
-        <div ref="recommend_content">
-            <template v-if="scrollpic_data.length">
+        <div class="recommend-scroll-wrapper">
+            <div class="scrollpic-module" v-if="scrollpic_data.length">
                 <Scrollpic :display_pointer="display_pointer">
                     <a v-for="scrollpic in scrollpic_data" :href="scrollpic['linkUrl']">
                         <img @load="scrollpic_load" class="scrollpic" :src="scrollpic['picUrl']" alt="">
                     </a>
                 </Scrollpic>
-            </template>
-            <div class="disc-module">
+            </div>
+            <div v-if="disc_list.length" class="disc-module">
                 <h1 class="disc-header">热门歌单推荐</h1>
                 <div class="disc-main">
                     <div class="disc-list">
@@ -28,11 +28,15 @@
                     </div>
                 </div>
             </div>
+            <div v-if="!disc_list.length" class="loading-module">
+                <Loading></Loading>
+            </div>
         </div>
     </div>
 </template>
 <script type="text/ecmascript-6">
 	import Scrollpic from 'base/scrollpic/scrollpic'
+	import Loading from 'base/loading/loading'
 	import {getDiscList,getRecommend} from 'api/recommend'
 	import BScroll from 'better-scroll'
 
@@ -93,7 +97,8 @@
             }
         },
 		components: {
-			Scrollpic
+			Scrollpic,
+			Loading
 		}
 	}
 </script>
@@ -102,33 +107,40 @@
     .recommend
         position relative
         top 88px
-        .disc-module
-            .disc-header
-                text-align center
-                height 65px
-                line-height 65px
-                color $color-theme
-                font-size 14px
-            .disc-main
-                .disc-list
-                    .disc
-                        display flex
-                        padding 0 20px 20px 20px
-                        .disc-cover
-                            flex 0 0 80px
-                            padding-right 20px
-                            img
-                                vertical-align top
-                                width 60px
-                                height 60px
-                        .disc-info
+        .recommend-scroll-wrapper
+            height 100%
+            .disc-module
+                .disc-header
+                    text-align center
+                    height 65px
+                    line-height 65px
+                    color $color-theme
+                    font-size 14px
+                .disc-main
+                    .disc-list
+                        .disc
                             display flex
-                            flex-direction column
-                            flex 1 0 auto
-                            font-size 14px
-                            line-height 30px
-                            .disc-author
-                                /*margin-bottom 10px*/
-                            .disc-name
-                                color $color-text-l
+                            padding 0 20px 20px 20px
+                            .disc-cover
+                                flex 0 0 80px
+                                padding-right 20px
+                                img
+                                    vertical-align top
+                                    width 60px
+                                    height 60px
+                            .disc-info
+                                display flex
+                                flex-direction column
+                                flex 1 0 auto
+                                font-size 14px
+                                line-height 30px
+                                .disc-author
+                                    /*margin-bottom 10px*/
+                                .disc-name
+                                    color $color-text-l
+            .loading-module
+                position absolute
+                top 50%
+                left 50%
+                transform translate(-50%,-50%)
 </style>
