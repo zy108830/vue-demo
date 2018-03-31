@@ -1,14 +1,14 @@
 ﻿<template>
     <div class="singer">
         <div class="singer-list-wrapper" ref="singer_list_wrapper">
-            <ul class="singer-group-list">
-                <li class="singer-group" v-for="singer_group,singer_index in this.singer_list_map">
+            <ul class="singer-group-list" v-show="singer_list.length>1">
+                <li class="singer-group" v-for="singer_group,singer_index in singer_list_map">
                     <h2 class="singer-group-title">{{singer_index}}</h2>
                     <ul class="singer-list">
                         <li v-for="singer in singer_group" class="singer-item">
                             <a class="singer-link" :href="getSingerLink(singer.Fsinger_mid)">
                                 <div class="singer-avatar">
-                                    <img :src="getSingerAvatar(singer.Fsinger_mid)" alt="">
+                                    <img v-lazy="getSingerAvatar(singer.Fsinger_mid)" alt="">
                                 </div>
                                 <div class="singer-name">
                                     <p>{{singer.Fsinger_name}}</p>
@@ -18,19 +18,24 @@
                     </ul>
                 </li>
             </ul>
+            <div v-show="display_loading && !singer_list.length" class="loading-module">
+                <Loading></Loading>
+            </div>
         </div>
     </div>
 </template>
 <script type="text/ecmascript-6">
     import {getSingerList} from "api/singer";
     import BScroll from 'better-scroll'
+    import Loading from 'base/loading/loading'
     export default {
 		name: "Singer",
         data(){
 		    return {
 		    	singer_list:[],
                 singer_list_hot:[],
-                singer_list_keys:[]
+                singer_list_keys:[],
+                display_loading:false
             }
         },
         created(){
@@ -76,6 +81,7 @@
         methods:{
 	        initSingListScroll(){
 	        	this.$refs.singer_list_wrapper.style.height=window.innerHeight-88+'px'
+	        	this.display_loading=true;
 	            this.scroll=new BScroll('.singer-list-wrapper',{
                     scrollX:false,
                     scrollY:true
@@ -94,6 +100,9 @@
 	        	    this.scroll.refresh();
                 },100)
             }
+        },
+        components:{
+	        Loading
         }
 	}
 </script>
@@ -123,4 +132,9 @@
                 font-size 14px
                 line-height 50px
                 margin-left 20px
+    .loading-module
+        position absolute
+        top 50%
+        left 50%
+        transform translate(-50%,-50%)
 </style>
