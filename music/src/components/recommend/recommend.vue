@@ -9,7 +9,7 @@
                         </a>
                     </Scrollpic>
                 </div>
-                <div v-if="disc_list.length" class="disc-module">
+                <div class="disc-module">
                     <h1 class="disc-header">热门歌单推荐</h1>
                     <div class="disc-main">
                         <div class="disc-list">
@@ -29,9 +29,9 @@
                         </div>
                     </div>
                 </div>
-                <!--<div v-if="!disc_list.length" class="loading-module">-->
-                    <!--<Loading></Loading>-->
-                <!--</div>-->
+            </div>
+            <div v-show="!disc_list.length" class="loading-module">
+                <Loading></Loading>
             </div>
         </div>
     </div>
