@@ -1,35 +1,37 @@
 ﻿﻿﻿<template>
     <div class="recommend" ref="recommend">
         <div class="recommend-scroll-wrapper">
-            <div class="scrollpic-module" v-if="scrollpic_data.length">
-                <Scrollpic :display_pointer="display_pointer">
-                    <a v-for="scrollpic in scrollpic_data" :href="scrollpic['linkUrl']">
-                        <img @load="scrollpic_load" class="scrollpic" :src="scrollpic['picUrl']" alt="">
-                    </a>
-                </Scrollpic>
-            </div>
-            <div v-if="disc_list.length" class="disc-module">
-                <h1 class="disc-header">热门歌单推荐</h1>
-                <div class="disc-main">
-                    <div class="disc-list">
-                        <div v-for="disc in disc_list" class="disc">
-                            <div class="disc-cover">
-                                <img v-lazy="disc.imgurl" alt="">
-                            </div>
-                            <div class="disc-info">
-                                <p class="disc-author">
-                                    {{disc.creator.name}}
-                                </p>
-                                <p class="disc-name">
-                                    {{disc.dissname}}
-                                </p>
+            <div>
+                <div class="scrollpic-module" v-if="scrollpic_data.length">
+                    <Scrollpic :display_pointer="display_pointer">
+                        <a v-for="scrollpic in scrollpic_data" :href="scrollpic['linkUrl']">
+                            <img @load="scrollpic_load" class="scrollpic" :src="scrollpic['picUrl']" alt="">
+                        </a>
+                    </Scrollpic>
+                </div>
+                <div v-if="disc_list.length" class="disc-module">
+                    <h1 class="disc-header">热门歌单推荐</h1>
+                    <div class="disc-main">
+                        <div class="disc-list">
+                            <div v-for="disc in disc_list" class="disc">
+                                <div class="disc-cover">
+                                    <img v-lazy="disc.imgurl" alt="">
+                                </div>
+                                <div class="disc-info">
+                                    <p class="disc-author">
+                                        {{disc.creator.name}}
+                                    </p>
+                                    <p class="disc-name">
+                                        {{disc.dissname}}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div v-if="!disc_list.length" class="loading-module">
-                <Loading></Loading>
+                <!--<div v-if="!disc_list.length" class="loading-module">-->
+                    <!--<Loading></Loading>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
@@ -82,15 +84,15 @@
             },
 	        initScrollWrapperDom() {
 	        	let recommend_height=window.innerHeight-88;
-		        document.getElementsByClassName('recommend')[0].style.height=recommend_height+'px';
-		        this.scroll = new BScroll('.recommend', {
+		        document.getElementsByClassName('recommend-scroll-wrapper')[0].style.height=recommend_height+'px';
+		        this.scroll = new BScroll('.recommend-scroll-wrapper', {
 			        scrollX: false,
 			        scrollY: true
 		        })
 	        }
         },
         watch:{
-	        disc_list(){
+	        disc_list(newValue,oldValue){
 	        	setTimeout(()=>{
                     this.scroll.refresh();
                 },100)
@@ -108,7 +110,6 @@
         position relative
         top 88px
         .recommend-scroll-wrapper
-            height 100%
             .disc-module
                 .disc-header
                     text-align center
