@@ -123,19 +123,21 @@
                             display flex
                             padding 0 20px 20px 20px
                             .disc-cover
-                                flex 0 0 80px
+                                flex 0 0 70px
                                 padding-right 20px
                                 img
                                     vertical-align top
-                                    width 60px
-                                    height 60px
+                                    width 100%
+                                    height auto
                             .disc-info
                                 display flex
                                 flex-direction column
-                                flex 1 0 auto
+                                flex 1 1 0
                                 font-size 14px
-                                line-height 30px
+                                line-height 20px
+                                justify-content center
                                 .disc-author
+                                    margin-bottom 10px
                                     /*margin-bottom 10px*/
                                 .disc-name
                                     color $color-text-l
