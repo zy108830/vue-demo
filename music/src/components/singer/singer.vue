@@ -6,12 +6,12 @@
                     <h2 class="singer-group-title">{{singer_index}}</h2>
                     <ul class="singer-list">
                         <li v-for="singer in singer_group" class="singer-item">
-                            <a class="singer-link" :href="getSingerLink(singer.Fsinger_mid)">
+                            <a class="singer-link" :href="singer.getSingerLink()">
                                 <div class="singer-avatar">
-                                    <img v-lazy="getSingerAvatar(singer.Fsinger_mid)" alt="">
+                                    <img v-lazy="singer.getSingerAvatar()" alt="">
                                 </div>
                                 <div class="singer-name">
-                                    <p>{{singer.Fsinger_name}}</p>
+                                    <p>{{singer.getSingerName()}}</p>
                                 </div>
                             </a>
                         </li>
@@ -28,12 +28,13 @@
     import {getSingerList} from "api/singer";
     import BScroll from 'better-scroll'
     import Loading from 'base/loading/loading'
+    import Singer from 'common/js/Singer'
     export default {
 		name: "Singer",
         data(){
 		    return {
 		    	singer_list:[],
-                singer_list_hot:[],
+			    singer_list_map:[],
                 singer_list_keys:[],
                 display_loading:false
             }
@@ -41,7 +42,8 @@
         created(){
 			window.singer=this;
             getSingerList().then((data)=>{
-            	this.singer_list=data['data']['list']
+                this.singer_list=data['data']['list'];
+	            this.singer_list_map=this.formatSingerList(this.singer_list)
             })
         },
         mounted(){
@@ -50,35 +52,41 @@
             },20)
         },
         computed:{
-			singer_list_map(){
-				let map={},map_sort={},hot_singer=[];
-				//建立歌手首字母与歌手列表group之间的映射
-				for (let i=0;i<this.singer_list.length;i++){
-					let singer=this.singer_list[i];
-					if(i<10){
-						hot_singer.push(singer)
+
+        },
+        methods:{
+            formatSingerList(){
+                let map={},map_sort={},hot_singer=[];
+                //建立歌手首字母与歌手列表group之间的映射
+                for (let i=0;i<this.singer_list.length;i++){
+                    let singer=this.singer_list[i];
+                    singer=new Singer({
+	                    singer_mid:singer.Fsinger_mid,
+	                    singer_name:singer.Fsinger_name,
+	                    singer_index:singer.Findex
+                    })
+                    if(i<10){
+                        hot_singer.push(singer)
                     }
-					let charCode=singer.Findex.charCodeAt();
-					if(charCode>=65 && charCode<=90){
-						if(!(singer.Findex in map)){
-							map[singer.Findex]=[];
-							this.singer_list_keys.push(singer.Findex);
-						}
-						map[singer.Findex].push(singer)
+                    let charCode=singer.getSingerIndex().charCodeAt();
+                    if(charCode>=65 && charCode<=90){
+                        if(!(singer.getSingerIndex() in map)){
+                            map[singer.getSingerIndex()]=[];
+                            this.singer_list_keys.push(singer.getSingerIndex());
+                        }
+                        map[singer.getSingerIndex()].push(singer)
                     }
                 }
                 //按照首字母对歌手列表group进行排序，并添加热门歌手数据
                 this.singer_list_keys=Object.keys(map).sort();
-				this.singer_list_keys.unshift('热门');
-				map['热门']=hot_singer;
+                this.singer_list_keys.unshift('热门');
+                map['热门']=hot_singer;
                 this.singer_list_keys.forEach((value,index)=>{
                     map_sort[value]=map[value]
                 })
                 //添加热门歌手数据
                 return map_sort;
-            }
-        },
-        methods:{
+            },
 	        initSingListScroll(){
 	        	this.$refs.singer_list_wrapper.style.height=window.innerHeight-88+'px'
 	        	this.display_loading=true;
@@ -86,12 +94,6 @@
                     scrollX:false,
                     scrollY:true
                 })
-            },
-			getSingerAvatar(singer_mid){
-				return `//y.gtimg.cn/music/photo_new/T001R150x150M000${singer_mid}.jpg?max_age=2592000`
-            },
-            getSingerLink(singer_mid){
-	            return `https://y.qq.com/n/yqq/singer/${singer_mid}.html#stat=y_new.singerlist.singerpic`
             }
         },
         watch:{
