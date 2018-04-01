@@ -18,6 +18,13 @@
                     </ul>
                 </li>
             </ul>
+            <div class="singer-index-nav">
+                <ul>
+                    <li @click="selectSingerGroup" :data-index="index" :class="{active:index==singer_group_index_current}" v-for="value,index in singer_list_keys">
+                        {{value.substr(0,1)}}
+                    </li>
+                </ul>
+            </div>
             <div v-show="display_loading && !singer_list.length" class="loading-module">
                 <Loading></Loading>
             </div>
@@ -36,6 +43,8 @@
 		    	singer_list:[],
 			    singer_list_map:[],
                 singer_list_keys:[],
+                singer_group_index_current:0,
+                singer_group_height_list:[],
                 display_loading:false
             }
         },
@@ -92,14 +101,41 @@
 	        	this.display_loading=true;
 	            this.scroll=new BScroll('.singer-list-wrapper',{
                     scrollX:false,
-                    scrollY:true
+                    scrollY:true,
+		            probeType: 3
                 })
+		        this.scroll.on('scroll', (pos) => {
+			        let scrollY = Math.abs(Math.round(pos.y))
+			        this.singer_group_index_current=this.getSingerGroupIndexCurrent(scrollY)
+		        })
+            },
+	        selectSingerGroup(event){
+	            this.scroll.scrollTo(0,-this.singer_group_height_list[event.target.dataset.index],400);
+	            setTimeout(()=>{
+		            this.singer_group_index_current=this.getSingerGroupIndexCurrent(this.scroll.getComputedPosition())
+	            },500)
+	        },
+            getSingerGroupHeightList(){
+                let singerGroup=document.getElementsByClassName('singer-group'),group_height_start=0;
+                for (let i=0;i<singerGroup.length;i++){
+                    this.singer_group_height_list.push(group_height_start)
+                    group_height_start+=singerGroup[i].clientHeight
+                }
+            },
+            getSingerGroupIndexCurrent(scrollY){
+                for (let i =0;i<this.singer_group_height_list.length-1;i++){
+                    if(scrollY>=this.singer_group_height_list[i] && scrollY <this.singer_group_height_list[i+1]){
+                        return i;
+                    }
+                }
+                return this.singer_group_height_list.length-1;
             }
         },
         watch:{
 	        singer_list_map(){
 	        	setTimeout(()=>{
 	        	    this.scroll.refresh();
+	        	    this.getSingerGroupHeightList();
                 },100)
             }
         },
@@ -139,4 +175,22 @@
         top 50%
         left 50%
         transform translate(-50%,-50%)
+    .singer-index-nav
+        position fixed
+        top 50%
+        right 0
+        width 20px
+        transform translateY(-40%)
+        background-color $color-background-d
+        border-radius 10px
+        ul
+            padding 20px 0
+            border-radius 8px
+            li
+                color $color-text-d
+                padding 3px
+                text-align center
+                font-size 12px
+            li.active
+                color $color-theme
 </style>
