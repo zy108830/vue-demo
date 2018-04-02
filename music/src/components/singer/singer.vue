@@ -110,10 +110,11 @@
 		        })
             },
 	        selectSingerGroup(event){
-	            this.scroll.scrollTo(0,-this.singer_group_height_list[event.target.dataset.index],400);
+	            let time=400,index=event.target.dataset.index;
+	            this.scroll.scrollTo(0,-this.singer_group_height_list[index],time);
 	            setTimeout(()=>{
-		            this.singer_group_index_current=this.getSingerGroupIndexCurrent(this.scroll.getComputedPosition())
-	            },500)
+                    this.singer_group_index_current=index;
+	            },time+50)
 	        },
             getSingerGroupHeightList(){
                 let singerGroup=document.getElementsByClassName('singer-group'),group_height_start=0;
