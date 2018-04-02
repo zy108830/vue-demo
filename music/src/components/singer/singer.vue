@@ -20,7 +20,7 @@
             </ul>
             <div class="singer-index-nav">
                 <ul>
-                    <li @click="selectSingerGroup" @touchstart="touchStartSingerGroup" @touchmove="touchSingerGroup" :data-index="index" :class="{active:index==singer_group_index_current}" v-for="value,index in singer_list_keys">
+                    <li @touchstart.stop.prevent="touchStartSingerGroup" @touchmove.stop.prevent="touchMoveSingerGroup" :data-index="index" :class="{active:index==singer_group_index_current}" v-for="value,index in singer_list_keys">
                         {{value.substr(0,1)}}
                     </li>
                 </ul>
@@ -38,9 +38,6 @@
     import Singer from 'common/js/Singer'
     export default {
 		name: "Singer",
-		created(){
-		    this.singer_group_index_touch_start=0;
-		},
         data(){
 		    return {
 		    	singer_list:[],
@@ -51,13 +48,19 @@
                 display_loading:false
             }
         },
-        created(){
-			window.singer=this;
-            getSingerList().then((data)=>{
-                this.singer_list=data['data']['list'];
-	            this.singer_list_map=this.formatSingerList(this.singer_list)
-            })
-        },
+	    created(){
+		    this.singer_group_index_touch={
+			    touch_start:0,
+			    touch_move:0,
+			    index_start:0,
+			    index_move:0
+		    };
+		    window.singer=this;
+		    getSingerList().then((data)=>{
+			    this.singer_list=data['data']['list'];
+			    this.singer_list_map=this.formatSingerList(this.singer_list)
+		    })
+	    },
         mounted(){
 		    setTimeout(()=>{
 		    	this.initSingListScroll();
@@ -108,23 +111,36 @@
 		            probeType: 3
                 })
 		        this.scroll.on('scroll', (pos) => {
-			        let scrollY = Math.abs(Math.round(pos.y))
+			        let scrollY = Math.abs(Math.floor(this.scroll.y))
 			        this.singer_group_index_current=this.getSingerGroupIndexCurrent(scrollY)
+			        // console.log('scroll',scrollY,this.scroll.y,this.singer_group_index_current);
 		        })
             },
-	        selectSingerGroup(event){
-	            console.log('触发click事件')
+	        touchMoveSingerGroup(event){
+		        this.singer_group_index_touch.touch_move=event.touches[0].pageY;
+		        let touch_move_distance=(this.singer_group_index_touch.touch_move-this.singer_group_index_touch.touch_start);
+		        let singer_group_index_height=18
+		        let index_touch_offset=Math.floor(touch_move_distance/singer_group_index_height)
+		        let singer_group_index_current=parseInt(this.singer_group_index_touch.index_start)+index_touch_offset;
+		        if(singer_group_index_current>this.singer_list_keys.length-1){
+			        singer_group_index_current=this.singer_list_keys.length-1
+		        }
+		        if(singer_group_index_current<0){
+			        singer_group_index_current=0
+		        }
+		        this.singer_group_index_current=singer_group_index_current;
+		        // console.log(`触摸滚动后的下标为`,this.singer_list_keys[singer_group_index_current])
+		        this.scroll.scrollTo(0,-this.singer_group_height_list[this.singer_group_index_current],400);
+		        // console.log(`滚动偏移的距离为${touch_move_distance}`,`应该移动${index_touch_offset}个下标`,`前往${-this.singer_group_height_list[this.singer_group_index_current]}`);
+	        },
+	        touchStartSingerGroup(event){
 	            let time=400,index=event.target.dataset.index;
 	            this.scroll.scrollTo(0,-this.singer_group_height_list[index],time);
-	            setTimeout(()=>{
-                    this.singer_group_index_current=index;
-	            },time+50)
-	        },
-	        touchStartSingerGroup(){
-		        console.log('触发touch start事件')
-	        },
-	        touchSingerGroup(event){
-	            console.log('触发touch拖动事件',event.target.dataset.index);
+	            //记录偏移
+	            this.singer_group_index_touch.touch_start=event.touches[0].pageY;
+	            this.singer_group_index_touch.index_start=index;
+	            console.log(`触摸开始时的下标为`,this.singer_list_keys[index])
+                this.singer_group_index_current=index;
 	        },
             getSingerGroupHeightList(){
                 let singerGroup=document.getElementsByClassName('singer-group'),group_height_start=0;
