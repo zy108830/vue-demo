@@ -20,7 +20,7 @@
             </ul>
             <div class="singer-index-nav">
                 <ul>
-                    <li @click="selectSingerGroup" :data-index="index" :class="{active:index==singer_group_index_current}" v-for="value,index in singer_list_keys">
+                    <li @click="selectSingerGroup" @touchstart="touchStartSingerGroup" @touchmove="touchSingerGroup" :data-index="index" :class="{active:index==singer_group_index_current}" v-for="value,index in singer_list_keys">
                         {{value.substr(0,1)}}
                     </li>
                 </ul>
@@ -38,6 +38,9 @@
     import Singer from 'common/js/Singer'
     export default {
 		name: "Singer",
+		created(){
+		    this.singer_group_index_touch_start=0;
+		},
         data(){
 		    return {
 		    	singer_list:[],
@@ -110,11 +113,18 @@
 		        })
             },
 	        selectSingerGroup(event){
+	            console.log('触发click事件')
 	            let time=400,index=event.target.dataset.index;
 	            this.scroll.scrollTo(0,-this.singer_group_height_list[index],time);
 	            setTimeout(()=>{
                     this.singer_group_index_current=index;
 	            },time+50)
+	        },
+	        touchStartSingerGroup(){
+		        console.log('触发touch start事件')
+	        },
+	        touchSingerGroup(event){
+	            console.log('触发touch拖动事件',event.target.dataset.index);
 	        },
             getSingerGroupHeightList(){
                 let singerGroup=document.getElementsByClassName('singer-group'),group_height_start=0;
