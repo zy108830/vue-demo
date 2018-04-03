@@ -28,6 +28,7 @@
             <div v-show="display_loading && !singer_list.length" class="loading-module">
                 <Loading></Loading>
             </div>
+            <h2 ref="fixed_title" v-show="display_fixed_title" class="singer-group-title singer-group-title-fixed">热门</h2>
         </div>
     </div>
 </template>
@@ -45,17 +46,18 @@
                 singer_list_keys:[],
                 singer_group_index_current:0,
                 singer_group_height_list:[],
-                display_loading:false
+                display_loading:false,
+                display_fixed_title:false
             }
         },
 	    created(){
+			//在data里面创建的变量会加observe，如下方式创建会提高性能
 		    this.singer_group_index_touch={
 			    touch_start:0,
 			    touch_move:0,
 			    index_start:0,
 			    index_move:0
 		    };
-		    window.singer=this;
 		    getSingerList().then((data)=>{
 			    this.singer_list=data['data']['list'];
 			    this.singer_list_map=this.formatSingerList(this.singer_list)
@@ -113,10 +115,28 @@
 		        this.scroll.on('scroll', (pos) => {
 			        let scrollY = Math.abs(Math.floor(this.scroll.y))
 			        this.singer_group_index_current=this.getSingerGroupIndexCurrent(scrollY)
+                    this.setFixedTitle()
 			        // console.log('scroll',scrollY,this.scroll.y,this.singer_group_index_current);
 		        })
             },
+	        setFixedTitle(){
+            	let scrollY=this.scroll.y
+                // console.log(scrollY);
+                if(scrollY>=0){
+			        this.display_fixed_title=false
+                }else {
+	                this.display_fixed_title=true
+            		let next_index=this.singer_group_index_current+1;
+                    let offset=(-this.singer_group_height_list[next_index])-scrollY
+                    if(offset>=-30 && offset<=0){
+                        let fixed_title_top=Math.floor(88-(30-Math.floor(Math.abs(offset))))
+                        console.log(fixed_title_top);
+                        this.$refs.fixed_title.style.top=fixed_title_top+'px';
+                    }
+                }
+            },
 	        touchMoveSingerGroup(event){
+            	//根据滚动的距离计算滚动了多少个歌手组索引
 		        this.singer_group_index_touch.touch_move=event.touches[0].pageY;
 		        let touch_move_distance=(this.singer_group_index_touch.touch_move-this.singer_group_index_touch.touch_start);
 		        let singer_group_index_height=18
@@ -184,6 +204,12 @@
             color $color-text-l
             line-height 30px
             padding-left 20px
+        .singer-group-title-fixed
+            position fixed
+            background-color red
+            width 100%
+            z-index 8
+            top 88px
         .singer-link
             display flex
             padding 20px 0 0 30px
