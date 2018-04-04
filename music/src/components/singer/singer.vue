@@ -6,7 +6,7 @@
                     <h2 class="singer-group-title">{{singer_index}}</h2>
                     <ul class="singer-list">
                         <li v-for="singer in singer_group" class="singer-item">
-                            <a class="singer-link" :href="singer.getSingerLink()">
+                            <a class="singer-link" @click="goSingerDetail(singer.getSingerMid())">
                                 <div class="singer-avatar">
                                     <img v-lazy="singer.getSingerAvatar()" alt="">
                                 </div>
@@ -30,6 +30,7 @@
             </div>
             <h2 ref="fixed_title" v-show="display_fixed_title" class="singer-group-title singer-group-title-fixed">{{fixed_title_content}}</h2>
         </div>
+        <router-view></router-view>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -78,6 +79,9 @@
             }
         },
         methods:{
+	        goSingerDetail(singer_mid){
+	        	this.$router.push({path:`/singer/${singer_mid}`})
+            },
             formatSingerList(){
                 let map={},map_sort={},hot_singer=[];
                 //建立歌手首字母与歌手列表group之间的映射
