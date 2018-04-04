@@ -28,7 +28,7 @@
             <div v-show="display_loading && !singer_list.length" class="loading-module">
                 <Loading></Loading>
             </div>
-            <h2 ref="fixed_title" v-show="display_fixed_title" class="singer-group-title singer-group-title-fixed">热门</h2>
+            <h2 ref="fixed_title" v-show="display_fixed_title" class="singer-group-title singer-group-title-fixed">{{fixed_title_content}}</h2>
         </div>
     </div>
 </template>
@@ -69,7 +69,13 @@
             },20)
         },
         computed:{
-
+	        fixed_title_content(){
+	        	if(this.singer_list_keys.length){
+	        	    return this.singer_list_keys[this.singer_group_index_current];
+                }else {
+	        		return '热门';
+                }
+            }
         },
         methods:{
             formatSingerList(){
@@ -128,10 +134,14 @@
 	                this.display_fixed_title=true
             		let next_index=this.singer_group_index_current+1;
                     let offset=(-this.singer_group_height_list[next_index])-scrollY
-                    if(offset>=-30 && offset<=0){
+                    console.log('偏移位置',offset)
+                    //fixed_title的高度是30,offset没有取0是为了有更好的过渡性
+                    if(offset>=-30 && offset<=3){
                         let fixed_title_top=Math.floor(88-(30-Math.floor(Math.abs(offset))))
                         console.log(fixed_title_top);
                         this.$refs.fixed_title.style.top=fixed_title_top+'px';
+                    }else {
+	                    this.$refs.fixed_title.style.top='88px';
                     }
                 }
             },
@@ -206,7 +216,7 @@
             padding-left 20px
         .singer-group-title-fixed
             position fixed
-            background-color red
+            /*background-color red*/
             width 100%
             z-index 8
             top 88px
