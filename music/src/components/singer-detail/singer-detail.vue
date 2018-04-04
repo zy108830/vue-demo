@@ -6,10 +6,16 @@
     </transition>
 </template>
 <script type="text/ecmascript-6">
+    import {mapGetters} from 'vuex'
 	export default {
         name:"SingerDetail",
         created(){
-        	console.log('23424');
+        	console.log(this.singer);
+        },
+        computed:{
+            ...mapGetters([
+                'singer'
+            ])
         }
 	}
 </script>

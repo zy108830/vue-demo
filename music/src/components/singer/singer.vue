@@ -6,7 +6,7 @@
                     <h2 class="singer-group-title">{{singer_index}}</h2>
                     <ul class="singer-list">
                         <li v-for="singer in singer_group" class="singer-item">
-                            <a class="singer-link" @click="goSingerDetail(singer.getSingerMid())">
+                            <a class="singer-link" @click="goSingerDetail(singer)">
                                 <div class="singer-avatar">
                                     <img v-lazy="singer.getSingerAvatar()" alt="">
                                 </div>
@@ -38,6 +38,7 @@
     import BScroll from 'better-scroll'
     import Loading from 'base/loading/loading'
     import Singer from 'common/js/Singer'
+    import {mapMutations} from 'vuex'
     export default {
 		name: "Singer",
         data(){
@@ -79,8 +80,11 @@
             }
         },
         methods:{
-	        goSingerDetail(singer_mid){
-	        	this.$router.push({path:`/singer/${singer_mid}`})
+	        goSingerDetail(singer){
+	        	this.$router.push({
+                    path : `/singer/${singer.getSingerMid()}`
+	        	})
+                this.setSinger(singer);
             },
             formatSingerList(){
                 let map={},map_sort={},hot_singer=[];
@@ -138,7 +142,7 @@
 	                this.display_fixed_title=true
             		let next_index=this.singer_group_index_current+1;
                     let offset=(-this.singer_group_height_list[next_index])-scrollY
-                    console.log('偏移位置',offset)
+                    // console.log('偏移位置',offset)
                     //fixed_title的高度是30,offset没有取0是为了有更好的过渡性
                     if(offset>=-30 && offset<=3){
                         let fixed_title_top=Math.floor(88-(30-Math.floor(Math.abs(offset))))
@@ -190,7 +194,11 @@
                     }
                 }
                 return this.singer_group_height_list.length-1;
-            }
+            },
+            //...这种写法是vuex提供的语法糖
+            ...mapMutations({
+                setSinger:"SET_SINGER"
+            })
         },
         watch:{
 	        singer_list_map(){
