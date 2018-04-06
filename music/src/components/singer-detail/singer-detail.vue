@@ -7,10 +7,19 @@
 </template>
 <script type="text/ecmascript-6">
     import {mapGetters} from 'vuex'
+    import {getSingerDetail} from 'api/singer'
 	export default {
         name:"SingerDetail",
         created(){
-        	console.log(this.singer);
+            if(!this.singer.singer_mid){
+                this.$router.push({
+                    path:'/singer'
+                })
+                return
+            }
+        	getSingerDetail(this.singer.singer_mid).then((data)=>{
+                console.log(data)
+        	})
         },
         computed:{
             ...mapGetters([
