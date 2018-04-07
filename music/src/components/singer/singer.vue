@@ -8,10 +8,10 @@
                         <li v-for="singer in singer_group" class="singer-item">
                             <a class="singer-link" @click="goSingerDetail(singer)">
                                 <div class="singer-avatar">
-                                    <img v-lazy="singer.getSingerAvatar()" alt="">
+                                    <img v-lazy="singer.singer_avatar" alt="">
                                 </div>
                                 <div class="singer-name">
-                                    <p>{{singer.getSingerName()}}</p>
+                                    <p>{{singer.singer_name}}</p>
                                 </div>
                             </a>
                         </li>
@@ -82,8 +82,9 @@
         methods:{
 	        goSingerDetail(singer){
 	        	this.$router.push({
-                    path : `/singer/${singer.getSingerMid()}`
+                    path : `/singer/${singer.singer_mid}`
 	        	})
+                console.log(singer)
                 this.setSinger(singer);
             },
             formatSingerList(){
@@ -99,13 +100,13 @@
                     if(i<10){
                         hot_singer.push(singer)
                     }
-                    let charCode=singer.getSingerIndex().charCodeAt();
+                    let charCode=singer.singer_index.charCodeAt();
                     if(charCode>=65 && charCode<=90){
-                        if(!(singer.getSingerIndex() in map)){
-                            map[singer.getSingerIndex()]=[];
-                            this.singer_list_keys.push(singer.getSingerIndex());
+                        if(!(singer.singer_link in map)){
+                            map[singer.singer_index]=[];
+                            this.singer_list_keys.push(singer.singer_index);
                         }
-                        map[singer.getSingerIndex()].push(singer)
+                        map[singer.singer_index].push(singer)
                     }
                 }
                 //按照首字母对歌手列表group进行排序，并添加热门歌手数据

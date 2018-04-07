@@ -1,40 +1,124 @@
-﻿﻿<template>
+﻿﻿
+<template>
     <transition name="singer-detail-trans">
         <div class="singer-detail">
-            453895738495734898573898
+            <div class="header">
+                <div class="title">
+                    <div @click="back" class="back">
+                        <i class="icon-back"></i>
+                    </div>
+                    <h1 class="singer-name">{{singer.singer_name}}</h1>
+                </div>
+                <div class="play-random">
+                    <i class="icon-play"></i> 随机播放全部
+                </div>
+                <div class="singer-avatar">
+                    <img :src="singer.singer_avatar" alt="">
+                </div>
+                <div class="backdrop"></div>
+            </div>
+            <div class="main">
+                <div class="song-list-wrapper" ref="song_list_wrapper">
+                    <div class="song-list">
+                        <ul>
+                            <li class="song-item" v-for="song in song_list">
+                                <h2 class="song-name">{{song.song_name}}</h2>
+                                <p class="song-album">{{singer.singer_name}} · {{song.song_album}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </transition>
 </template>
 <script type="text/ecmascript-6">
-    import {mapGetters} from 'vuex'
-    import {getSingerDetail} from 'api/singer'
+	import {mapGetters} from 'vuex'
+	import {getSingerDetail} from 'api/singer'
+	import Song from 'common/js/song'
+    import BScroll from 'better-scroll'
+
 	export default {
-        name:"SingerDetail",
-        created(){
-            if(!this.singer.singer_mid){
-                this.$router.push({
-                    path:'/singer'
-                })
-                return
-            }
-        	getSingerDetail(this.singer.singer_mid).then((data)=>{
-                console.log(data)
-        	})
+		name: "SingerDetail",
+		data() {
+			return {
+				song_list: []
+			}
+		},
+		created() {
+			if (!this.singer.singer_mid) {
+				this.$router.push({
+					path: '/singer'
+				})
+				return
+			}
+			getSingerDetail(this.singer.singer_mid).then((data) => {
+				this.normalizeSingerDetailData(data);
+			})
+            window.singer_detail=this;
+		},
+        mounted(){
+		    setTimeout(()=>{
+		    	this.initSongListScroll();
+            },20)
         },
-        computed:{
-            ...mapGetters([
-                'singer'
-            ])
-        }
+		methods: {
+			back() {
+				this.$router.push({
+					path: '/singer'
+				})
+			},
+            initSongListScroll(){
+	            this.$refs.song_list_wrapper.style.height=window.innerHeight*0.6+'px'
+	            this.scroll=new BScroll('.song-list-wrapper',{
+		            scrollY:true,
+		            scrollX:false,
+                    probeType:3
+	            })
+                this.scroll.on('scroll',()=>{
+                	// let origin_height=parseFloat(this.$refs.song_list_wrapper.style.height);
+                	// let current_height=origin_height+Math.abs(this.scroll.y)
+                    // console.log(current_height)
+	                // this.$refs.song_list_wrapper.style.height=current_height+'px';
+                });
+            },
+			normalizeSingerDetailData(data) {
+				for (let i = 0; i < data['data']['list'].length; i++) {
+					let song = data['data']['list'][i];
+					this.song_list.push(new Song({
+						song_mid: song['musicData']['songmid'],
+						song_name: song['musicData']['songname'],
+						song_album: song['musicData']['albumname']
+					}))
+				}
+			}
+		},
+        watch:{
+	        song_list(){
+	        	setTimeout(()=>{
+	        		if(!this.scroll){
+	        			return false
+                    }
+	        		this.scroll.refresh();
+                },20)
+            }
+        },
+		computed: {
+			...mapGetters([
+				'singer'
+			])
+		}
 	}
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
     @import "~common/stylus/variable"
-    .singer-detail-trans-enter-active,.singer-detail-trans-leave-active
+    .singer-detail-trans-enter-active, .singer-detail-trans-leave-active
         transition all .5s ease
+
     .singer-detail-trans-enter, .singer-detail-trans-leave-to
         transform: translateX(100%);
         opacity: 0;
+
     .singer-detail
         position fixed
         background-color $color-background
@@ -43,7 +127,69 @@
         width 100%
         height 100%
         z-index 110
-        /*position fixed*/
-        /*background-color red*/
-        /*z-index 10*/
+        .header
+            position relative
+            height 40%
+            overflow hidden
+            .title
+                position fixed
+                z-index 20
+                width 100%
+                .back
+                    position fixed
+                    padding 10px
+                    font-size 0
+                    color $color-theme
+                    .icon-back
+                        font-size 22px
+                .singer-name
+                    height 42px
+                    line-height 42px
+                    text-align center
+                    font-size 18px
+            .singer-avatar
+                overflow hidden
+                img
+                    width 100%
+            .play-random
+                position absolute
+                left 50%
+                transform translate(-50%)
+                bottom 30px
+                width 135px
+                height 32px
+                border-radius 16px
+                border 2px solid $color-theme
+                color $color-theme
+                text-align center
+                line-height 32px
+                font-size 12px
+                z-index 300
+                .icon-play
+                    margin-right 5px
+            .backdrop
+                position absolute
+                z-index 10
+                top 0
+                left 0
+                width 100%
+                height 100%
+                background-color black
+                opacity 0.4
+        .main
+            .song-list-wrapper
+                overflow hidden
+            .song-list
+                padding 20px 30px
+                .song-item
+                    padding 10px 0
+                    .song-name
+                        line-height 20px
+                        height 20px
+                        font-size 14px
+                    .song-album
+                        line-height 20px
+                        height 20px
+                        font-size 14px
+                        color $color-text-d
 </style>
