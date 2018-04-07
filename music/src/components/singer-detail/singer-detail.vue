@@ -3,6 +3,10 @@
     <transition name="singer-detail-trans">
         <div class="singer-detail">
             <div class="header">
+                <div class="singer-avatar">
+                    <img :src="singer.singer_avatar" alt="">
+                </div>
+                <div class="backdrop"></div>
                 <div class="title">
                     <div @click="back" class="back">
                         <i class="icon-back"></i>
@@ -12,12 +16,9 @@
                 <div class="play-random">
                     <i class="icon-play"></i> 随机播放全部
                 </div>
-                <div class="singer-avatar">
-                    <img :src="singer.singer_avatar" alt="">
-                </div>
-                <div class="backdrop"></div>
             </div>
             <div class="main">
+                <div class="bg-layer" ref="bg_layer"></div>
                 <div class="song-list-wrapper" ref="song_list_wrapper">
                     <div class="song-list">
                         <ul>
@@ -36,13 +37,14 @@
 	import {mapGetters} from 'vuex'
 	import {getSingerDetail} from 'api/singer'
 	import Song from 'common/js/song'
-    import BScroll from 'better-scroll'
+	import BScroll from 'better-scroll'
 
 	export default {
 		name: "SingerDetail",
 		data() {
 			return {
-				song_list: []
+				song_list: [],
+				scroll_origin_height: 0,
 			}
 		},
 		created() {
@@ -55,33 +57,39 @@
 			getSingerDetail(this.singer.singer_mid).then((data) => {
 				this.normalizeSingerDetailData(data);
 			})
-            window.singer_detail=this;
+			window.singer_detail = this;
 		},
-        mounted(){
-		    setTimeout(()=>{
-		    	this.initSongListScroll();
-            },20)
-        },
+		mounted() {
+			setTimeout(() => {
+				this.initSongListScroll();
+			}, 20)
+		},
 		methods: {
 			back() {
 				this.$router.push({
 					path: '/singer'
 				})
 			},
-            initSongListScroll(){
-	            this.$refs.song_list_wrapper.style.height=window.innerHeight*0.6+'px'
-	            this.scroll=new BScroll('.song-list-wrapper',{
-		            scrollY:true,
-		            scrollX:false,
-                    probeType:3
-	            })
-                this.scroll.on('scroll',()=>{
-                	// let origin_height=parseFloat(this.$refs.song_list_wrapper.style.height);
-                	// let current_height=origin_height+Math.abs(this.scroll.y)
-                    // console.log(current_height)
-	                // this.$refs.song_list_wrapper.style.height=current_height+'px';
-                });
-            },
+			initSongListScroll() {
+				this.scroll_origin_height = window.innerHeight * 0.6
+				this.$refs.song_list_wrapper.style.height = this.scroll_origin_height + 'px'
+				this.$refs.bg_layer.style.height = this.scroll_origin_height + 'px'
+				this.scroll = new BScroll('.song-list-wrapper', {
+					scrollY: true,
+					scrollX: false,
+					probeType: 3
+				})
+				this.scroll.on('scroll', () => {
+					console.log(this.scroll.y)
+					if (this.scroll.y < 0) {
+						if(this.scroll_origin_height + Math.abs(this.scroll.y) < window.innerHeight - 42){
+							this.$refs.bg_layer.style.height = this.scroll_origin_height+Math.abs(this.scroll.y) + 'px'
+                        }else {
+							// this.$refs.song_list_wrapper.style.overflow='hidden'
+                        }
+					}
+				});
+			},
 			normalizeSingerDetailData(data) {
 				for (let i = 0; i < data['data']['list'].length; i++) {
 					let song = data['data']['list'][i];
@@ -93,16 +101,16 @@
 				}
 			}
 		},
-        watch:{
-	        song_list(){
-	        	setTimeout(()=>{
-	        		if(!this.scroll){
-	        			return false
-                    }
-	        		this.scroll.refresh();
-                },20)
-            }
-        },
+		watch: {
+			song_list() {
+				setTimeout(() => {
+					if (!this.scroll) {
+						return false
+					}
+					this.scroll.refresh();
+				}, 20)
+			}
+		},
 		computed: {
 			...mapGetters([
 				'singer'
@@ -126,14 +134,28 @@
         left 0
         width 100%
         height 100%
-        z-index 110
+        z-index 100
         .header
             position relative
             height 40%
             overflow hidden
+            .singer-avatar
+                overflow hidden
+                img
+                    width 100%
+            .backdrop
+                position absolute
+                z-index 101
+                top 0
+                left 0
+                width 100%
+                height 100%
+                background-color black
+                opacity 0.4
             .title
                 position fixed
-                z-index 20
+                top 0
+                z-index 102
                 width 100%
                 .back
                     position fixed
@@ -147,12 +169,9 @@
                     line-height 42px
                     text-align center
                     font-size 18px
-            .singer-avatar
-                overflow hidden
-                img
-                    width 100%
             .play-random
-                position absolute
+                z-index 102
+                position fixed
                 left 50%
                 transform translate(-50%)
                 bottom 30px
@@ -164,21 +183,21 @@
                 text-align center
                 line-height 32px
                 font-size 12px
-                z-index 300
                 .icon-play
                     margin-right 5px
-            .backdrop
-                position absolute
-                z-index 10
-                top 0
-                left 0
-                width 100%
-                height 100%
-                background-color black
-                opacity 0.4
         .main
+            .bg-layer
+                position absolute
+                left 0
+                bottom 0
+                z-index 103
+                width 100%
+                height 400px
+                background-color $color-background
             .song-list-wrapper
-                overflow hidden
+                /*overflow hidden*/
+                position absolute
+                z-index 104
             .song-list
                 padding 20px 30px
                 .song-item
