@@ -3,11 +3,11 @@
     <transition name="singer-detail-trans">
         <div class="singer-detail">
             <div class="header">
-                <div class="singer-avatar">
+                <div class="singer-avatar" :class="{'singer-avatar-up':scroll_fixed}">
                     <img :src="singer.singer_avatar" alt="">
                 </div>
-                <div class="backdrop"></div>
-                <div class="title">
+                <div class="backdrop" :class="{'backdrop-up':scroll_fixed}"></div>
+                <div class="title" :class="{'title-up':scroll_fixed}">
                     <div @click="back" class="back">
                         <i class="icon-back"></i>
                     </div>
@@ -45,6 +45,7 @@
 			return {
 				song_list: [],
 				scroll_origin_height: 0,
+				scroll_fixed:false
 			}
 		},
 		created() {
@@ -81,10 +82,12 @@
 				})
 				this.scroll.on('scroll', () => {
 					console.log(this.scroll.y)
-					if (this.scroll.y < 0) {
+					if (this.scroll.y <= 0) {
 						if(this.scroll_origin_height + Math.abs(this.scroll.y) < window.innerHeight - 42){
+							this.scroll_fixed=false
 							this.$refs.bg_layer.style.height = this.scroll_origin_height+Math.abs(this.scroll.y) + 'px'
                         }else {
+							this.scroll_fixed=true
 							// this.$refs.song_list_wrapper.style.overflow='hidden'
                         }
 					}
@@ -143,6 +146,11 @@
                 overflow hidden
                 img
                     width 100%
+            .singer-avatar-up
+                z-index: 105;
+                position: absolute;
+                width: 100%;
+                height: 44px;
             .backdrop
                 position absolute
                 z-index 101
@@ -152,6 +160,9 @@
                 height 100%
                 background-color black
                 opacity 0.4
+            .backdrop-up
+                z-index 106
+                height 44px
             .title
                 position fixed
                 top 0
@@ -169,9 +180,11 @@
                     line-height 42px
                     text-align center
                     font-size 18px
+            .title-up
+                z-index: 107
             .play-random
+                position absolute
                 z-index 102
-                position fixed
                 left 50%
                 transform translate(-50%)
                 bottom 30px
