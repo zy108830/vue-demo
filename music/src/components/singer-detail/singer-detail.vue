@@ -67,9 +67,7 @@
 		},
 		methods: {
 			back() {
-				this.$router.push({
-					path: '/singer'
-				})
+			    this.$router.back();
 			},
 			initSongListScroll() {
 				this.scroll_origin_height = window.innerHeight * 0.6
