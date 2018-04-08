@@ -102,7 +102,7 @@
                     }
                     let charCode=singer.singer_index.charCodeAt();
                     if(charCode>=65 && charCode<=90){
-                        if(!(singer.singer_link in map)){
+                        if(!(singer.singer_index in map)){
                             map[singer.singer_index]=[];
                             this.singer_list_keys.push(singer.singer_index);
                         }
