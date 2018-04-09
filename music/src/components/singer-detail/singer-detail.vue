@@ -2,19 +2,19 @@
 <template>
     <transition name="singer-detail-trans">
         <div class="singer-detail">
-            <div class="header">
-                <div class="singer-avatar" :class="{'singer-avatar-up':scroll_fixed}">
-                    <img :src="singer.singer_avatar" alt="">
-                </div>
-                <div class="backdrop" :class="{'backdrop-up':scroll_fixed}"></div>
-                <div class="title" :class="{'title-up':scroll_fixed}">
-                    <div @click="back" class="back">
+            <div class="header" :class="{'header-scroll-down':scroll_down}">
+                <div class="title" :class="{'title-up':scroll_fixed,'title-scroll-down':scroll_down}">
+                    <div v-show="singer" @click="back" class="back">
                         <i class="icon-back"></i>
                     </div>
                     <h1 class="singer-name">{{singer.singer_name}}</h1>
                 </div>
-                <div class="play-random">
-                    <i class="icon-play"></i> 随机播放全部
+                <div class="singer-avatar" ref="singer_avatar" :class="{'singer-avatar-up':scroll_fixed,'singer-avatar-scroll-down':scroll_down}">
+                    <img :src="singer.singer_avatar" alt="">
+                    <div class="backdrop" :class="{'backdrop-up':scroll_fixed,'backdrop-scroll-down':scroll_down}"></div>
+                    <div v-show="song_list.length" class="play-random" :class="{'play-random-up':scroll_fixed,'play-scroll-down':scroll_down}">
+                        <i class="icon-play"></i> 随机播放全部
+                    </div>
                 </div>
             </div>
             <div class="main">
@@ -28,6 +28,9 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="loading-wrapper">
+                        <Loading v-show="!song_list.length"></Loading>
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,6 +41,7 @@
 	import {getSingerDetail} from 'api/singer'
 	import Song from 'common/js/song'
 	import BScroll from 'better-scroll'
+    import Loading from 'base/loading/loading'
 
 	export default {
 		name: "SingerDetail",
@@ -45,7 +49,8 @@
 			return {
 				song_list: [],
 				scroll_origin_height: 0,
-				scroll_fixed:false
+				scroll_fixed:false,
+				scroll_down:false
 			}
 		},
 		created() {
@@ -88,7 +93,13 @@
 							this.scroll_fixed=true
 							// this.$refs.song_list_wrapper.style.overflow='hidden'
                         }
-					}
+						this.$refs.singer_avatar.style.transform=`scale(1)`
+						this.scroll_down=false
+					}else{
+						let multiple=this.scroll.y/this.scroll_origin_height;
+                        this.$refs.singer_avatar.style.transform=`scale(${1+multiple})`
+                        this.scroll_down=true;
+                    }
 				});
 			},
 			normalizeSingerDetailData(data) {
@@ -116,7 +127,10 @@
 			...mapGetters([
 				'singer'
 			])
-		}
+		},
+        components:{
+	        Loading
+        }
 	}
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -141,9 +155,16 @@
             height 40%
             overflow hidden
             .singer-avatar
+                height 100%
                 overflow hidden
                 img
                     width 100%
+            .singer-avatar-scroll-down
+                position absolute
+                width 100%
+                height 100%
+                z-index 104
+                transform-origin top
             .singer-avatar-up
                 z-index: 105;
                 position: absolute;
@@ -161,6 +182,8 @@
             .backdrop-up
                 z-index 106
                 height 44px
+            .backdrop-scroll-down
+                z-index 105
             .title
                 position fixed
                 top 0
@@ -180,6 +203,8 @@
                     font-size 18px
             .title-up
                 z-index: 107
+            .title-scroll-down
+                z-index: 106
             .play-random
                 position absolute
                 z-index 102
@@ -196,6 +221,12 @@
                 font-size 12px
                 .icon-play
                     margin-right 5px
+            .play-random-up
+                display none
+            .play-scroll-down
+                z-index 106
+        .header-scroll-down
+            overflow initial
         .main
             .bg-layer
                 position absolute
@@ -209,6 +240,12 @@
                 /*overflow hidden*/
                 position absolute
                 z-index 104
+                width 100%
+                .loading-wrapper
+                    position absolute
+                    top 50%
+                    left 50%
+                    transform translate(-50%,-50%)
             .song-list
                 padding 20px 30px
                 .song-item
