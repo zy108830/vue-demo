@@ -11,7 +11,7 @@
                 </div>
                 <div class="singer-avatar" ref="singer_avatar" :class="{'singer-avatar-up':scroll_fixed,'singer-avatar-scroll-down':scroll_down}">
                     <img :src="singer.singer_avatar" alt="">
-                    <div class="backdrop" :class="{'backdrop-up':scroll_fixed,'backdrop-scroll-down':scroll_down}"></div>
+                    <div ref="backdrop" class="backdrop" :class="{'backdrop-up':scroll_fixed,'backdrop-scroll-down':scroll_down,'backdrop-scrolling':backdrop_scrolling}"></div>
                     <div v-show="song_list.length" class="play-random" :class="{'play-random-up':scroll_fixed,'play-scroll-down':scroll_down}">
                         <i class="icon-play"></i> 随机播放全部
                     </div>
@@ -50,7 +50,8 @@
 				song_list: [],
 				scroll_origin_height: 0,
 				scroll_fixed:false,
-				scroll_down:false
+				scroll_down:false,
+				backdrop_scrolling:false
 			}
 		},
 		created() {
@@ -86,16 +87,23 @@
 				this.scroll.on('scroll', () => {
 					console.log(this.scroll.y)
 					if (this.scroll.y <= 0) {
+						//上拉
 						if(this.scroll_origin_height + Math.abs(this.scroll.y) < window.innerHeight - 42){
 							this.scroll_fixed=false
 							this.$refs.bg_layer.style.height = this.scroll_origin_height+Math.abs(this.scroll.y) + 'px'
+                            this.backdrop_scrolling=true;
+							let blur=Math.abs(this.scroll.y)*0.05+'px'
+							this.$refs.backdrop.style['-webkit-backdrop-filter']=`blur(${blur})`
                         }else {
 							this.scroll_fixed=true
+							this.backdrop_scrolling=false;
 							// this.$refs.song_list_wrapper.style.overflow='hidden'
                         }
 						this.$refs.singer_avatar.style.transform=`scale(1)`
 						this.scroll_down=false
 					}else{
+						//下拉
+						this.backdrop_scrolling=false;
 						let multiple=this.scroll.y/this.scroll_origin_height;
                         this.$refs.singer_avatar.style.transform=`scale(${1+multiple})`
                         this.scroll_down=true;
@@ -179,6 +187,10 @@
                 height 100%
                 background-color black
                 opacity 0.4
+            .backdrop-scrolling
+                -webkit-backdrop-filter blur(0px)
+                opacity: 1
+                background-color rgba(0,0,0,0.4)
             .backdrop-up
                 z-index 106
                 height 44px
