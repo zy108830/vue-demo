@@ -1,9 +1,9 @@
 ﻿﻿﻿<template>
     <div class="recommend" ref="recommend">
-        <div class="recommend-scroll-wrapper">
+        <Scroll ref="scroll" class="recommend-content" :data="disc_list">
             <div>
                 <div class="scrollpic-module" v-if="scrollpic_data.length">
-                    <Scrollpic :display_pointer="display_pointer">
+                    <Scrollpic>
                         <a v-for="scrollpic in scrollpic_data" :href="scrollpic['linkUrl']">
                             <img @load="scrollpic_load" class="scrollpic" :src="scrollpic['picUrl']" alt="">
                         </a>
@@ -33,15 +33,14 @@
             <div v-show="!disc_list.length" class="loading-module">
                 <Loading></Loading>
             </div>
-        </div>
+        </Scroll>
     </div>
 </template>
 <script type="text/ecmascript-6">
+    import Scroll from 'base/scroll/scroll'
 	import Scrollpic from 'base/scrollpic/scrollpic'
 	import Loading from 'base/loading/loading'
 	import {getDiscList,getRecommend} from 'api/recommend'
-	import BScroll from 'better-scroll'
-
 	export default {
 		name: "Recommend",
         props:{
@@ -50,8 +49,7 @@
 		data() {
 			return {
 				disc_list:[],
-				scrollpic_data:[],
-				display_pointer:false
+				scrollpic_data:[]
             }
 		},
 		created() {
@@ -59,7 +57,7 @@
 			this.requestDiscApi();
 		},
         mounted(){
-            this.initScrollWrapperDom();
+
         },
         methods:{
 	        requestRecommendApi() {
@@ -74,31 +72,14 @@
 		        })
             },
 	        scrollpic_load(){
-	        	if(!this.scrollpic_load_complete){
-			        setTimeout(()=>{
-				        this.scroll.refresh();
-				        this.display_pointer=true;
-			        },100)
-                    this.scrollpic_load_complete=true
-                }
-            },
-	        initScrollWrapperDom() {
-	        	let recommend_height=window.innerHeight-88;
-		        document.getElementsByClassName('recommend-scroll-wrapper')[0].style.height=recommend_height+'px';
-		        this.scroll = new BScroll('.recommend-scroll-wrapper', {
-			        scrollX: false,
-			        scrollY: true
-		        })
-	        }
-        },
-        watch:{
-	        disc_list(newValue,oldValue){
-	        	setTimeout(()=>{
-                    this.scroll.refresh();
-                },100)
+                this.$refs.scroll.refresh();
             }
         },
+        watch:{
+
+        },
 		components: {
+			Scroll,
 			Scrollpic,
 			Loading
 		}
@@ -107,9 +88,12 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
     @import "~common/stylus/variable"
     .recommend
-        position relative
+        position fixed
         top 88px
-        .recommend-scroll-wrapper
+        bottom 0
+        .recommend-content
+            height 100%
+            overflow hidden
             .disc-module
                 .disc-header
                     text-align center
