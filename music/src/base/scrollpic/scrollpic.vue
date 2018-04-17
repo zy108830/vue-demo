@@ -4,7 +4,7 @@
         <div class="scrollpic_list" ref="scrollpic_list">
             <slot></slot>
         </div>
-        <div class="pointer_list_wrapper" v-if="display_pointer">
+        <div class="pointer_list_wrapper">
             <div class="pointer_list">
                 <div v-for="value,key in pointer_list" class="pointer">
                     <span :class="{selected:key==dotIndex}"></span>
@@ -29,11 +29,7 @@
 			interval: {
 				type: Number,
 				default: 2000
-			},
-			display_pointer:{
-				type:Boolean,
-                default:false
-            }
+			}
 		},
 		created() {
 

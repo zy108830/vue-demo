@@ -90,6 +90,7 @@
     .recommend
         position fixed
         top 88px
+        width 100%
         bottom 0
         .recommend-content
             height 100%
@@ -116,7 +117,7 @@
                             .disc-info
                                 display flex
                                 flex-direction column
-                                flex 1 1 0
+                                flex 1 1 auto
                                 font-size 14px
                                 line-height 20px
                                 justify-content center
