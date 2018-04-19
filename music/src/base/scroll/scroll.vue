@@ -11,14 +11,27 @@
 			data: {
 				type: Array,
 				default: []
-			}
+			},
+			probeType:{
+			    type:Number,
+                default:0
+            }
 		},
 		mounted() {
 			setTimeout(() => {
-				this.scroll = new BScroll('.scroll')
+				this.init()
 			}, 20)
 		},
 		methods: {
+			init(){
+				console.log(this.probeType)
+				this.scroll = new BScroll('.scroll',{
+					probeType:this.probeType
+				})
+				this.scroll.on('scroll', (pos) => {
+					this.$emit('scroll',pos);
+				})
+            },
 			refresh() {
 				setTimeout(() => {
 					this.scroll.refresh();

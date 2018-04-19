@@ -1,6 +1,6 @@
 ﻿<template>
     <div class="singer">
-        <div class="singer-list-wrapper" ref="singer_list_wrapper">
+        <Scroll :probeType="3" @scroll="scrollListener" :data="singer_list" class="singer-list-wrapper" ref="singer_list_wrapper">
             <ul class="singer-group-list" v-show="singer_list.length>1">
                 <li class="singer-group" v-for="singer_group,singer_index in singer_list_map">
                     <h2 class="singer-group-title">{{singer_index}}</h2>
@@ -29,13 +29,13 @@
                 <Loading></Loading>
             </div>
             <h2 ref="fixed_title" v-show="display_fixed_title" class="singer-group-title singer-group-title-fixed">{{fixed_title_content}}</h2>
-        </div>
+        </Scroll>
         <router-view></router-view>
     </div>
 </template>
 <script type="text/ecmascript-6">
     import {getSingerList} from "api/singer";
-    import BScroll from 'better-scroll'
+    import Scroll from 'base/scroll/scroll'
     import Loading from 'base/loading/loading'
     import Singer from 'common/js/Singer'
     import {mapMutations} from 'vuex'
@@ -60,6 +60,7 @@
 			    index_start:0,
 			    index_move:0
 		    };
+		    this.scrollY=0;
 		    getSingerList().then((data)=>{
 			    this.singer_list=data['data']['list'];
 			    this.singer_list_map=this.formatSingerList(this.singer_list)
@@ -119,30 +120,22 @@
                 //添加热门歌手数据
                 return map_sort;
             },
+            scrollListener(pos){
+                this.scrollY = Math.abs(Math.floor(pos.y))
+                this.singer_group_index_current=this.getSingerGroupIndexCurrent()
+                this.setFixedTitle()
+            },
 	        initSingListScroll(){
-	        	this.$refs.singer_list_wrapper.style.height=window.innerHeight-88+'px'
 	        	this.display_loading=true;
-	            this.scroll=new BScroll('.singer-list-wrapper',{
-                    scrollX:false,
-                    scrollY:true,
-		            probeType: 3
-                })
-		        this.scroll.on('scroll', (pos) => {
-			        let scrollY = Math.abs(Math.floor(this.scroll.y))
-			        this.singer_group_index_current=this.getSingerGroupIndexCurrent(scrollY)
-                    this.setFixedTitle()
-			        // console.log('scroll',scrollY,this.scroll.y,this.singer_group_index_current);
-		        })
             },
 	        setFixedTitle(){
-            	let scrollY=this.scroll.y
                 // console.log(scrollY);
-                if(scrollY>=0){
+                if(this.scrollY>=0){
 			        this.display_fixed_title=false
                 }else {
 	                this.display_fixed_title=true
             		let next_index=this.singer_group_index_current+1;
-                    let offset=(-this.singer_group_height_list[next_index])-scrollY
+                    let offset=(-this.singer_group_height_list[next_index])-this.scrollY
                     // console.log('偏移位置',offset)
                     //fixed_title的高度是30,offset没有取0是为了有更好的过渡性
                     if(offset>=-30 && offset<=3){
@@ -188,9 +181,9 @@
                     group_height_start+=singerGroup[i].clientHeight
                 }
             },
-            getSingerGroupIndexCurrent(scrollY){
+            getSingerGroupIndexCurrent(){
                 for (let i =0;i<this.singer_group_height_list.length-1;i++){
-                    if(scrollY>=this.singer_group_height_list[i] && scrollY <this.singer_group_height_list[i+1]){
+                    if(this.scrollY>=this.singer_group_height_list[i] && this.scrollY <this.singer_group_height_list[i+1]){
                         return i;
                     }
                 }
@@ -204,21 +197,26 @@
         watch:{
 	        singer_list_map(){
 	        	setTimeout(()=>{
-	        	    this.scroll.refresh();
 	        	    this.getSingerGroupHeightList();
                 },100)
             }
         },
         components:{
-	        Loading
+	        Loading,
+	        Scroll
         }
 	}
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
     @import "~common/stylus/variable"
     .singer
-        position relative
+        position fixed
         top 88px
+        width 100%
+        bottom 0
+        .scroll
+            height 100%
+            overflow hidden
         .singer-group
             padding-bottom 30px
         .singer-group-title

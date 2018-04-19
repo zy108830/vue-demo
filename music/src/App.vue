@@ -43,9 +43,4 @@
         width 100%
         height 100%
         background-color $color-background
-    .app-header
-        position fixed
-        z-index 10
-        width 100%
-        background-color $color-background
 </style>
