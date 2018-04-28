@@ -1,5 +1,4 @@
-﻿﻿
-<template>
+﻿﻿<template>
     <transition name="singer-detail-trans">
         <div class="singer-detail">
             <div class="header" :class="{'header-scroll-down':scroll_down}">
@@ -19,7 +18,7 @@
             </div>
             <div class="main">
                 <div class="bg-layer" ref="bg_layer"></div>
-                <div class="song-list-wrapper" ref="song_list_wrapper">
+                <Scroll @scroll="scrollListener" :data="song_list" class="song-list-wrapper" :probeType="3" ref="song_list_wrapper">
                     <div class="song-list">
                         <ul>
                             <li class="song-item" v-for="song in song_list">
@@ -31,7 +30,7 @@
                     <div class="loading-wrapper">
                         <Loading v-show="!song_list.length"></Loading>
                     </div>
-                </div>
+                </Scroll>
             </div>
         </div>
     </transition>
@@ -42,6 +41,7 @@
 	import Song from 'common/js/song'
 	import BScroll from 'better-scroll'
     import Loading from 'base/loading/loading'
+    import Scroll from 'base/scroll/scroll'
 
 	export default {
 		name: "SingerDetail",
@@ -61,6 +61,7 @@
 				})
 				return
 			}
+			this.scrollY=0;
 			getSingerDetail(this.singer.singer_mid).then((data) => {
 				this.normalizeSingerDetailData(data);
 			})
@@ -75,40 +76,35 @@
 			back() {
 			    this.$router.back();
 			},
+			scrollListener(pos){
+				this.scrollY=pos.y;
+				if (this.scrollY <= 0) {
+					//上拉
+					if(this.scroll_origin_height + Math.abs(this.scrollY) < window.innerHeight - 42){
+						this.scroll_fixed=false
+						this.$refs.bg_layer.style.height = this.scroll_origin_height+Math.abs(this.scrollY) + 'px'
+						this.backdrop_scrolling=true;
+						let blur=Math.abs(this.scrollY)*0.05+'px'
+						this.$refs.backdrop.style['-webkit-backdrop-filter']=`blur(${blur})`
+					}else {
+						this.scroll_fixed=true
+						this.backdrop_scrolling=false;
+						// this.$refs.song_list_wrapper.style.overflow='hidden'
+					}
+					this.$refs.singer_avatar.style.transform=`scale(1)`
+					this.scroll_down=false
+				}else{
+					//下拉
+					this.backdrop_scrolling=false;
+					let multiple=this.scrollY/this.scroll_origin_height;
+					this.$refs.singer_avatar.style.transform=`scale(${1+multiple})`
+					this.scroll_down=true;
+				}
+            },
 			initSongListScroll() {
 				this.scroll_origin_height = window.innerHeight * 0.6
 				this.$refs.song_list_wrapper.style.height = this.scroll_origin_height + 'px'
 				this.$refs.bg_layer.style.height = this.scroll_origin_height + 'px'
-				this.scroll = new BScroll('.song-list-wrapper', {
-					scrollY: true,
-					scrollX: false,
-					probeType: 3
-				})
-				this.scroll.on('scroll', () => {
-					console.log(this.scroll.y)
-					if (this.scroll.y <= 0) {
-						//上拉
-						if(this.scroll_origin_height + Math.abs(this.scroll.y) < window.innerHeight - 42){
-							this.scroll_fixed=false
-							this.$refs.bg_layer.style.height = this.scroll_origin_height+Math.abs(this.scroll.y) + 'px'
-                            this.backdrop_scrolling=true;
-							let blur=Math.abs(this.scroll.y)*0.05+'px'
-							this.$refs.backdrop.style['-webkit-backdrop-filter']=`blur(${blur})`
-                        }else {
-							this.scroll_fixed=true
-							this.backdrop_scrolling=false;
-							// this.$refs.song_list_wrapper.style.overflow='hidden'
-                        }
-						this.$refs.singer_avatar.style.transform=`scale(1)`
-						this.scroll_down=false
-					}else{
-						//下拉
-						this.backdrop_scrolling=false;
-						let multiple=this.scroll.y/this.scroll_origin_height;
-                        this.$refs.singer_avatar.style.transform=`scale(${1+multiple})`
-                        this.scroll_down=true;
-                    }
-				});
 			},
 			normalizeSingerDetailData(data) {
 				for (let i = 0; i < data['data']['list'].length; i++) {
@@ -122,14 +118,7 @@
 			}
 		},
 		watch: {
-			song_list() {
-				setTimeout(() => {
-					if (!this.scroll) {
-						return false
-					}
-					this.scroll.refresh();
-				}, 20)
-			}
+
 		},
 		computed: {
 			...mapGetters([
@@ -137,7 +126,8 @@
 			])
 		},
         components:{
-	        Loading
+	        Loading,
+	        Scroll
         }
 	}
 </script>
@@ -157,11 +147,10 @@
         left 0
         width 100%
         height 100%
-        z-index 100
         .header
-            position relative
-            height 40%
-            overflow hidden
+            width 100%
+            height 0
+            padding-top 75%
             .singer-avatar
                 height 100%
                 overflow hidden
