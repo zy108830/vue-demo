@@ -30,7 +30,7 @@
             </div>
             <h2 ref="fixed_title" v-show="display_fixed_title" class="singer-group-title singer-group-title-fixed">{{fixed_title_content}}</h2>
         </Scroll>
-        <router-view></router-view>
+        <router-view ></router-view>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -82,11 +82,11 @@
         },
         methods:{
 	        goSingerDetail(singer){
+		        this.setSinger(singer);
 	        	this.$router.push({
                     path : `/singer/${singer.singer_mid}`
 	        	})
-                console.log(singer)
-                this.setSinger(singer);
+	        	return false;
             },
             formatSingerList(){
                 let map={},map_sort={},hot_singer=[];
@@ -121,7 +121,7 @@
                 return map_sort;
             },
             scrollListener(pos){
-                this.scrollY = Math.abs(Math.floor(pos.y))
+                this.scrollY = Math.floor(pos.y)
                 this.singer_group_index_current=this.getSingerGroupIndexCurrent()
                 this.setFixedTitle()
             },
@@ -129,13 +129,12 @@
 	        	this.display_loading=true;
             },
 	        setFixedTitle(){
-                // console.log(scrollY);
                 if(this.scrollY>=0){
-			        this.display_fixed_title=false
+			        this.display_fixed_title=true
                 }else {
 	                this.display_fixed_title=true
             		let next_index=this.singer_group_index_current+1;
-                    let offset=(-this.singer_group_height_list[next_index])-this.scrollY
+                    let offset=(-this.singer_group_height_list[next_index])-Math.abs(this.scrollY)
                     // console.log('偏移位置',offset)
                     //fixed_title的高度是30,offset没有取0是为了有更好的过渡性
                     if(offset>=-30 && offset<=3){
@@ -182,8 +181,9 @@
                 }
             },
             getSingerGroupIndexCurrent(){
+	        	let scrollY=Math.abs(this.scrollY)
                 for (let i =0;i<this.singer_group_height_list.length-1;i++){
-                    if(this.scrollY>=this.singer_group_height_list[i] && this.scrollY <this.singer_group_height_list[i+1]){
+                    if(scrollY>=this.singer_group_height_list[i] && scrollY <this.singer_group_height_list[i+1]){
                         return i;
                     }
                 }

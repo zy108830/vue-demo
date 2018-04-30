@@ -29,6 +29,7 @@
 					probeType:this.probeType
 				})
 				this.scroll.on('scroll', (pos) => {
+					console.log(pos);
 					this.$emit('scroll',pos);
 				})
             },
