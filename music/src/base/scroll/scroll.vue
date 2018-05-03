@@ -1,5 +1,5 @@
 ﻿﻿<template>
-    <div class="scroll">
+    <div ref="wrapper">
         <slot></slot>
     </div>
 </template>
@@ -24,8 +24,8 @@
 		},
 		methods: {
 			init(){
-				console.log(this.probeType)
-				this.scroll = new BScroll('.scroll',{
+				///如果不用this.$refs.scroll的形式，而是用.scroll，就会导致组件在复用的时候gg
+				this.scroll = new BScroll(this.$refs.wrapper,{
 					probeType:this.probeType
 				})
 				this.scroll.on('scroll', (pos) => {
