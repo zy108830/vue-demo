@@ -6,6 +6,9 @@ import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 import store from './store'
 import 'common/stylus/index'
+import VConsole from 'vconsole'
+
+// new VConsole()
 
 Vue.use(VueLazyload,{
 	'loading':require('common/image/default.png')
