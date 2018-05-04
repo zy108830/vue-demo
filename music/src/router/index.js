@@ -5,6 +5,7 @@ import Singer from 'components/singer/singer'
 import Rank from 'components/rank/rank'
 import Search from 'components/search/search'
 import SingerDetail from 'components/singer-detail/singer-detail'
+import Player from 'components/player/player'
 
 Vue.use(Router)
 const router = new Router({
@@ -29,6 +30,9 @@ const router = new Router({
 	}, {
 		path: '/search',
 		component: Search
+	},{
+		path: '/components/player',
+		component: Player
 	}]
 });
 export default router

@@ -7,11 +7,13 @@
         <keep-alive>
             <router-view/>
         </keep-alive>
+        <Player></Player>
     </div>
 </template>
 <script type="text/ecmascript-6">
 	import Header from 'components/header/header'
 	import Tab from 'components/tab/tab'
+	import Player from 'components/player/player'
 	export default {
 		name: 'App',
 		data() {
@@ -30,7 +32,8 @@
 		},
 		components: {
 			Header,
-			Tab
+			Tab,
+            Player
 		}
 	}
 </script>
