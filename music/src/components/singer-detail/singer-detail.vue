@@ -1,22 +1,23 @@
-﻿﻿
-<template>
+﻿﻿<template>
     <transition name="singer-detail-trans">
         <div class="singer-detail">
-            <div class="header" ref="header" :class="{'header-scroll-down':scroll_down}">
-                <ImgBackdrop v-if="avatar" :url="avatar" :percent="75"></ImgBackdrop>
-                <div class="title" :class="{'title-up':scroll_fixed,'title-scroll-down':scroll_down}">
+            <div class="header" ref="header" :class="{'header-scroll-down':scroll_down,'header-scroll-top':scroll_to_top}">
+                <div ref="headerscale" class="headerscale">
+                    <ImgBackdrop ref="imgBackdrop" :blur="blur" :url="avatar" :percent="75"></ImgBackdrop>
+                    <div v-show="song_list.length && !scroll_to_top" class="play-random">
+                        <i class="icon-play"></i> 随机播放全部
+                    </div>
+                </div>
+                <div class="title">
                     <div v-show="singer" @click="back" class="back">
                         <i class="icon-back"></i>
                     </div>
                     <h1 class="singer-name">{{singer.singer_name}}</h1>
                 </div>
-                <div v-show="song_list.length" class="play-random" :class="{'play-random-up':scroll_fixed,'play-scroll-down':scroll_down}">
-                    <i class="icon-play"></i> 随机播放全部
-                </div>
             </div>
-            <div class="song-list-container" ref="song_list_container">
+            <div class="main" ref="song_list_container">
                 <div class="bg-layer" ref="bg_layer"></div>
-                <Scroll @scroll="scrollListener" :data="song_list" :probeType="3" >
+                <Scroll class="scroll" :class="{'scroll-to-top':scroll_to_top}" @scroll="scrollListener" :data="song_list" :probeType="3">
                     <div class="song-list">
                         <ul>
                             <li class="song-item" v-for="song in song_list">
@@ -41,16 +42,19 @@
 	import Scroll from 'base/scroll/scroll'
 	import ImgBackdrop from 'base/img/ImgBackdrop'
 
+	const title_height = 42
 	export default {
 		name: "SingerDetail",
 		data() {
 			return {
 				song_list: [],
 				scroll_origin_height: 0,
-				scroll_fixed: false,
+				scroll_to_top: false,
 				scroll_down: false,
-                avatar:'',
-				backdrop_scrolling: false
+				avatar: '',
+				scrollY: 0,
+				scrollYPositive: 0,
+				blur:0
 			}
 		},
 		created() {
@@ -58,7 +62,6 @@
 				this.back();
 				return
 			}
-			this.scrollY = 0;
 			getSingerDetail(this.singer.singer_mid).then((data) => {
 				this.normalizeSingerDetailData(data);
 			})
@@ -67,41 +70,48 @@
 		mounted() {
 			setTimeout(() => {
 				this.initSongListScroll();
-			}, 20)
+			}, 200)
 		},
 		methods: {
 			back() {
 				this.$router.back();
 			},
+			displayAvatarBackdrop() {
+				this.blur = this.scrollYPositive * 0.05
+			},
+			zoomInAvatar() {
+				let multiple = this.scrollYPositive / this.header_origin_height;
+				this.$refs.headerscale.style.transform = `scale(${1 + multiple})`
+			},
+			scrollUp() {
+				let scroll_new_height = this.scroll_origin_height + this.scrollYPositive;
+				if (scroll_new_height < window.innerHeight - title_height) {
+					this.displayAvatarBackdrop();
+					this.scroll_to_top = false
+					this.$refs.bg_layer.style.height = this.scroll_origin_height + this.scrollYPositive + 'px'
+				} else {
+					this.scroll_to_top = true
+				}
+				this.scroll_down = false
+			},
+			scrollDown() {
+				this.scroll_down = true;
+				this.zoomInAvatar();
+			},
 			scrollListener(pos) {
 				this.scrollY = pos.y;
+				this.scrollYPositive = Math.abs(this.scrollY)
 				if (this.scrollY <= 0) {
-					//上拉
-					if (this.scroll_origin_height + Math.abs(this.scrollY) < window.innerHeight - 42) {
-						this.scroll_fixed = false
-						this.$refs.bg_layer.style.height = this.scroll_origin_height + Math.abs(this.scrollY) + 'px'
-						this.backdrop_scrolling = true;
-						let blur = Math.abs(this.scrollY) * 0.05 + 'px'
-						this.$refs.backdrop.style['-webkit-backdrop-filter'] = `blur(${blur})`
-					} else {
-						this.scroll_fixed = true
-						this.backdrop_scrolling = false;
-						// this.$refs.song_list_wrapper.style.overflow='hidden'
-					}
-					this.$refs.singer_avatar.style.transform = `scale(1)`
-					this.scroll_down = false
+					this.scrollUp();
 				} else {
-					//下拉
-					this.backdrop_scrolling = false;
-					let multiple = this.scrollY / this.scroll_origin_height;
-					this.$refs.singer_avatar.style.transform = `scale(${1 + multiple})`
-					this.scroll_down = true;
+					this.scrollDown();
 				}
 			},
 			initSongListScroll() {
-				this.avatar=this.singer.singer_avatar
-				this.$refs.song_list_container.style.height = window.innerHeight - this.$refs.header.clientHeight + 'px'
-				// this.$refs.bg_layer.style.height = this.scroll_origin_height + 'px'
+				this.avatar = this.singer.singer_avatar
+                this.header_origin_height= this.$refs.header.clientHeight
+				this.scroll_origin_height = window.innerHeight - this.header_origin_height
+				this.$refs.song_list_container.style.height = this.scroll_origin_height + 'px'
 			},
 			normalizeSingerDetailData(data) {
 				for (let i = 0; i < data['data']['list'].length; i++) {
@@ -146,15 +156,24 @@
         background-color $color-background
         .header
             position relative
+            &.header-scroll-down
+                overflow initial
+                z-index 300
+            &.header-scroll-top
+                z-index 200
+                height 42px
+                overflow hidden
+            .headerscale
+                transform-origin top
             .backdrop-scrolling
                 -webkit-backdrop-filter blur(0px)
                 opacity: 1
                 background-color rgba(0, 0, 0, 0.4)
-            .backdrop-up
-                z-index 106
-                height 44px
-            .backdrop-scroll-down
-                z-index 105
+                &.backdrop-up
+                    z-index 106
+                    height 44px
+                &.backdrop-scroll-down
+                    z-index 105
             .title
                 position fixed
                 top 0
@@ -172,10 +191,6 @@
                     line-height 42px
                     text-align center
                     font-size 18px
-            .title-up
-                z-index: 107
-            .title-scroll-down
-                z-index: 106
             .play-random
                 position absolute
                 left 50%
@@ -189,42 +204,42 @@
                 text-align center
                 line-height 32px
                 font-size 12px
+                &.play-random-hide
+                    display none
+                &.play-scroll-down
+                    z-index 106
                 .icon-play
                     margin-right 5px
-            .play-random-up
-                display none
-            .play-scroll-down
-                z-index 106
-        .header-scroll-down
-            overflow initial
-        .song-list-container
-            position absolute
-            z-index 104
+        .main
+            position fixed
+            z-index 150
+            left 0
+            bottom 0
             width 100%
-            .song-list
-                padding 20px 30px
-                .song-item
-                    padding 10px 0
-                    .song-name
-                        line-height 20px
-                        height 20px
-                        font-size 14px
-                    .song-album
-                        line-height 20px
-                        height 20px
-                        font-size 14px
-                        color $color-text-d
-            .loading-wrapper
-                position absolute
-                top 50%
-                left 50%
-                transform translate(-50%, -50%)
             .bg-layer
                 position absolute
                 left 0
                 bottom 0
-                z-index 103
                 width 100%
-                height 400px
                 background-color $color-background
+            .scroll
+                height 100%
+                .song-list
+                    padding 20px 30px
+                    .song-item
+                        padding 10px 0
+                        .song-name
+                            line-height 20px
+                            height 20px
+                            font-size 14px
+                        .song-album
+                            line-height 20px
+                            height 20px
+                            font-size 14px
+                            color $color-text-d
+                .loading-wrapper
+                    position absolute
+                    top 50%
+                    left 50%
+                    transform translate(-50%, -50%)
 </style>

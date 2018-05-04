@@ -1,35 +1,37 @@
 ﻿<template>
     <div class="singer">
-        <Scroll :probeType="3" @scroll="scrollListener" :data="singer_list" class="singer-list-wrapper" ref="singer_list_wrapper">
-            <ul class="singer-group-list" v-show="singer_list.length>1">
-                <li class="singer-group" v-for="singer_group,singer_index in singer_list_map">
-                    <h2 class="singer-group-title">{{singer_index}}</h2>
-                    <ul class="singer-list">
-                        <li v-for="singer in singer_group" class="singer-item">
-                            <a class="singer-link" @click="goSingerDetail(singer)">
-                                <div class="singer-avatar">
-                                    <img v-lazy="singer.singer_avatar" alt="">
-                                </div>
-                                <div class="singer-name">
-                                    <p>{{singer.singer_name}}</p>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="singer-index-nav">
-                <ul>
-                    <li @touchstart.stop.prevent="touchStartSingerGroup" @touchmove.stop.prevent="touchMoveSingerGroup" :data-index="index" :class="{active:index==singer_group_index_current}" v-for="value,index in singer_list_keys">
-                        {{value.substr(0,1)}}
+        <div class="singer-page">
+            <Scroll ref="scroll" class="singer-scroll" :probeType="3" @scroll="scrollListener" :data="singer_list">
+                <ul class="singer-group-list" v-show="singer_list.length>1">
+                    <li class="singer-group" v-for="singer_group,singer_index in singer_list_map">
+                        <h2 class="singer-group-title">{{singer_index}}</h2>
+                        <ul class="singer-list">
+                            <li v-for="singer in singer_group" class="singer-item">
+                                <a class="singer-link" @click="goSingerDetail(singer)">
+                                    <div class="singer-avatar">
+                                        <img v-lazy="singer.singer_avatar" alt="">
+                                    </div>
+                                    <div class="singer-name">
+                                        <p>{{singer.singer_name}}</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-            </div>
-            <div v-show="display_loading && !singer_list.length" class="loading-module">
-                <Loading></Loading>
-            </div>
-            <h2 ref="fixed_title" v-show="display_fixed_title" class="singer-group-title singer-group-title-fixed">{{fixed_title_content}}</h2>
-        </Scroll>
+                <div class="singer-index-nav">
+                    <ul>
+                        <li @touchstart.stop.prevent="touchStartSingerGroup" @touchmove.stop.prevent="touchMoveSingerGroup" :data-index="index" :class="{active:index==singer_group_index_current}" v-for="value,index in singer_list_keys">
+                            {{value.substr(0,1)}}
+                        </li>
+                    </ul>
+                </div>
+                <div v-show="display_loading && !singer_list.length" class="loading-module">
+                    <Loading></Loading>
+                </div>
+                <h2 ref="fixed_title" v-show="display_fixed_title" class="singer-group-title singer-group-title-fixed">{{fixed_title_content}}</h2>
+            </Scroll>
+        </div>
         <router-view ></router-view>
     </div>
 </template>
@@ -49,7 +51,8 @@
                 singer_group_index_current:0,
                 singer_group_height_list:[],
                 display_loading:false,
-                display_fixed_title:false
+                display_fixed_title:false,
+			    scrollY:0
             }
         },
 	    created(){
@@ -60,7 +63,6 @@
 			    index_start:0,
 			    index_move:0
 		    };
-		    this.scrollY=0;
 		    getSingerList().then((data)=>{
 			    this.singer_list=data['data']['list'];
 			    this.singer_list_map=this.formatSingerList(this.singer_list)
@@ -130,7 +132,7 @@
             },
 	        setFixedTitle(){
                 if(this.scrollY>=0){
-			        this.display_fixed_title=true
+			        this.display_fixed_title=false
                 }else {
 	                this.display_fixed_title=true
             		let next_index=this.singer_group_index_current+1;
@@ -161,12 +163,12 @@
 		        }
 		        this.singer_group_index_current=singer_group_index_current;
 		        // console.log(`触摸滚动后的下标为`,this.singer_list_keys[singer_group_index_current])
-		        this.scroll.scrollTo(0,-this.singer_group_height_list[this.singer_group_index_current],400);
+		        this.$refs.scroll.scroll.scrollTo(0,-this.singer_group_height_list[this.singer_group_index_current],400);
 		        // console.log(`滚动偏移的距离为${touch_move_distance}`,`应该移动${index_touch_offset}个下标`,`前往${-this.singer_group_height_list[this.singer_group_index_current]}`);
 	        },
 	        touchStartSingerGroup(event){
 	            let time=400,index=event.target.dataset.index;
-	            this.scroll.scrollTo(0,-this.singer_group_height_list[index],time);
+	            this.$refs.scroll.scroll.scrollTo(0,-this.singer_group_height_list[index],time);
 	            //记录偏移
 	            this.singer_group_index_touch.touch_start=event.touches[0].pageY;
 	            this.singer_group_index_touch.index_start=index;
@@ -210,13 +212,15 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
     @import "~common/stylus/variable"
     .singer
-        position fixed
-        top 88px
-        width 100%
-        bottom 0
-        .scroll
-            height 100%
+        .singer-page
+            position fixed
+            left 0
+            top 88px
+            width 100%
+            bottom 0
             overflow hidden
+        .singer-scroll
+            height 100%
         .singer-group
             padding-bottom 30px
         .singer-group-title

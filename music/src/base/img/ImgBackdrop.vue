@@ -15,15 +15,26 @@
 			percent: {
 				type: Number,
 				default: 100
+			},
+			blur: {
+				type: Number,
+				default: 0
 			}
 		},
 		data() {
 			return {}
 		},
 		mounted() {
-			this.$refs.avatar.style['background-image'] = `url(${this.url})`;
 			this.$refs.avatar.style['padding-top'] = this.percent / 100 * 100 + '%';
-		}
+		},
+		watch:{
+		    url(){
+			    this.$refs.avatar.style['background-image'] = `url(${this.url})`;
+            },
+            blur(){
+	            this.$refs.backdrop.style['-webkit-backdrop-filter'] = `blur(${this.blur}px)`
+            }
+        }
 	}
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -39,6 +50,5 @@
             left 0
             width 100%
             height 100%
-            background-color black
-            opacity 0.4
+            background-color rgba(0,0,0,0.5)
 </style>

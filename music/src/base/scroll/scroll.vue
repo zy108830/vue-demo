@@ -1,5 +1,5 @@
 ﻿﻿<template>
-    <div ref="wrapper">
+    <div class="better-scroll-wrapper" ref="wrapper">
         <slot></slot>
     </div>
 </template>
@@ -29,7 +29,6 @@
 					probeType:this.probeType
 				})
 				this.scroll.on('scroll', (pos) => {
-					console.log(pos);
 					this.$emit('scroll',pos);
 				})
             },
