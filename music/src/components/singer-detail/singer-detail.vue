@@ -20,7 +20,7 @@
                 <Scroll class="scroll" :class="{'scroll-to-top':scroll_to_top}" @scroll="scrollListener" :data="song_list" :probeType="3">
                     <div class="song-list">
                         <ul>
-                            <li class="song-item" v-for="song in song_list">
+                            <li class="song-item" @click="playMusic(song_list,index)" v-for="song,index in song_list">
                                 <h2 class="song-name">{{song.song_name}}</h2>
                                 <p class="song-album">{{singer.singer_name}} · {{song.song_album}}</p>
                             </li>
@@ -35,12 +35,13 @@
     </transition>
 </template>
 <script type="text/ecmascript-6">
-	import {mapGetters} from 'vuex'
+	import {mapGetters,mapActions} from 'vuex'
 	import {getSingerDetail} from 'api/singer'
 	import Song from 'common/js/song'
 	import Loading from 'base/loading/loading'
 	import Scroll from 'base/scroll/scroll'
 	import ImgBackdrop from 'base/img/ImgBackdrop'
+	import {selectPlay} from "../../store/actions";
 
 	const title_height = 42
 	export default {
@@ -76,6 +77,15 @@
 			back() {
 				this.$router.back();
 			},
+            playMusic(song_list,index){
+                this.selectPlay({
+                    list:song_list,
+                    index
+                })
+            },
+            ...mapActions([
+            	'selectPlay'
+            ]),
 			displayAvatarBackdrop() {
 				this.blur = this.scrollYPositive * 0.05
 			},
